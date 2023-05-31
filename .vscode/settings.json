@@ -101,6 +101,14 @@
 		"zIndex"
 	],
 	"cSpell.words": [
-		"Dispatchable"
+		"Dispatchable",
+		"GLTF",
+		"gsap",
+		"raycaster",
+		"skeletonlabs",
+		"tailwindcss",
+		"tweenjs",
+		"wireframe",
+		"yoyo"
 	]
 }

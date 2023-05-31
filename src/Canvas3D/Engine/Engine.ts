@@ -1,24 +1,16 @@
 import * as THREE from 'three';
+import { EngineEventBus } from './EngineEventBus';
+import { Chrome, type ChromeHeap } from './Chrome';
 
-export { THREE };
+export { THREE, Chrome, ChromeHeap };
 
-interface EngineMemory extends Performance {
-	memory?: {
-		totalJSHeapSize: number;
-		usedJSHeapSize: number;
-		jsHeapSizeLimit: number;
-	};
-}
 
 export interface EngineStats {
 	frames: number;
 	delta: number;
+	fps: number;
 	load: number;
-	heap: {
-		totalJSHeapSize: number;
-		usedJSHeapSize: number;
-		jsHeapSizeLimit: number;
-	};
+	heap?: ChromeHeap;
 }
 
 export type EngineCallback = (stats: EngineStats) => void;
@@ -26,13 +18,15 @@ export type EngineCallback = (stats: EngineStats) => void;
 
 export class Engine {
 
+	public stats: EngineStats = { frames: 0, delta: 1 / 60, fps: 60, load: 0};
+	
 	private looper = 0;
 
-	private stats: EngineStats = { frames: 0, delta: 1 / 60, load: 0, heap: { totalJSHeapSize: 0, usedJSHeapSize: 0, jsHeapSizeLimit: 0 } };
-
+	
 	private callbacks: EngineCallback[] = [];
+	
+	static EventBus = EngineEventBus.getInstance();
 
-	private performance = window.performance as EngineMemory;
 
 	constructor() {
 		//
@@ -40,11 +34,20 @@ export class Engine {
 
 	public update = () => {
 		this.stats.frames += 1;
+		// TWEEN.update();
+		Engine.EventBus.dispatch("update", this.stats);
 	}
 
-	private ts = 0;
-	private te = 0;
+
+
+	private ts = performance.now();
+	private te = performance.now();
+	private tf = performance.now();
+	private nf = 0;
+
 	private loop = () => {
+
+		this.nf += 1;
 
 		this.looper = requestAnimationFrame(this.loop);
 
@@ -52,18 +55,25 @@ export class Engine {
 		this.stats.delta = (this.te - this.ts) / 1000;
 		this.ts = this.te;
 
+		
+
 		if (!document.hidden) {
 
-			const t0 = this.performance.now();
-			this.update();
-			this.callbacks.map(callback => callback(this.stats));
-			this.stats.load = (this.performance.now() - t0);
-
-			if (this.performance && this.performance.memory) {
-				this.stats.heap.totalJSHeapSize = this.performance.memory.totalJSHeapSize;
-				this.stats.heap.usedJSHeapSize = this.performance.memory.usedJSHeapSize;
-				this.stats.heap.jsHeapSizeLimit = this.performance.memory.jsHeapSizeLimit;
+			if(this.te - this.tf >= 100) {
+				this.stats.fps = 1000 * this.nf / (this.te - this.tf );
+				this.nf = 0; this.tf = this.te;
+				Engine.EventBus.dispatch("engine-stats", this.stats);
 			}
+
+			const t0 = window.performance.now();
+
+			this.update();
+			
+			this.callbacks.map(callback => callback(this.stats));
+			
+			this.stats.load = (window.performance.now() - t0);
+
+			this.stats.heap = Chrome.getHeapInfo();
 		}
 	}
 
@@ -89,7 +99,65 @@ export class Engine {
 		cancelAnimationFrame(this.looper);
 	}
 
-	static getCanvasById(canvasId: string) {
+
+	public getHeapLimit = () => {
+		if(this.stats.heap) {
+			return this.stats.heap.limitSize;
+		}
+		return NaN;
+	}
+	public getHeapSize = () => {
+		if(this.stats.heap) {
+			return this.stats.heap.totalSize;
+		}
+		return NaN;
+	}
+	public getHeapUsed = () => {
+		if(this.stats.heap) {
+			return this.stats.heap.usedSize;
+		}
+		return NaN;
+	}
+
+	public getHeapAllocated = () => {
+		if(this.stats.heap) {
+			return this.stats.heap.allocated;
+		}
+		return NaN;
+	}
+	public getHeapConsumed = () => {
+		if(this.stats.heap) {
+			return this.stats.heap.consumed;
+		}
+		return NaN;
+	}
+
+
+	static generateUid = (prefix?: string, suffix?: string) => {
+		// format: prefix-xxxxxxx-suffix
+		const str = "0123456789abcdefghijklmnopqrstuvwxyz";
+		let uid = "";
+		for(let i=0; i<7; i++) {
+			const idx = Math.ceil(Math.random() * str.length);
+			uid += str[idx];
+		}
+
+		uid = prefix ? `${prefix}-${uid}` : uid;
+		uid = suffix ? `${uid}-${suffix}` : uid;
+		return uid;
+	}
+
+	static getElementById = (elementId: string) => {
+		return document.getElementById(elementId);
+	}
+
+	static getCanvasById = (canvasId: string) => {
 		return document.getElementById(canvasId) as HTMLCanvasElement;
+	}
+
+	static createCanvas = (canvasId?: string) => {
+		const c = document.createElement("canvas");
+		c.id = canvasId ? canvasId : Engine.generateUid();
+		return c as HTMLCanvasElement;
 	}
 }
