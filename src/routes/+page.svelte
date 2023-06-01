@@ -4,16 +4,11 @@
 	import { gsap, Power2, Power3, Power4, Back, Elastic, Bounce } from 'gsap';
 	import { Engine, type EngineStats, THREE } from '../Canvas3D/Engine/Engine';
 	import { Graphics } from '../Canvas3D/Graphics/Graphics';
-	
-	import { tweened } from 'svelte/motion';
-	import { cubicOut } from 'svelte/easing';
-	import { group_outros } from 'svelte/internal';
-	import { RaySensor } from '../Canvas3D/Graphics/RaySensor';
+	import { GraphicsRaySensor } from '../Canvas3D/Graphics/GraphicsRaySensor';
+	import { Triangle } from 'three';
+	import { GraphicsLoader } from '../Canvas3D/Graphics/GraphicsLoader';
+	import { text } from '@sveltejs/kit';
 
-	// const progress = tweened(0, {
-	// 	duration: 2000,
-	// 	easing: cubicOut
-	// });
 
 	let engine: Engine;
 
@@ -23,14 +18,12 @@
 	let heapAlloc: number = 0;
 	let heapUsed: number = 0;
 
-	let loaded: number = 0;
 
 	onMount(async() => {
 
 		engine = new Engine();
 
 		engine.start();
-
 		engine.onFrame((s: EngineStats) => {
 			stats = s;
 			heapLimit = engine.getHeapLimit();
@@ -39,20 +32,28 @@
 		});
 
 		
-		// progress.set(1);
+		const model = await Graphics.loadGLTF("cube1.glb");
+		const gltf = model.gltf;
 
-		// let g1 = new Graphics(engine, 'container1');
-		let g2 = new Graphics(engine, 'container2');
-		let g3 = new Graphics(engine, 'container3');
-		// let g4 = new Graphics(engine, 'container4');
-
-		const scene2 = await g2.loadScene("cube1.glb", 1);
-		const scene3 = await g3.loadScene("cube1.glb", 0);
-	
 		
-		const sensor = new RaySensor(g3);
-		sensor.sense("Sphere", {
-			mouseClick: (e) => console.log(e)
+
+		let gC = new Graphics(engine, 'container1');
+		let gM = new Graphics(engine, 'container2');
+
+		const sceneC  = gC.useScene(gltf, 0);
+		const sceneM  = gM.useScene(gltf, 2);
+
+		
+
+		// await gM.setSceneType("park");
+		// await gM.setSceneType("snow");
+		await gM.setSceneType("park");
+		
+
+		
+		const sensor = new GraphicsRaySensor(gM);
+		sensor.sense("Ball", {
+			// mouseMove: (e) => console.log(e)
 		});
 
 
@@ -62,19 +63,16 @@
 			value: Math.PI * 2,
 			duration: 2,
 			ease: Elastic.easeInOut,
-			repeat: -1, // Repeat indefinitely
-     		yoyo: true, // Reverse the animation on each repeat	
+			repeat: -1,
+     		yoyo: true,
 			onUpdate: () => {
-				scene2.rotation.y = progress.value;
-				scene3.rotation.y = progress.value;
+				sceneC.rotation.y = progress.value;
+				sceneM .rotation.y = progress.value;
 			},
 			onComplete: () => {
 
 			},
 		});
-
-
-
 	});
 	
 
@@ -87,13 +85,11 @@
 	<div class="flex flex-col space-y-5">
 		<div class="heap ">frames: {stats?.frames} delta: {stats?.delta.toFixed(3)} load: {stats?.load.toFixed(3)} fps: {stats?.fps.toFixed(2)}</div>
 		
-		<!-- <div id="container1" class="border border-green-700"></div> -->
 
-		<div id="container2" class="border border-blue-700"></div>
+		<div id="container1" class="border border-blue-700"></div>
 
-		<div id="container3" class="border border-yellow-700"></div>
+		<div id="container2" class="border border-yellow-700"></div>
 
-		<!-- <div id="container4" class="border border-red-700"></div> -->
 	</div>
 	<div>
 		<div class="heap">HeapLimit: {(heapLimit/1e6).toFixed(2)}MB</div>
