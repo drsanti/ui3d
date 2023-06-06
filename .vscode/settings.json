@@ -101,13 +101,17 @@
 		"zIndex"
 	],
 	"cSpell.words": [
+		"ccaller",
+		"creject",
 		"Dispatchable",
 		"drsant",
 		"GLTF",
 		"gsap",
+		"mousedrag",
 		"negx",
 		"negy",
 		"negz",
+		"orbitcontrols",
 		"posx",
 		"posz",
 		"raycaster",
