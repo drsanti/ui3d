@@ -1,4 +1,5 @@
-import { THREE, Engine } from "../Engine/Engine";
+import * as THREE from "three"
+import { Engine } from "../Engine/Engine";
 import type { Graphics } from "./Graphics";
 import { GraphicsEventBus } from "./GraphicsEventBus";
 

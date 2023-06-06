@@ -1,4 +1,6 @@
-import * as THREE from 'three';
+
+import {THREE, OrbitControls, GLTFLoader, type GLTF} from "../Graphics/ModulesIndex";
+
 import { EngineEventBus } from './EngineEventBus';
 import { Chrome, type ChromeHeap } from './Chrome';
 import { Graphics } from '../Graphics/Graphics';

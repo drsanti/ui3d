@@ -1,11 +1,12 @@
-import { Engine, THREE, type EngineStats } from "../Engine/Engine";
-import { OrbitControls } from '../three/examples/jsm/controls/OrbitControls';
+
+import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
+
 import { GraphicsEventBus } from "./GraphicsEventBus";
 import { GraphicsLoader, type ModelLoaderCallback, } from "./GraphicsLoader";
 import { GraphicsCanvas } from "./GraphicsCanvas";
 import { GraphicsRaySensor } from "./GraphicsRaySensor";
 import { GraphicsAssets } from "./GraphicsResources";
-import type { GLTF } from "../@types/three/examples/jsm/loaders/GLTFLoader";
+import type { Engine, EngineStats } from "../Engine";
 
 
 
@@ -43,8 +44,8 @@ export class Graphics extends GraphicsEventBus {
 		sceneIndex = sceneIndex >= gltf.scenes.length ? gltf.scenes.length - 1 : sceneIndex;
 		sceneIndex = sceneIndex < 0 ? gltf.scenes.length - 1 : sceneIndex;
 		
-		const group = gltf.scenes[sceneIndex].clone();
-		gltf.scenes[sceneIndex].traverse( (child) => {
+		const group: THREE.Group = gltf.scenes[sceneIndex].clone();
+		gltf.scenes[sceneIndex].traverse( (child: THREE.Object3D) => {
 			group.add(child.clone());
 		});
 		this.scene.add(group);

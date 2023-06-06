@@ -1,8 +1,9 @@
+// import * as THREE from "three";
+// import { GLTFLoader, type GLTF } from "three/examples/jsm/loaders/GLTFLoader";
 
 
-import type { GLTF } from "../@types/three/examples/jsm/loaders/GLTFLoader";
-import { GLTFLoader} from "../three/examples/jsm/loaders/GLTFLoader";
-import * as THREE from "three";
+
+import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
 
 export interface ModelInfo {
     path: string;
@@ -76,7 +77,7 @@ export class GraphicsLoader {
             // const clog = (s1: string, s2: string) => console.log(`process %c${s1} %c${s2}`, `color: yellow`, `color: lime`)
             let bytes = 0;
 
-            new GLTFLoader().load(gltfPath, (glTF) => {
+            new GLTFLoader().load(gltfPath, (glTF: GLTF) => {
 
                     glTF.scene.traverse( (c: THREE.Object3D) => {
                         if(c instanceof THREE.Mesh) {
@@ -95,14 +96,14 @@ export class GraphicsLoader {
                     callbackOptions?.loaded?.(modelData);
                     resolve(modelData);
 
-                },(xhr) => {
+                },(xhr: any) => {
                     bytes = xhr.total;
                     const info: ModelDownloadInfo = {
                         path: gltfPath, percent: (xhr.loaded / xhr.total) * 100, 
                         loaded: xhr.loaded, total: xhr.total
                     };
                     callbackOptions?.loading?.(info);
-                }, (error) => {
+                }, (error: any) => {
                     const msg = `Error loading GLTF model - ${error}`;
                     callbackOptions?.error?.(msg);
                     reject(msg);
@@ -121,7 +122,7 @@ export class GraphicsLoader {
 				() => {
                     //
 				},
-				(url, loaded, total) => {
+				(url:string, loaded:number, total:number) => {
 					url; loaded; total;
 
                     // const ss = url.split('/');
@@ -131,15 +132,15 @@ export class GraphicsLoader {
                         ${
                             url.includes('park') ? '#8f8' : url.includes('bridge') ? '#88f': '#ff8'}`)
 				},
-				(url) => {
+				(url: string) => {
 					const errMsg = `Error loading ${url}`
 					console.error(errMsg)
 					reject(errMsg)
 				})
-			).setPath(path).load(names, (cubeText) => {
+			).setPath(path).load(names, (cubeText: THREE.CubeTexture) => {
 				resolve(cubeText)
 				cubeText.dispose();
-			}, (xhr) => {
+			}, (xhr: any) => {
 				xhr
                 console.log(xhr.loaded)
 			})
@@ -155,7 +156,7 @@ export class GraphicsLoader {
     static async loadTexture(url: string): Promise<THREE.Texture> {
         return new Promise((resolve, reject) => {
             reject    
-            new THREE.TextureLoader().load(url, (texture)=>{
+            new THREE.TextureLoader().load(url, (texture: THREE.Texture) => {
                 resolve(texture);
             });
         });

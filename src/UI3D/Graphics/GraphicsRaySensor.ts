@@ -1,5 +1,8 @@
 
-import { THREE } from "../Engine/Engine";
+// import  * as THREE from "three";
+
+import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
+
 import type { Graphics } from "./Graphics";
 import type { GraphicsCanvas } from "./GraphicsCanvas";
 

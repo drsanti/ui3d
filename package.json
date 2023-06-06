@@ -13,11 +13,10 @@
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.2.9",
-		"@rollup/plugin-commonjs": "^25.0.0",
-		"@rollup/plugin-node-resolve": "^15.1.0",
 		"@skeletonlabs/skeleton": "^1.6.2",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/adapter-static": "^2.0.2",
+		"@sveltejs/gl": "^0.0.37",
 		"@sveltejs/kit": "^1.5.0",
 		"@tailwindcss/forms": "^0.5.3",
 		"@tailwindcss/typography": "^0.5.9",
@@ -29,13 +28,10 @@
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-svelte": "^2.26.0",
-		"gltf-loader-ts": "^0.3.1",
 		"highlight.js": "^11.8.0",
 		"postcss": "^8.4.24",
 		"prettier": "^2.8.0",
 		"prettier-plugin-svelte": "^2.8.1",
-		"rollup-plugin-includepaths": "^0.2.4",
-		"rollup-plugin-node-polyfills": "^0.2.1",
 		"svelte": "^3.54.0",
 		"svelte-check": "^3.0.1",
 		"tailwindcss": "^3.3.2",
@@ -45,10 +41,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/gl": "^0.0.37",
 		"chroma-js": "^2.4.2",
 		"gsap": "^3.11.5",
-		"three": "^0.152.2",
+		"three": "^0.153.0",
 		"three-orbitcontrols-ts": "^0.1.2"
 	}
 }

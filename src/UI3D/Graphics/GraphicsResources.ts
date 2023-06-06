@@ -1,5 +1,6 @@
-import * as THREE from "three";
-import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader";
+
+import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
+
 import { GraphicsLoader, type ModelLoaderCallback } from "./GraphicsLoader";
 
 
@@ -23,10 +24,11 @@ const RESOURCES = [
 
 
 
+export type EnvMapType = THREE.Texture;
 
 export interface Resources {
 	loaded: boolean;
-	envMaps: THREE.CubeTexture[]
+	envMaps: EnvMapType[]
 	glTFs: GLTF[]
 }
 
@@ -34,7 +36,7 @@ export interface Resources {
 export class GraphicsAssets {
 
 
-    static envMaps: THREE.CubeTexture[] = [];
+    static envMaps: EnvMapType[] = [];
 	static glTFs: GLTF[] = [];
 	static resources: Resources;
 
@@ -75,7 +77,7 @@ export class GraphicsAssets {
 
 			this.resources.glTFs.forEach(glTF => {
 				glTF.scenes.forEach(s => {
-					s.traverse(c => {
+					s.traverse( (c: THREE.Object3D) => {
 						if(c instanceof THREE.Mesh) {
 							c.geometry.dispose();
 						}
