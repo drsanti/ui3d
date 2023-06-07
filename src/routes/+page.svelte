@@ -2,17 +2,20 @@
 
 	import { Engine, type EngineStats } from '../ui3d/Engine/Engine';
 	import Scene from '../ui3d/Components/scene.svelte';
-	import { Linear, Back } from 'gsap';
+	import { Linear, Elastic, Back } from 'gsap';
+	import { Painter } from '../ui3d/Painter/Painter';
+	import { Plotter } from '../ui3d/Painter/Plotter';
 
 	let stats: EngineStats;
 	let heapLimit: number = 0;
 	let heapAlloc: number = 0;
 	let heapUsed: number = 0;
 
+	let ready = false;
 	let engine: Engine;
 
 	Engine.init().then((instance: Engine) => {
-		
+		ready = true;
 		engine = instance;
 		engine.start();
 		engine.onFrame((s: EngineStats) => {
@@ -37,7 +40,7 @@
 		sensor.sense('Ball', {
 			mouseDown: (e) => {
 				g0.previousEnvironment();
-				g1.nextEnvironment();
+				g1.previousEnvironment();
 			},
 			mouseDrag: (e: THREE.Intersection) => {
 				console.dir(e.object.name);
@@ -46,6 +49,10 @@
 
 		const D = 20;
 		g0.setSize(D * 16, D * 9);
+		g1.setSize(D * 16, D * 9);
+
+		// Engine.updateDOMRect().then(e => console.log(e));
+		// engine.getOverlayCanvases().then( (c) => console.log(c));
 
 		g0.getGraphicsCanvas()
 			.initialCanvas2D()
@@ -78,15 +85,50 @@
 		});
 		// tween.repeat(0);
 		// tween.kill();
+
+
+		// setTimeout(() =>{
+		// 	const canvases = document.querySelectorAll("canvas");
+		// 	console.log(canvases);
+		// 	canvases.forEach((c) => {
+		// 		const rect = c.getBoundingClientRect();
+		// 		console.log(rect);
+		// 	})
+		// },2000);
+
+		engine.getOverlayCanvases().then( (canvases) => {
+			const p = new Plotter(canvases[0]);
+			const tween = engine.createTween({
+				firstValue: 0,
+				lastValue: Math.PI * 2,
+				ease: Elastic.easeIn,
+				yoyo: true,
+				repeat: -1,
+				duration: 1.5,
+				onUpdate: (value: number) => {
+					p.add(value/(Math.PI * 2) * p.getHeight()/2);
+				}
+			});
+			
+		});// engine
+		
+
+
+
 	});
 </script>
 
-<div class="container h-full mx-auto flex justify-center items-center flex-col">
+<!-- {#if ready} -->
+	
+
+<div class="{`${ready ? 'border border-red-500' : 'hidden'}`} container h-full mx-auto flex justify-center items-center flex-col">
+
 	<div class="flex flex-col space-y-5">
-		<div class="heap">
-			frames: {stats?.frames} delta: {stats?.delta.toFixed(3)} load: {stats?.load.toFixed(3)} fps: {stats?.fps.toFixed(
-				2
-			)}
+		<div class="pt-4">
+			<span class="heap px-1 text-yellow-400">frames: {stats?.frames}</span>
+			<span class="heap px-1 text-pink-400">fps: {stats?.fps.toFixed(3)}</span>
+			<span class="heap px-1 text-blue-400">delta: {stats?.delta.toFixed(3)}</span>
+			<span class="heap px-1 text-green-400">load: {stats?.load.toFixed(3)}%</span>
 		</div>
 
 		<div id="container0" class="border border-blue-700 w-fit" />
@@ -99,24 +141,21 @@
 			<Scene {engine} />
 		{/if}
 	</div>
-	<div>
-		<div class="heap">HeapLimit: {(heapLimit / 1e6).toFixed(2)}MB</div>
-		<div class="heap">HeapSize: {heapAlloc.toFixed(4)}%</div>
-		<div class="heap">HeapUsed: {heapUsed.toFixed(4)}%</div>
+	<div class="py-4">
+		<span class="heap text-yellow-400 px-1">HeapLimit: {(heapLimit / 1e6).toFixed(2)}MB</span>
+		<span class="heap text-green-400 px-1">HeapSize: {heapAlloc.toFixed(4)}%</span>
+		<span class="heap text-pink-400 px-1">HeapUsed: {heapUsed.toFixed(4)}%</span>
 	</div>
+
 </div>
+
 
 <style>
 	.heap {
 		font-family: 'Lato', sans-serif;
 		font-size: 0.8rem;
 	}
-
-	div {
-		/* border: 1px solid red; */
-	}
-
-	canvas {
-		border: 4px solid yellow;
+	canvas{
+		@apply border border-2 border-red-500;
 	}
 </style>

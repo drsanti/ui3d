@@ -258,6 +258,7 @@ export class Engine {
 
 			onMount( async() => {
 				await GraphicsAssets.downloadResources("Engine.init");
+				this.updateDOMRect();
 				resolve(this.getInstance());
 				callbackOptions?.mountCallback?.(this.getInstance());
 			});
@@ -269,6 +270,61 @@ export class Engine {
 			});
 		});
 	}
+
+	public static updateDOMRect = (): Promise<{id: string, rect: DOMRect}[]> => {
+
+		const items: {id: string, rect: DOMRect}[] = [];
+
+		return new Promise((resolve, reject) => {
+
+			window.requestAnimationFrame( () => {
+			
+				document.querySelectorAll("canvas").forEach((c) => {
+					const rect = c.getBoundingClientRect();
+					items.push({id: c.id, rect });
+				});
+
+				document.querySelectorAll("div").forEach((c) => {
+					const rect = c.getBoundingClientRect();
+					items.push({id: c.id, rect });
+				});
+
+				resolve(items);
+			});
+		});
+	}
+	public updateDOMRect = (): Promise<{id: string, rect: DOMRect}[]> => Engine.updateDOMRect();
+
+	public static getOverlayContainers = async () => {
+
+		const containers: HTMLDivElement[] = [];
+
+		await this.updateDOMRect();
+		document.querySelectorAll("div").forEach((c) => {
+			const _ = c.getBoundingClientRect();
+			if(c.id.includes("overlay-container")){
+				containers.push(c);
+			}	
+		});
+		return containers;
+	}
+	public getOverlayContainers = () => Engine.getOverlayContainers();
+
+	public static getOverlayCanvases = async () => {
+
+		const canvases: HTMLCanvasElement[] = [];
+
+		await this.updateDOMRect();
+		document.querySelectorAll("canvas").forEach((c) => {
+			const _ = c.getBoundingClientRect();
+			if(c.id.includes("overlay-canvas")){
+				canvases.push(c);
+			}	
+		});
+		return canvases;
+	}
+	public getOverlayCanvases = () => Engine.getOverlayCanvases();
+
 
 
 	public getResources = () => {
@@ -296,8 +352,6 @@ export class Engine {
 			onComplete: () => opt.onComplete?.()
 		});
 	}
-
-
 }
 
 

@@ -6,13 +6,16 @@
 
 	export let engine: Engine;
 
-	let containerId = `containerId-${Math.random().toFixed(4)}`;
+	let containerId = `container3-${Math.random().toFixed(4)}`;
 
     onMount( async () => {
 
 		const graphics = engine.createGraphics(containerId);
 		const scene = graphics.useScene(engine.getResources().glTFs[0], 2);
-		graphics.nextEnvironment()
+		graphics.nextEnvironment();
+
+		const D = 20;
+		graphics.setSize(D * 16, D * 9);
 
 		const sensor = graphics.createRaySensor();
 		sensor.sense("Ball", {

@@ -267,18 +267,20 @@ export class Graphics extends GraphicsEventBus {
 		
 		const envMaps = GraphicsAssets.resources.envMaps;
 
-		if( this.scene.environment == null) {
-			this.scene.environment = envMaps[0];
+		const change = (envMap: THREE.Texture) => {
+			this.scene.environment = envMap;
 			if(changeBackground === true)
-				this.scene.background = envMaps[0];
+				this.scene.background = envMap;
+		}
+
+		if( this.scene.environment == null) {
+			change(envMaps[0]);
 		}
 		else {
 			const currentBkg = envMaps.filter( (bkg) => bkg ==  this.scene.environment)[0];
 			let index = envMaps.indexOf(currentBkg);
 			index = (index + 1) % envMaps.length;
-			this.scene.environment = envMaps[index];
-			if(changeBackground === true)
-				this.scene.background = currentBkg;
+			change(envMaps[index]);
 		}
 	}
 
@@ -286,19 +288,20 @@ export class Graphics extends GraphicsEventBus {
 		
 		const envMaps = GraphicsAssets.resources.envMaps;
 
-		if( this.scene.environment == null) {
-			this.scene.environment = envMaps[envMaps.length-1];
+		const change = (envMap: THREE.Texture) => {
+			this.scene.environment = envMap;
 			if(changeBackground === true)
-				this.scene.background = envMaps[envMaps.length-1];
+				this.scene.background = envMap;
+		}
+
+		if( this.scene.environment == null) {
+			change(envMaps[envMaps.length-1]);
 		}
 		else {
 			const currentBkg = envMaps.filter( (bkg) => bkg ==  this.scene.environment)[0];
 			let index = envMaps.indexOf(currentBkg);
 			index = (index - 1) < 0 ? envMaps.length - 1 : index - 1;
-			this.scene.environment = envMaps[index];
-			if(changeBackground === true)
-				this.scene.background = currentBkg;
-
+			change(envMaps[index]);
 		}
 	}
 
