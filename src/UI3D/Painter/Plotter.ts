@@ -26,7 +26,7 @@ export class Plotter extends Painter {
     }
 
     public redraw = () => {
-        this.fillBackground("black", 0.7);
+        this.fillBackground("black", 0.0);
         this.drawGrids();
         const offset = this.cY();
 
@@ -37,14 +37,14 @@ export class Plotter extends Painter {
         // gradient.addColorStop(0,   "lime");//chroma.hsv(180,   1, 1).hex());
         // gradient.addColorStop(0.5, "blue");//chroma.hsv(0, 1, 1).hex());
         // gradient.addColorStop(1,   "red");//chroma.hsv(360, 1, 1).hex());
-        ctx.strokeStyle = this.createLinearGradient("white", "yellow", "red", "xy");
+        ctx.strokeStyle = this.createLinearGradient("white", "yellow", "red", "y");
 
 
         ctx.lineWidth = 2.5;
         ctx.save();
         ctx.translate(0, offset);
         const sx = this.getSize().width / this.samples;
-        ctx.filter = 'blur(1px)';
+        // ctx.filter = 'blur(1px)';
         for(let i = 1; i < this.buffer.length; i++) {
             const y = this.buffer[i] * (-1);
             const x = i * sx;

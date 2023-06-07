@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import { Engine, type EngineStats } from '../ui3d/Engine/Engine';
 	import Scene from '../ui3d/Components/scene.svelte';
 	import { Linear, Elastic, Back } from 'gsap';
@@ -14,7 +13,7 @@
 	let ready = false;
 	let engine: Engine;
 
-	Engine.init().then((instance: Engine) => {
+	Engine.init( {  } ).then((instance: Engine) => {
 		ready = true;
 		engine = instance;
 		engine.start();
@@ -79,13 +78,12 @@
 			repeat: -1,
 			duration: 2.5,
 			onUpdate: (value: number) => {
-				s0.rotation.y = value;
-				s1.rotation.y = value * 1.5;
+				// s0.rotation.y = value;
+				// s1.rotation.y = value * 1.5;
 			}
 		});
 		// tween.repeat(0);
 		// tween.kill();
-
 
 		// setTimeout(() =>{
 		// 	const canvases = document.querySelectorAll("canvas");
@@ -96,7 +94,7 @@
 		// 	})
 		// },2000);
 
-		engine.getOverlayCanvases().then( (canvases) => {
+		engine.getOverlayCanvases().then((canvases) => {
 			const p = new Plotter(canvases[0]);
 			const tween = engine.createTween({
 				firstValue: 0,
@@ -106,23 +104,19 @@
 				repeat: -1,
 				duration: 1.5,
 				onUpdate: (value: number) => {
-					p.add(value/(Math.PI * 2) * p.getHeight()/2);
+					s0.rotation.y = value;
+					s1.rotation.y = value * 1.0;
+
+					p.add(((value / (Math.PI * 2)) * p.getHeight()) / 2);
 				}
 			});
-			
-		});// engine
-		
-
-
-
+		}); // engine
 	});
 </script>
 
 <!-- {#if ready} -->
-	
 
-<div class="{`${ready ? 'border border-red-500' : 'hidden'}`} container h-full mx-auto flex justify-center items-center flex-col">
-
+<div class="{`${ready ? '' : 'hidden'}`} container h-screen border border-gray-600 mx-auto flex justify-center items-center flex-col">
 	<div class="flex flex-col space-y-5">
 		<div class="pt-4">
 			<span class="heap px-1 text-yellow-400">frames: {stats?.frames}</span>
@@ -142,20 +136,18 @@
 		{/if}
 	</div>
 	<div class="py-4">
-		<span class="heap text-yellow-400 px-1">HeapLimit: {(heapLimit / 1e6).toFixed(2)}MB</span>
-		<span class="heap text-green-400 px-1">HeapSize: {heapAlloc.toFixed(4)}%</span>
-		<span class="heap text-pink-400 px-1">HeapUsed: {heapUsed.toFixed(4)}%</span>
+		<span class="heap text-yellow-400 px-1">Limit: {(heapLimit / 1e6).toFixed(2)}MB</span>
+		<span class="heap text-green-400 px-1">Size: {heapAlloc.toFixed(4)}%</span>
+		<span class="heap text-pink-400 px-1">Used: {heapUsed.toFixed(4)}%</span>
 	</div>
-
 </div>
 
+<div class="{`${ready ? 'hidden' : ''}`} flex h-screen bg-gray-700 text-center justify-center items-center text-3xl">loading... please wait</div>
 
 <style>
 	.heap {
 		font-family: 'Lato', sans-serif;
 		font-size: 0.8rem;
 	}
-	canvas{
-		@apply border border-2 border-red-500;
-	}
+
 </style>
