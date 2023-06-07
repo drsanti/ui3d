@@ -8,3 +8,6 @@ npm run gh-pages
 
 git checkout main
 git checkout -b ui3d-pages
+
+
+git checkout gh-pages
