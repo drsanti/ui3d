@@ -1,9 +1,8 @@
 <script lang="ts">
 
-	import { Engine, type EngineStats } from '../UI3D/Engine/Engine';
-	import Scene from '../UI3D/Components/scene.svelte';
-	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-	
+	import { Engine, type EngineStats } from '../ui3d/Engine/Engine';
+	import Scene from '../ui3d/Components/scene.svelte';
+	import { Linear, Back } from 'gsap';
 
 	let stats: EngineStats;
 	let heapLimit: number = 0;
@@ -68,6 +67,7 @@
 		const tween = engine.createTween({
 			firstValue: 0,
 			lastValue: Math.PI * 2,
+			ease: Back.easeIn,
 			yoyo: true,
 			repeat: -1,
 			duration: 2.5,

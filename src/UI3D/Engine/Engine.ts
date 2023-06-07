@@ -6,9 +6,53 @@ import { Chrome, type ChromeHeap } from './Chrome';
 import { Graphics } from '../Graphics/Graphics';
 import { onMount, onDestroy } from 'svelte';
 import { GraphicsAssets } from '../Graphics/GraphicsResources';
-import { gsap, Power2, Power3, Power4, Back, Elastic, Bounce } from 'gsap';
+
 import * as chroma from 'chroma-js';
 
+
+import {
+	gsap,
+	Back,
+	Bounce,
+	Circ,
+	Cubic,
+	Elastic,
+	Expo,
+	Linear,
+	Power0,
+	Power1,
+	Power2,
+	Power3,
+	Power4,
+	Quad,
+	Quart,
+	Quint,
+	Sine,
+	SteppedEase,
+	Strong
+}from "gsap"
+
+export {
+	gsap,
+	Back,
+	Bounce,
+	Circ,
+	Cubic,
+	Elastic,
+	Expo,
+	Linear,
+	Power0,
+	Power1,
+	Power2,
+	Power3,
+	Power4,
+	Quad,
+	Quart,
+	Quint,
+	Sine,
+	SteppedEase,
+	Strong
+}from "gsap"
 
 
 
@@ -243,7 +287,7 @@ export class Engine {
 		const opt = options;
 		const progress: { value: number } = { value: opt.firstValue };
 		return gsap.to(progress, {
-            ease: Back.easeInOut,
+            ease: opt.ease ? opt.ease : Back.easeInOut,//Elastic.easeInOut,
 			value: opt.lastValue,
 			duration: opt.duration ? opt.duration : 1,
 			repeat: opt.repeat === undefined || opt.repeat == 0 ? 0 : opt.repeat, // -1 infinite
@@ -256,12 +300,15 @@ export class Engine {
 
 }
 
+
 export interface EngineTween {
-    firstValue: number;
+	firstValue: number;
     lastValue: number;
+	ease?: gsap.EaseFunction;
     duration?: number;
     repeat?: number;
     yoyo?: boolean;
     onUpdate: (value: number) => void;
     onComplete?: () => void;
 }
+

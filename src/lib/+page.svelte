@@ -1,7 +1,7 @@
 <script lang="ts">
 
-	import { Engine, type EngineStats } from '../UI3D/Engine/Engine';
-	import Scene from '../UI3D/Components/scene.svelte';
+	import { Engine, type EngineStats } from '../ui3d/Engine/Engine';
+	import Scene from '../ui3d/Components/scene.svelte';
 	import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 	
 
