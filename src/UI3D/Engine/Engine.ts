@@ -1,11 +1,11 @@
 
-import {THREE, OrbitControls, GLTFLoader, type GLTF} from "../Graphics/ModulesIndex";
+import { THREE, OrbitControls, GLTFLoader, type GLTF } from "../Graphics/ModulesIndex";
 
 import { EngineEventBus } from './EngineEventBus';
 import { Chrome, type ChromeHeap } from './Chrome';
 import { Graphics } from '../Graphics/Graphics';
 import { onMount, onDestroy } from 'svelte';
-import { GraphicsAssets } from '../Graphics/GraphicsResources';
+import { GraphicsAssets, type Resources } from '../Graphics/GraphicsResources';
 
 import * as chroma from 'chroma-js';
 
@@ -30,7 +30,7 @@ import {
 	Sine,
 	SteppedEase,
 	Strong
-}from "gsap"
+} from "gsap"
 import type { CubeTextureDownloaderCallbacks, ModelLoadedCallback, ModelLoaderCallbacks } from "../Graphics/GraphicsLoader";
 
 export {
@@ -53,7 +53,7 @@ export {
 	Sine,
 	SteppedEase,
 	Strong
-}from "gsap"
+} from "gsap"
 
 
 
@@ -72,38 +72,39 @@ export type EngineCallback = (stats: EngineStats) => void;
 
 
 export interface MountDestroyCallbacks {
-	onMouse?: (engine: Engine) => any;
+	onLoaded?: (engine: Engine, resources: Resources) => any;	// Resources loaded
+	onMount?: (engine: Engine) => any;
 	onDestroy?: (engine: Engine) => any;
 }
 
 
 export class Engine {
 
-	public stats: EngineStats = { frames: 0, delta: 1 / 60, fps: 60, load: 0};
-	
+	public stats: EngineStats = { frames: 0, delta: 1 / 60, fps: 60, load: 0 };
+
 	private looper = 0;
-	
+
 	private callbacks: EngineCallback[] = [];
-	
+
 	private EventBus = EngineEventBus.getInstance();
 
 	private static instance?: Engine = undefined;
 
-    private constructor() {
-        
+	private constructor() {
+
 		window.addEventListener("resize", () => {
 			this.EventBus.dispatch("resize", { width: window.innerWidth, height: window.innerHeight });
 		});
-    }
+	}
 
-    public static getInstance = (): Engine => {
-        if (this.instance === undefined) {
-            this.instance = new Engine();
-        }
-        return this.instance;
-    }
+	public static getInstance = (): Engine => {
+		if (this.instance === undefined) {
+			this.instance = new Engine();
+		}
+		return this.instance;
+	}
 
-	public onResize = (callback: (e: {width: number, height: number}) => void) => {
+	public onResize = (callback: (e: { width: number, height: number }) => void) => {
 		this.EventBus.register("resize", (e) => {
 			callback(e);
 		});
@@ -135,8 +136,8 @@ export class Engine {
 
 		if (!document.hidden) {
 
-			if(this.te - this.tf >= 100) {
-				this.stats.fps = 1000 * this.nf / (this.te - this.tf );
+			if (this.te - this.tf >= 100) {
+				this.stats.fps = 1000 * this.nf / (this.te - this.tf);
 				this.nf = 0; this.tf = this.te;
 
 				this.EventBus.dispatch("engine-stats", this.stats);
@@ -145,9 +146,9 @@ export class Engine {
 			const t0 = window.performance.now();
 
 			this.update();
-			
+
 			this.callbacks.map(callback => callback(this.stats));
-			
+
 			this.stats.load = (window.performance.now() - t0);
 
 			this.stats.heap = Chrome.getHeapInfo();
@@ -178,32 +179,32 @@ export class Engine {
 
 
 	public getHeapLimit = () => {
-		if(this.stats.heap) {
+		if (this.stats.heap) {
 			return this.stats.heap.limitSize;
 		}
 		return NaN;
 	}
 	public getHeapSize = () => {
-		if(this.stats.heap) {
+		if (this.stats.heap) {
 			return this.stats.heap.totalSize;
 		}
 		return NaN;
 	}
 	public getHeapUsed = () => {
-		if(this.stats.heap) {
+		if (this.stats.heap) {
 			return this.stats.heap.usedSize;
 		}
 		return NaN;
 	}
 
 	public getHeapAllocated = () => {
-		if(this.stats.heap) {
+		if (this.stats.heap) {
 			return this.stats.heap.allocated;
 		}
 		return NaN;
 	}
 	public getHeapConsumed = () => {
-		if(this.stats.heap) {
+		if (this.stats.heap) {
 			return this.stats.heap.consumed;
 		}
 		return NaN;
@@ -214,9 +215,9 @@ export class Engine {
 		// format: prefix-xxxxxxx-suffix
 		const str = "0123456789abcdefghijklmnopqrstuvwxyz";
 		let uid = "";
-		for(let i=0; i<7; i++) {
+		for (let i = 0; i < 7; i++) {
 			const idx = Math.floor(Math.random() * str.length);
-			if(idx < 0 || idx > str.length)
+			if (idx < 0 || idx > str.length)
 				throw new Error(`The index %{idx} is out of range!!`);
 			uid += str[idx];
 		}
@@ -259,51 +260,68 @@ export class Engine {
 	// Graphics APIs Wrapper
 	//-----------------------------------------------------------------------------
 
-	public static init = (engineCallbackOptions?: MountDestroyCallbacks, cubeTextureCallbacks?: CubeTextureDownloaderCallbacks, modelLoaderCallbacks?: ModelLoaderCallbacks): Promise<Engine>  => {
+	public static init = (engineCallbackOptions?: MountDestroyCallbacks, cubeTextureCallbacks?: CubeTextureDownloaderCallbacks, modelLoaderCallbacks?: ModelLoaderCallbacks): Promise<Engine> => {
 
-		return new Promise( ( resolve ) => {
 
-			onMount( async() => {
-				await GraphicsAssets.downloadResources("Engine.init", cubeTextureCallbacks, modelLoaderCallbacks);
+		return new Promise((resolve) => {
+
+			const _svelte_onMount = onMount;
+			const _svelte_onDestroy = onDestroy;
+
+			_svelte_onMount(async () => {
+				const t0 = performance.now();
+				console.log(`%cEngine downloading resources...`, `color: #6fa`);
+
+				engineCallbackOptions?.onMount?.(this.getInstance());
 
 				this.updateDOMRect();
-				
+
+				const resources = await GraphicsAssets.downloadResources("Engine.init", cubeTextureCallbacks, modelLoaderCallbacks);
+
+				this.updateDOMRect();
+
+				console.log(`%cEngine takes ${((performance.now() - t0) / 1000).toFixed(3)} seconds to consume resources.`, `color: #6fa`);
+
 				resolve(this.getInstance());
-				
-				engineCallbackOptions?.onMouse?.(this.getInstance());
+
+				console.log(`%cEngine running...`, `color: #6fa`);
+				Engine.getInstance().start();
+
+				engineCallbackOptions?.onLoaded?.(this.getInstance(), resources);
 			});
 
-			onDestroy( async() => {
-				if(this.instance){
+			_svelte_onDestroy(async () => {
+				if (this.instance) {
 					engineCallbackOptions?.onDestroy?.(this.getInstance());
+					this.instance.stop();
 				}
 			});
 		});
 	}
 
-	public static updateDOMRect = (): Promise<{id: string, rect: DOMRect}[]> => {
+	public static updateDOMRect = (): Promise<{ id: string, rect: DOMRect }[]> => {
 
-		const items: {id: string, rect: DOMRect}[] = [];
+		const items: { id: string, rect: DOMRect }[] = [];
 
 		return new Promise((resolve, reject) => {
 
-			window.requestAnimationFrame( () => {
-			
+			window.requestAnimationFrame(() => {
+
 				document.querySelectorAll("canvas").forEach((c) => {
 					const rect = c.getBoundingClientRect();
-					items.push({id: c.id, rect });
+					items.push({ id: c.id, rect });
 				});
 
 				document.querySelectorAll("div").forEach((c) => {
 					const rect = c.getBoundingClientRect();
-					items.push({id: c.id, rect });
+					items.push({ id: c.id, rect });
 				});
 
 				resolve(items);
 			});
 		});
 	}
-	public updateDOMRect = (): Promise<{id: string, rect: DOMRect}[]> => Engine.updateDOMRect();
+	public updateDOMRect = (): Promise<{ id: string, rect: DOMRect }[]> => Engine.updateDOMRect();
 
 	public static getOverlayContainers = async () => {
 
@@ -312,9 +330,9 @@ export class Engine {
 		await this.updateDOMRect();
 		document.querySelectorAll("div").forEach((c) => {
 			const _ = c.getBoundingClientRect();
-			if(c.id.includes("overlay-container")){
+			if (c.id.includes("overlay-container")) {
 				containers.push(c);
-			}	
+			}
 		});
 		return containers;
 	}
@@ -327,9 +345,9 @@ export class Engine {
 		await this.updateDOMRect();
 		document.querySelectorAll("canvas").forEach((c) => {
 			const _ = c.getBoundingClientRect();
-			if(c.id.includes("overlay-canvas")){
+			if (c.id.includes("overlay-canvas")) {
 				canvases.push(c);
-			}	
+			}
 		});
 		return canvases;
 	}
@@ -353,12 +371,12 @@ export class Engine {
 		const opt = options;
 		const progress: { value: number } = { value: opt.firstValue };
 		return gsap.to(progress, {
-            ease: opt.ease ? opt.ease : Back.easeInOut,//Elastic.easeInOut,
+			ease: opt.ease ? opt.ease : Back.easeInOut,//Elastic.easeInOut,
 			value: opt.lastValue,
 			duration: opt.duration ? opt.duration : 1,
 			repeat: opt.repeat === undefined || opt.repeat == 0 ? 0 : opt.repeat, // -1 infinite
-     		yoyo: opt.yoyo === true ? opt.yoyo : false ,
-			onUpdate: () =>  opt.onUpdate(progress.value),
+			yoyo: opt.yoyo === true ? opt.yoyo : false,
+			onUpdate: () => opt.onUpdate(progress.value),
 			onComplete: () => opt.onComplete?.()
 		});
 	}
@@ -367,12 +385,12 @@ export class Engine {
 
 export interface EngineTween {
 	firstValue: number;
-    lastValue: number;
+	lastValue: number;
 	ease?: gsap.EaseFunction;
-    duration?: number;
-    repeat?: number;
-    yoyo?: boolean;
-    onUpdate: (value: number) => void;
-    onComplete?: () => void;
+	duration?: number;
+	repeat?: number;
+	yoyo?: boolean;
+	onUpdate: (value: number) => void;
+	onComplete?: () => void;
 }
 

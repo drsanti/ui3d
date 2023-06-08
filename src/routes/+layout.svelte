@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
 	// The ordering of these imports is critical to your app working properly
 	import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
 	// If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
@@ -10,7 +10,7 @@
 	import { updated } from '$app/stores';
 </script>
 
-<!-- <slot /> -->
-<main data-sveltekit-reload={$updated ? '' : 'off'}>
+<slot />
+<!-- <main data-sveltekit-reload={$updated ? '' : 'off'}>
 	<slot />
-</main>
+</main> -->
