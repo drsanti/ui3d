@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Toast, toastStore } from '@skeletonlabs/skeleton';
 	import type { ToastSettings } from '@skeletonlabs/skeleton';
-	import { Engine } from '../UI3D/Engine';
+	import { Engine } from '../ui3d/Engine';
+	import { Linear, Elastic, Back } from 'gsap';
 
 	import { engineStore } from './store';
 
@@ -55,11 +56,11 @@
 	);
 </script>
 
-<div class="container flex items-center justify-center h-screen border">
+<slot />
+
+<div class="container flex items-center justify-center h-fit border">
 	<div class="main">{@html infoMessage}</div>
 </div>
-
-<slot />
 
 <Toast />
 
