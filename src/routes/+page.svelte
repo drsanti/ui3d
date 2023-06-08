@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import EngineComponent from '../components/EngineComponent.svelte';
-	import type { Engine, EngineStats } from '../UI3D/Engine';
+
+	import type { Engine, EngineStats } from '../ui3d/Engine';
 
 	import { engineStore } from '../components/store';
 
