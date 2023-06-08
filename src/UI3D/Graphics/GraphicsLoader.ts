@@ -27,7 +27,7 @@ export type ModelLoadingCallback = (info: ModelDownloadInfo) => void;
 export type ModelLoadedCallback = (data: ModelData) => void;
 export type ModelErrorCallback = (error: string) => void;
 
-export interface ModelLoaderCallback {
+export interface ModelLoaderCallbacks {
     loading?: ModelLoadingCallback
     loaded?: ModelLoadedCallback
     error?: ModelErrorCallback
@@ -55,22 +55,29 @@ export interface TextureDownloadInfo {
     loaded: number;
     total: number
 }
-export type TextureLoadingCallback = (info: TextureDownloadInfo) => void;
-export type TextureLoadedCallback = (data: TextureData) => void;
-export type TextureErrorCallback = (error: string) => void;
+// export type TextureLoadingCallback = (info: TextureDownloadInfo) => void;
+// export type TextureLoadedCallback = (data: TextureData) => void;
+// export type TextureErrorCallback = (error: string) => void;
 
-export interface TextureLoaderCallback {
-    loading: TextureLoadingCallback
-    loaded: TextureLoadedCallback
-    error: TextureErrorCallback
+// export interface TextureLoaderCallback {
+//     loading: TextureLoadingCallback
+//     loaded: TextureLoadedCallback
+//     error: TextureErrorCallback
+// }
+
+
+
+
+export interface CubeTextureDownloaderCallbacks {
+    onStart?: (info?: string) => void;
+    onProgress?: (url: string, loaded: number, total: number, tag: string) => void;
+    onDownloaded?: (cubeText: THREE.CubeTexture) => void;
+    onError?: (error: string, url?: string) => void;
 }
-
-
-
 
 export class GraphicsLoader {
 
-    static loadGLTF = (gltfPath: string, callbackOptions?: ModelLoaderCallback): Promise<ModelData> => {
+    static loadGLTF = (gltfPath: string, callbackOptions?: ModelLoaderCallbacks): Promise<ModelData> => {
        
         return new Promise( (resolve, reject) => {
 
@@ -114,31 +121,41 @@ export class GraphicsLoader {
     }
 
 
-    static async loadCubeEnvTexture(path: string, names: string[]): Promise<THREE.CubeTexture> {
+    static async loadCubeEnvTexture(path: string, names: string[], callbackOptions?: CubeTextureDownloaderCallbacks): Promise<THREE.CubeTexture> {
         // path: textures/cube/park or textures/cube/bridge or etc.
+
+        const getTag = (url: string) => {
+            return url.includes('park') ? 'park' : url.includes('bridge') ? 'bridge' : url.includes('snow') ? 'snow' : 'unknown';          
+        }
+
 		return new Promise((resolve, reject) => {
 
 			new THREE.CubeTextureLoader(new THREE.LoadingManager(
-				() => {
-                    //
-				},
-				(url:string, loaded:number, total:number) => {
-					url; loaded; total;
 
-                    // const ss = url.split('/');
-                    // const pc = 100*loaded/total;
-                    // console.log(`texture ${loaded}/${total} ${ss[ss.length-1]} ${pc.toFixed(2)}%`);
-                    console.log(`%c${loaded}/${total} - ${url}`, `color: 
-                        ${
-                            url.includes('park') ? '#8f8' : url.includes('bridge') ? '#88f': '#ff8'}`)
+				() => {
+                    callbackOptions?.onStart?.(`start downloading ${names.length} files from "${path}"`);
 				},
+
+				(url: string, loaded: number, total: number) => {
+                    /**
+                     * loaded: number of files loaded
+                     * total: number of files to be downloaded
+                     */
+                    //console.log(`%c${loaded}/${total} - ${url}`, `color: ${url.includes('park') ? '#8f8' : url.includes('bridge') ? '#88f': '#ff8'}`)
+                    const tag = getTag(url);
+                    callbackOptions?.onProgress?.(url, loaded, total, tag);
+                },
+
 				(url: string) => {
 					const errMsg = `Error loading ${url}`
-					console.error(errMsg)
-					reject(errMsg)
+					console.error(errMsg);
+					reject(errMsg);
+                    callbackOptions?.onError?.(errMsg, url);
 				})
+
 			).setPath(path).load(names, (cubeText: THREE.CubeTexture) => {
-				resolve(cubeText)
+				resolve(cubeText);
+                callbackOptions?.onDownloaded?.(cubeText);
 				cubeText.dispose();
 			}, (xhr: any) => {
 				xhr
@@ -147,13 +164,14 @@ export class GraphicsLoader {
 		})
 	}
 
-    static async loadDefaultCubeEnvTexture(dir: string): Promise<THREE.CubeTexture> {
+    static async loadDefaultCubeEnvTexture(dir: string, callbackOptions?: CubeTextureDownloaderCallbacks): Promise<THREE.CubeTexture> {
         // dir: "show", "bridge", "park", etc.
 		const names = ["posx.jpg", "negx.jpg", "posy.jpg", "negy.jpg", "posz.jpg", "negz.jpg"]
-		return this.loadCubeEnvTexture(`textures/cube/${dir}/`, names);
+		return this.loadCubeEnvTexture(`textures/cube/${dir}/`, names, callbackOptions);
 	}
 
     static async loadTexture(url: string): Promise<THREE.Texture> {
+        //! TODO: Add download manager and callbacks to track downloading states and progress.
         return new Promise((resolve, reject) => {
             reject    
             new THREE.TextureLoader().load(url, (texture: THREE.Texture) => {
@@ -162,3 +180,4 @@ export class GraphicsLoader {
         });
 	}
 } 
+

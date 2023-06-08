@@ -31,6 +31,7 @@ import {
 	SteppedEase,
 	Strong
 }from "gsap"
+import type { CubeTextureDownloaderCallbacks, ModelLoadedCallback, ModelLoaderCallbacks } from "../Graphics/GraphicsLoader";
 
 export {
 	gsap,
@@ -68,6 +69,12 @@ export interface EngineStats {
 }
 
 export type EngineCallback = (stats: EngineStats) => void;
+
+
+export interface MountDestroyCallbacks {
+	onMouse?: (engine: Engine) => any;
+	onDestroy?: (engine: Engine) => any;
+}
 
 
 export class Engine {
@@ -252,20 +259,23 @@ export class Engine {
 	// Graphics APIs Wrapper
 	//-----------------------------------------------------------------------------
 
-	public static init = (callbackOptions?: { mountCallback?: (engine: Engine) => any, destroyCallback?: (engine: Engine) => any}): Promise<Engine>  => {
+	public static init = (engineCallbackOptions?: MountDestroyCallbacks, cubeTextureCallbacks?: CubeTextureDownloaderCallbacks, modelLoaderCallbacks?: ModelLoaderCallbacks): Promise<Engine>  => {
 
 		return new Promise( ( resolve ) => {
 
 			onMount( async() => {
-				await GraphicsAssets.downloadResources("Engine.init");
+				await GraphicsAssets.downloadResources("Engine.init", cubeTextureCallbacks, modelLoaderCallbacks);
+
 				this.updateDOMRect();
+				
 				resolve(this.getInstance());
-				callbackOptions?.mountCallback?.(this.getInstance());
+				
+				engineCallbackOptions?.onMouse?.(this.getInstance());
 			});
 
-			onDestroy(() => {
+			onDestroy( async() => {
 				if(this.instance){
-					callbackOptions?.destroyCallback?.(this.getInstance());
+					engineCallbackOptions?.onDestroy?.(this.getInstance());
 				}
 			});
 		});

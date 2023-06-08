@@ -2,7 +2,7 @@
 import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
 
 import { GraphicsEventBus } from "./GraphicsEventBus";
-import { GraphicsLoader, type ModelLoaderCallback, } from "./GraphicsLoader";
+import { GraphicsLoader, type ModelLoaderCallbacks, } from "./GraphicsLoader";
 import { GraphicsCanvas } from "./GraphicsCanvas";
 import { GraphicsRaySensor } from "./GraphicsRaySensor";
 import { GraphicsAssets } from "./GraphicsResources";
@@ -34,7 +34,7 @@ export class Graphics extends GraphicsEventBus {
 
 
 
-	public loadGLTF = async(gltfPath: string, callbackOptions?: ModelLoaderCallback) => {
+	public loadGLTF = async(gltfPath: string, callbackOptions?: ModelLoaderCallbacks) => {
 		return await GraphicsLoader.loadGLTF(gltfPath, callbackOptions);	
 	}
 

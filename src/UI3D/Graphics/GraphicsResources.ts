@@ -1,7 +1,7 @@
 
 import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
 
-import { GraphicsLoader, type ModelLoaderCallback } from "./GraphicsLoader";
+import { GraphicsLoader, type CubeTextureDownloaderCallbacks, type ModelLoaderCallbacks as ModelLoaderCallbacks } from "./GraphicsLoader";
 
 
 const RESOURCES = [
@@ -45,19 +45,7 @@ export class GraphicsAssets {
 	static inprogress = false;
 
 
-    static waitResource = async(callerId?: string) => {
-		return new Promise<void>((resolve) => {
-			let cnt = 0;
-			const t = setInterval(() => {
-				console.log(`${callerId} waiting...${++cnt}`);
-				if(this.resources.loaded === true) {
-					clearInterval(t);
-					console.log(`%c${callerId} resolving...`, 'color: lime');
-					resolve();
-				}
-			}, 100);
-		});
-	}
+   
 
 	/**
 	 * This function must be called by onDestroy function to clear all static variables.
@@ -94,19 +82,38 @@ export class GraphicsAssets {
 		}
 	}
 
-	static downloadResources = async (callerId?: string, callbackOptions?: ModelLoaderCallback): Promise<Resources> => {
+	static waitResource = async(callerId?: string) => {
+		return new Promise<void>((resolve) => {
+			let cnt = 0;
+			const t = setInterval(() => {
+				console.log(`${callerId} waiting...${++cnt}`);
+				if(this.resources.loaded === true) {
+					clearInterval(t);
+					console.log(`%c${callerId} resolving...`, 'color: lime');
+					resolve();
+				}
+			}, 100);
+		});
+	}
+
+	static downloadResources = async (callerId?: string, cubeTextureCallbackOptions?: CubeTextureDownloaderCallbacks, modelCallbackOptions?: ModelLoaderCallbacks): Promise<Resources> => {
 
 		this.resources = {envMaps: this.envMaps, glTFs: this.glTFs, loaded: false};
 
 		console.log(`%c${callerId} is try to download`, `color: cyan`);
 
-
+		/**
+		 * Another instance is loading, wait for the shared resources.
+		 */
 		if( this.inprogress === true ) {
 			console.log(`%creject, the previous caller is in progress...`, `color: yellow`);
 			await this.waitResource(callerId);
 		}
 
 		
+		/**
+		 * The resources are loaded, perform the resolve.
+		 */
 		if(this.resources.loaded === true) {
 			return new Promise<Resources>((resolve) => {
 				resolve(this.resources);
@@ -132,21 +139,35 @@ export class GraphicsAssets {
 				}	
 			}
 
-			this.resourceList.forEach(res => {
+			this.resourceList.forEach( async (res) => {
+
+
+				// if(res.type === "env") {
+				// 	const cubeTexture = await GraphicsLoader.loadDefaultCubeEnvTexture(res.name, {
+				// 		onProgress: (url, loaded, total, tag) => {
+				// 			console.log(url, loaded, total, tag);
+				// 		}
+				// 	});
+				// 	this.envMaps.push(cubeTexture);
+				// 	countAndResolve();
+				// }
 				
+
 				if(res.type === "env") {
 					//>> console.log(`downloading ${res.type}.${res.name}`);
-					GraphicsLoader.loadDefaultCubeEnvTexture(res.name).then((cubeTexture) => {
+					GraphicsLoader.loadDefaultCubeEnvTexture(res.name, cubeTextureCallbackOptions)
+					.then((cubeTexture) => {
 						this.envMaps.push(cubeTexture);
 						//>> console.log(`${res.name} is downloaded.`);
 						countAndResolve();
 					}).catch( () => reject(`error downloading ${res.type}.${res.name}`));
 				}
+
 				else if(res.type === "gltf") {
 
 					//>> console.log(`downloading ${res.type}.${res.name}`);
 
-					GraphicsLoader.loadGLTF(res.name, callbackOptions)
+					GraphicsLoader.loadGLTF(res.name, modelCallbackOptions)
 					.then((data) => {
 						const glTf = data.glTF;
 						this.glTFs.push(glTf);
@@ -159,7 +180,6 @@ export class GraphicsAssets {
 
 						countAndResolve();	
 					}).catch( () => reject(`error downloading ${res.type}.${res.name}`));
-
 
 				}
 			});
