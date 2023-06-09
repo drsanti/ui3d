@@ -1,16 +1,23 @@
 
-import {THREE, OrbitControls, GLTFLoader, type GLTF} from "./ModulesIndex";
+import { THREE, OrbitControls, GLTFLoader, type GLTF } from "./ModulesIndex";
 
 import { GraphicsEventBus } from "./GraphicsEventBus";
 import { GraphicsLoader, type ModelLoaderCallbacks, } from "./GraphicsLoader";
 import { GraphicsCanvas } from "./GraphicsCanvas";
 import { GraphicsRaySensor } from "./GraphicsRaySensor";
 import { GraphicsAssets } from "./GraphicsResources";
-import type { Engine, EngineStats } from "../Engine";
+import type { Engine, EngineStats } from "../Engine/Engine";
 
 
+export interface Point {
+	x: number;
+	y: number;
+}
 
-// export {GLTFLoader, GraphicsEventBus, GraphicsAssets, GraphicsRaySensor, GraphicsCanvas, GraphicsLoader}
+export interface Size {
+	width: number;
+	height: number;
+}
 
 
 export interface Resources {
@@ -34,18 +41,19 @@ export class Graphics extends GraphicsEventBus {
 
 
 
-	public loadGLTF = async(gltfPath: string, callbackOptions?: ModelLoaderCallbacks) => {
-		return await GraphicsLoader.loadGLTF(gltfPath, callbackOptions);	
+	public loadGLTF = async (gltfPath: string, callbackOptions?: ModelLoaderCallbacks) => {
+		return await GraphicsLoader.loadGLTF(gltfPath, callbackOptions);
 	}
 
+
 	public useScene = (gltf: GLTF, sceneIndex?: number): THREE.Group => {
-		
+
 		sceneIndex = sceneIndex ? sceneIndex : 0
 		sceneIndex = sceneIndex >= gltf.scenes.length ? gltf.scenes.length - 1 : sceneIndex;
 		sceneIndex = sceneIndex < 0 ? gltf.scenes.length - 1 : sceneIndex;
-		
+
 		const group: THREE.Group = gltf.scenes[sceneIndex].clone();
-		gltf.scenes[sceneIndex].traverse( (child: THREE.Object3D) => {
+		gltf.scenes[sceneIndex].traverse((child: THREE.Object3D) => {
 			group.add(child.clone());
 		});
 		this.scene.add(group);
@@ -54,19 +62,16 @@ export class Graphics extends GraphicsEventBus {
 
 
 
-	constructor(private engine: Engine, canvasId: string) {
+	constructor(private engine: Engine, containerId: string) {
 
 		super();
 
-		engine.onResize( (e) => {
-			// this.setSize(e.width, e.height);
-		});
 
 
 		/**
 		 * Create all graphics elements, scene, camera, renderer, etc.
 		 */
-		this.createGraphics(canvasId);
+		this.initElements(containerId);
 
 
 		/**
@@ -85,22 +90,22 @@ export class Graphics extends GraphicsEventBus {
 		 * Directional light
 		 */
 		const light = new THREE.DirectionalLight(0xFFFFFF, 2);
-		light.position.set(2,5,2);
+		light.position.set(2, 5, 2);
 		this.scene.add(light);
 
 		this.scene.add(new THREE.AmbientLight(0xFFFFFF, 1));
 	}
 
-	
+
 
 
 	public clearScene = () => {
 
-		this.scene.traverse( (obj) => {
+		this.scene.traverse((obj) => {
 
 			this.scene.remove(obj);
 
-			if(obj instanceof THREE.Mesh) {
+			if (obj instanceof THREE.Mesh) {
 				obj.geometry.dispose();
 				obj.material.map?.dispose();
 				obj.material.aoMap?.dispose();
@@ -126,7 +131,7 @@ export class Graphics extends GraphicsEventBus {
 
 	public update = (stats: EngineStats) => {
 		stats
-		if(this.isRunning === false && this.frameCnt > 0) {
+		if (this.isRunning === false && this.frameCnt > 0) {
 			return;
 		}
 
@@ -141,7 +146,7 @@ export class Graphics extends GraphicsEventBus {
 	/**
 	 * Create new canvas, renderer, and controls. The previous components are disposed.
 	 */
-	public createGraphics(containerId: string) {
+	public initElements = async (containerId: string) => {
 
 		/**
 		 * Remove all events from the renderer.comElement.
@@ -149,6 +154,10 @@ export class Graphics extends GraphicsEventBus {
 		this.graphicsCanvas?.dispose();
 
 		this.graphicsCanvas = new GraphicsCanvas(this, containerId);
+		if (this.graphicsCanvas === null || this.graphicsCanvas === undefined) {
+			throw new Error(`Cannot create the GraphicsCanvas!`);
+		}
+
 		const canvas = this.graphicsCanvas.getRenderingCanvas();
 
 
@@ -166,7 +175,7 @@ export class Graphics extends GraphicsEventBus {
 		this.renderer.setClearColor(0x00000, 0);
 		this.renderer.setSize(canvas.width, canvas.height);
 		this.renderer.setPixelRatio(canvas.width / canvas.height);
-		
+
 
 		/**
 		 * Update camera's aspect ratio and projection matrix.
@@ -182,32 +191,50 @@ export class Graphics extends GraphicsEventBus {
 		// this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		this.controls = new OrbitControls(this.camera, this.graphicsCanvas.getOverlayContainer());
 
+		window.addEventListener("resize", () => {
+			const size: Size = { width: window.innerWidth, height: window.innerHeight }
+			this.dispatch("resize", size);
+			console.log({ width: window.innerWidth, height: window.innerHeight });
+		});
+
 	}
 
-	public setSize = (width: number, height: number) => {
-		
+	public onResize = (callback: (size: Size) => void) => {
+		this.on("resize", callback);
+	}
+
+	public setSize = async (width: number, height: number) => {
+
 		const renderingCanvas = this.getGraphicsCanvas().getRenderingCanvas();
 		renderingCanvas.width = width;
 		renderingCanvas.height = height;
 
-		const overlayCanvas = this.getGraphicsCanvas().getOverlayCanvas();
+		const overlayCanvas = await this.getGraphicsCanvas().getOverlayCanvas();
 		overlayCanvas.width = width;
 		overlayCanvas.height = height;
 
+		const backCanvas = await this.getGraphicsCanvas().getBackCanvas();
+		backCanvas.width = width;
+		backCanvas.height = height;
+
 		this.renderer.setSize(renderingCanvas.width, renderingCanvas.height);
-		this.renderer.setPixelRatio(renderingCanvas.width / renderingCanvas.height);	
+		this.renderer.setPixelRatio(renderingCanvas.width / renderingCanvas.height);
 
 		this.camera.aspect = renderingCanvas.width / renderingCanvas.height;
 		this.camera.updateProjectionMatrix();
 	}
 
+	public setSize169 = () => {
+		this.setSize(window.innerWidth, window.innerWidth * 9 / 16);
+	}
 
-	public getObjectByName = (name: string, parent?: THREE.Scene | THREE.Group) : THREE.Object3D | undefined => {
+
+	public getObjectByName = (name: string, parent?: THREE.Scene | THREE.Group): THREE.Object3D | undefined => {
 		const p = parent ? parent : this.scene;
 		let obj: THREE.Object3D | undefined = undefined;
 		p.traverse(c => {
 			// console.log(c.type, c.name);
-			if( c.name == name && (c instanceof THREE.Mesh || c instanceof THREE.Group || c instanceof THREE.Scene)) {	
+			if (c.name == name && (c instanceof THREE.Mesh || c instanceof THREE.Group || c instanceof THREE.Scene)) {
 				obj = c;
 			}
 		});
@@ -219,23 +246,23 @@ export class Graphics extends GraphicsEventBus {
 	public getMeshes = (parent?: THREE.Scene | THREE.Group) => {
 		const meshes: THREE.Mesh[] = [];
 		parent = parent ? parent : this.scene;
-		parent.traverse( c => {
-			if( c instanceof THREE.Mesh ) {
-				meshes.push( c );
+		parent.traverse(c => {
+			if (c instanceof THREE.Mesh) {
+				meshes.push(c);
 			}
 		});
 		return meshes;
 	}
 
 	public getCamera = () => this.camera;
-	public getRenderer  = () => this.renderer;
-	public getScene = () => this.scene;	
+	public getRenderer = () => this.renderer;
+	public getScene = () => this.scene;
 	public getRenderingCanvas = () => this.renderer.domElement;
 	public getGraphicsCanvas = () => this.graphicsCanvas as GraphicsCanvas;
 
 
 	public createRaySensor = () => {
-		return new GraphicsRaySensor( this );
+		return new GraphicsRaySensor(this);
 	}
 
 
@@ -243,7 +270,7 @@ export class Graphics extends GraphicsEventBus {
 		this.scene.background = background;
 	};
 	public clearBackground = () => {
-		this.scene.background = null;	
+		this.scene.background = null;
 	}
 	public setBackgroundBlurriness = (value: number) => {
 		this.scene.backgroundBlurriness = value;
@@ -263,21 +290,29 @@ export class Graphics extends GraphicsEventBus {
 	//-----------------------------------------------------------------
 	// Graphics APIs
 	//-----------------------------------------------------------------
+
+	public getOverlayContainer = () => this.graphicsCanvas?.getOverlayContainer() as HTMLDivElement;
+	public getOverlayCanvas = () => this.graphicsCanvas?.getOverlayCanvas() as HTMLCanvasElement;
+
+	public getBackContainer = () => this.graphicsCanvas?.getBackContainer() as HTMLDivElement;
+	public getBackCanvas = () => this.graphicsCanvas?.getBackCanvas() as HTMLCanvasElement;
+
+
 	public nextEnvironment = (changeBackground = true) => {
-		
+
 		const envMaps = GraphicsAssets.resources.envMaps;
 
 		const change = (envMap: THREE.Texture) => {
 			this.scene.environment = envMap;
-			if(changeBackground === true)
+			if (changeBackground === true)
 				this.scene.background = envMap;
 		}
 
-		if( this.scene.environment == null) {
+		if (this.scene.environment == null) {
 			change(envMaps[0]);
 		}
 		else {
-			const currentBkg = envMaps.filter( (bkg) => bkg ==  this.scene.environment)[0];
+			const currentBkg = envMaps.filter((bkg) => bkg == this.scene.environment)[0];
 			let index = envMaps.indexOf(currentBkg);
 			index = (index + 1) % envMaps.length;
 			change(envMaps[index]);
@@ -285,20 +320,20 @@ export class Graphics extends GraphicsEventBus {
 	}
 
 	public previousEnvironment = (changeBackground = true) => {
-		
+
 		const envMaps = GraphicsAssets.resources.envMaps;
 
 		const change = (envMap: THREE.Texture) => {
 			this.scene.environment = envMap;
-			if(changeBackground === true)
+			if (changeBackground === true)
 				this.scene.background = envMap;
 		}
 
-		if( this.scene.environment == null) {
-			change(envMaps[envMaps.length-1]);
+		if (this.scene.environment == null) {
+			change(envMaps[envMaps.length - 1]);
 		}
 		else {
-			const currentBkg = envMaps.filter( (bkg) => bkg ==  this.scene.environment)[0];
+			const currentBkg = envMaps.filter((bkg) => bkg == this.scene.environment)[0];
 			let index = envMaps.indexOf(currentBkg);
 			index = (index - 1) < 0 ? envMaps.length - 1 : index - 1;
 			change(envMaps[index]);

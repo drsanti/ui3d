@@ -6,11 +6,10 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 
-	//
-	import { updated } from '$app/stores';
+	import { onMount } from 'svelte';
+
+	console.clear();
+	onMount(async () => console.log(`%c layout.svelte loaded`, `background: #228`));
 </script>
 
 <slot />
-<!-- <main data-sveltekit-reload={$updated ? '' : 'off'}>
-	<slot />
-</main> -->

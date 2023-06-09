@@ -2,58 +2,117 @@ import chroma from "chroma-js";
 import { Painter } from "./Painter";
 
 export class Plotter extends Painter {
-    
+
 
     private samples: number;
 
     private buffer: number[] = [];
+
+    private max = +1;
+    private min = -1;
+
+    private isAutoRange = true;
+
+    private gainFactor = 1.0;
 
     constructor(canvas: HTMLCanvasElement) {
 
         super(canvas);
 
         this.samples = 500;
+
     }
 
+    /**
+     * Add data [-0, +1] to buffer and redraw.
+     */
+    private _counter = 0;
     public add = (data: number, noDraw?: boolean) => {
         this.buffer.push(data);
-        if(this.buffer.length > this.samples) {
+        if (this.buffer.length > this.samples) {
             this.buffer.shift();
         }
-        if(noDraw !== true) {
+
+        // this.max = data > this.max ? data : this.max - 0.0001; //Math.abs(this.max * 0.002);
+        // this.min = data < this.min ? data : this.min + 0.0001; //Math.abs(this.min * 0.002);
+
+        // console.log([this.min, this.max]);
+
+        if (this.isAutoRange) {
+            if (data > this.max || data < this.min) {
+                console.log('auto...')
+                this._counter = 0;
+                this.autoMinMax();
+            }
+            else {
+                if (++this._counter >= this.samples) {
+                    this._counter = 0;
+                    this.autoMinMax();
+                }
+            }
+        }
+
+
+        if (noDraw !== true) {
             this.redraw();
         }
     }
 
     public redraw = () => {
+
         this.fillBackground("black", 0.0);
+
         this.drawGrids();
-        const offset = this.cY();
+
+        const fullScaleGain = (this.canvas.height / (this.max - this.min));
+
+        const offset = this.canvas.height / 2;// + this.min * autoGain;
+
 
         const ctx = this.context;
         ctx.beginPath();
- 
-        // const gradient = ctx.createLinearGradient(0, this.canvas.height/2, 0, -this.canvas.height/2);
-        // gradient.addColorStop(0,   "lime");//chroma.hsv(180,   1, 1).hex());
-        // gradient.addColorStop(0.5, "blue");//chroma.hsv(0, 1, 1).hex());
-        // gradient.addColorStop(1,   "red");//chroma.hsv(360, 1, 1).hex());
+
         ctx.strokeStyle = this.createLinearGradient("white", "yellow", "red", "y");
 
 
         ctx.lineWidth = 2.5;
-        ctx.save();
-        ctx.translate(0, offset);
+        // ctx.save();
+        ctx.translate(0, 0);
         const sx = this.getSize().width / this.samples;
         // ctx.filter = 'blur(1px)';
-        for(let i = 1; i < this.buffer.length; i++) {
-            const y = this.buffer[i] * (-1);
+        for (let i = 1; i < this.buffer.length; i++) {
+            const amp = this.buffer[i];
+            const y = amp * (-fullScaleGain * this.gainFactor) + offset;
             const x = i * sx;
             ctx.lineTo(x, y);
         }
         ctx.stroke();
-        ctx.filter = '';
-        ctx.restore();
+        // ctx.filter = '';
+        // ctx.restore();
     }
 
+    public setMinMax = (min: number, max: number) => {
+        this.min = min;
+        this.max = max;
+    }
 
+    public autoMinMax = () => {
+        let min = this.buffer[0];
+        let max = min;
+        for (let i = 1; i < this.buffer.length; i++) {
+            const v = this.buffer[i];
+            min = v < min ? v : min;
+            max = v > max ? v : max;
+        }
+        this.min = min;
+        this.max = max;
+    }
+
+    public enableAutoRange = (enabled: boolean) => {
+        this.isAutoRange = enabled;
+    }
+
+    public setGainFactor = (gainFactor: number) => {
+        this.gainFactor = gainFactor;
+    }
 }

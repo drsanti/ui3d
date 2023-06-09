@@ -19,10 +19,12 @@ export class Painter {
 
     public context: CanvasRenderingContext2D;
 
+    private isGridEnabled = true;
+
     constructor(public canvas: HTMLCanvasElement) {
-    
+
         this.context = canvas.getContext("2d") as CanvasRenderingContext2D;
-    
+
         if (this.context === null) {
             throw new Error(`Cannot can 2d context of the canvas "${canvas.id}".`);
         }
@@ -37,8 +39,12 @@ export class Painter {
 
     public drawGrids = (props?: GridProps) => {
 
-        this.ngV = props?.ngV === undefined ? this.ngV  : props?.ngV;
-        this.ngH = props?.ngH === undefined ? this.ngH  : props?.ngH;
+        if (this.isGridEnabled === false) {
+            return;
+        }
+
+        this.ngV = props?.ngV === undefined ? this.ngV : props?.ngV;
+        this.ngH = props?.ngH === undefined ? this.ngH : props?.ngH;
 
         // console.log(this.ngV, this.ngH)
 
@@ -48,25 +54,25 @@ export class Painter {
         ctx.save();
         // ctx.filter = 'blur(0.2px)';
 
-        const stX = cvs.width/this.ngV;
-        const stY = cvs.height/this.ngH;
+        const stX = cvs.width / this.ngV;
+        const stY = cvs.height / this.ngH;
 
         ctx.strokeStyle = chroma("cyan").alpha(0.8).hex();
         ctx.lineWidth = 0.65;
         ctx.setLineDash([5, 5]);
         ctx.beginPath();
-        
+
         // Horizontal lines
-        for( let n = 1; n <= this.ngH; n++ ) {
+        for (let n = 1; n <= this.ngH; n++) {
             const y = Math.round(n * stY);
-            ctx.moveTo( 0, y );
-            ctx.lineTo( cvs.width, y );
+            ctx.moveTo(0, y);
+            ctx.lineTo(cvs.width, y);
         }
         // Vertical lines
-        for( let n = 0; n < this.ngV; n++ ) {
+        for (let n = 0; n < this.ngV; n++) {
             const x = Math.round(n * stX);
-            ctx.moveTo( x, 0 );
-            ctx.lineTo( x, cvs.height );
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, cvs.height);
         }
 
         ctx.stroke();
@@ -78,12 +84,12 @@ export class Painter {
         ctx.setLineDash([]);
         ctx.beginPath();
 
-        
-        ctx.translate( this.cX(), this.cY() );
-        ctx.rotate( 0 );
+
+        ctx.translate(this.cX(), this.cY());
+        ctx.rotate(0);
         const len = 7;
-        ctx.moveTo(-len, 0); ctx.lineTo( len, 0 );
-        ctx.moveTo(0, -len); ctx.lineTo( 0, len );
+        ctx.moveTo(-len, 0); ctx.lineTo(len, 0);
+        ctx.moveTo(0, -len); ctx.lineTo(0, len);
         ctx.stroke();
 
         ctx.restore();
@@ -112,24 +118,50 @@ export class Painter {
     }
 
     public getSize = () => {
-        return {width: this.canvas.width, height: this.canvas.height};
+        return { width: this.canvas.width, height: this.canvas.height };
     }
 
+    public enableGrids = (enabled: boolean) => {
+        this.isGridEnabled = enabled;
+    }
+    public showGrids = () => {
+        this.isGridEnabled = true;
+    }
+    public hideGrids = () => {
+        this.isGridEnabled = false;
+    }
 
-    public createLinearGradient = (colorLow: string, colorMid: string, colorHigh: string, direction: "x"|"y"|"xy") => {
+    public drawText = (text: string, x: number, y: number) => {
+        const ctx = this.context;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.beginPath();
+        ctx.font = '22px mono';
+        ctx.textBaseline = "top";
+        ctx.strokeStyle = chroma('red').alpha(0.7).hex();
+        ctx.fillStyle = chroma('red').alpha(0.9).hex();
+        // ctx.strokeText("hello", 0, 0);
+        ctx.fillText(text, x, y);
+        ctx.stroke();
+        ctx.fill();
+        ctx.restore();
+
+    }
+
+    public createLinearGradient = (colorLow: string, colorMid: string, colorHigh: string, direction: "x" | "y" | "xy") => {
         let gradient;
-        if(direction==="y")
-            gradient = this.context.createLinearGradient(0, this.canvas.height/2, 0, -this.canvas.height/2);
-        else if(direction==="x"){
-            gradient = this.context.createLinearGradient(0, this.canvas.height/2, this.canvas.width, this.canvas.height/2);    
+        if (direction === "y")
+            gradient = this.context.createLinearGradient(0, this.canvas.height, 0, 0);
+        else if (direction === "x") {
+            gradient = this.context.createLinearGradient(0, 0, this.canvas.width, 0);
         }
         else {
-            gradient = this.context.createLinearGradient(0, this.canvas.height/2, this.canvas.width, -this.canvas.height/2);   
+            gradient = this.context.createLinearGradient(0, this.canvas.height, this.canvas.width, 0);
         }
 
-        gradient.addColorStop(0,   colorLow);
+        gradient.addColorStop(0, colorLow);
         gradient.addColorStop(0.5, colorMid);
-        gradient.addColorStop(1,   colorHigh);
+        gradient.addColorStop(1, colorHigh);
         return gradient;
     }
 

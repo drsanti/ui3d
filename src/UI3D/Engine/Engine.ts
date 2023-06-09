@@ -90,6 +90,8 @@ export class Engine {
 
 	private static instance?: Engine = undefined;
 
+	private isRunning = false
+
 	private constructor() {
 
 		window.addEventListener("resize", () => {
@@ -100,6 +102,7 @@ export class Engine {
 	public static getInstance = (): Engine => {
 		if (this.instance === undefined) {
 			this.instance = new Engine();
+			console.log(`%c New instance is created.`, `background: #882`);
 		}
 		return this.instance;
 	}
@@ -170,6 +173,8 @@ export class Engine {
 	}
 
 	public start = () => {
+		console.log(`%c start() is called.`, `background: #882`);
+		cancelAnimationFrame(this.looper);
 		this.loop();
 	}
 
@@ -254,6 +259,20 @@ export class Engine {
 		return div;
 	}
 
+	static createBackContainer = (idPrefix?: string, backgroundColor?: string) => {
+		const div = document.createElement("div");
+		div.id = Engine.generateUUID(idPrefix ? idPrefix : `overlay-div-container`);
+		div.style.position = "absolute";
+		div.style.top = "0";
+		div.style.left = "0";
+		div.style.bottom = "0";
+		div.style.right = "0";
+		console.log(`%cBack Container "${div.id}" is created`, `color:#a5f`);
+		div.style.backgroundColor = backgroundColor ? backgroundColor : "rgba(0, 0, 0, 0.0)";
+		return div;
+	}
+
+
 
 
 	//-----------------------------------------------------------------------------
@@ -323,6 +342,9 @@ export class Engine {
 	}
 	public updateDOMRect = (): Promise<{ id: string, rect: DOMRect }[]> => Engine.updateDOMRect();
 
+	/**
+	 * Returns overlay containers (array of containers) in the document.body.
+	 */
 	public static getOverlayContainers = async () => {
 
 		const containers: HTMLDivElement[] = [];
@@ -336,8 +358,15 @@ export class Engine {
 		});
 		return containers;
 	}
+
+	/**
+	 * Returns overlay containers (array of containers) in the document.body.
+	 */
 	public getOverlayContainers = () => Engine.getOverlayContainers();
 
+	/**
+	 * Returns all overlay canvases (array of canvases) in the document.body.
+	 */
 	public static getOverlayCanvases = async () => {
 
 		const canvases: HTMLCanvasElement[] = [];
@@ -351,6 +380,10 @@ export class Engine {
 		});
 		return canvases;
 	}
+
+	/**
+	 * Returns all overlay canvases (array of canvas) in the document.body.
+	 */
 	public getOverlayCanvases = () => Engine.getOverlayCanvases();
 
 
@@ -363,8 +396,8 @@ export class Engine {
 		return await GraphicsAssets.downloadResources(callerId);
 	}
 
-	public createGraphics = (canvasId: string) => {
-		return new Graphics(Engine.getInstance(), canvasId);
+	public createGraphics = (containerId: string) => {
+		return new Graphics(Engine.getInstance(), containerId);
 	}
 
 	public createTween = (options: EngineTween) => {
@@ -386,7 +419,7 @@ export class Engine {
 export interface EngineTween {
 	firstValue: number;
 	lastValue: number;
-	ease?: gsap.EaseFunction;
+	ease?: gsap.EaseFunction | string;
 	duration?: number;
 	repeat?: number;
 	yoyo?: boolean;

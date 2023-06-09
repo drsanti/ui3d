@@ -138,7 +138,6 @@ export class GraphicsRaySensor {
 	public sense = (target?: THREE.Object3D | string, callbackOptions?: RayMouseCallbacks) => {
 		
 
-
 		if(target == undefined) {
 			const meshes = this.graphics.getMeshes();
 			this._target = meshes[0];
