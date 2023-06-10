@@ -3,6 +3,7 @@
 	import { engineStore } from './store';
 	import type { Unsubscriber } from 'svelte/store';
 	import type { ChromeHeap, Engine, EngineStats } from '../ui3d/Engine/Engine';
+	import KvItem from './kvItem.svelte';
 
 	const log = (text: string, color?: string) => {
 		// console.log(`%c${text}`, `color: ${color ? color : 'orange'}`);
@@ -35,7 +36,7 @@
 	onDestroy(() => unsubscribe?.());
 </script>
 
-<div class="container">
+<!-- <div class="container">
 	<span class="stats text-yellow-400">used: {memory?.used.toFixed(2)}%</span>
 	<span class="stats text-green-400">alloc: {memory?.alloc.toFixed(2)}%</span>
 	<span class="stats text-blue-400">size: {(memory?.size / 1e6).toFixed(2)}MB</span>
@@ -48,5 +49,18 @@
 	}
 	.stats {
 		@apply flex-grow text-xs font-mono border-0 w-1/4;
+	}
+</style> -->
+
+<div class="stats-wrapper">
+	<KvItem key={'used'} val={memory?.used} suffix={'%'} />
+	<KvItem key={'alloc'} val={memory?.alloc} suffix={'%'} />
+	<KvItem key={'size'} val={memory?.size / 1e6} suffix={'MB'} />
+	<KvItem key={'limit'} val={memory?.limit / 1e9} suffix={'GB'} />
+</div>
+
+<style>
+	.stats-wrapper {
+		@apply flex justify-around overflow-hidden py-1 bg-black;
 	}
 </style>

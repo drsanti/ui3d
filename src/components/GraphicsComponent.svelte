@@ -43,7 +43,7 @@
 				onUpdate: (value: number) => {
 					s0.rotation.y = value * Math.PI + Math.PI;
 					backPlotter.add(value);
-					backPlotter.drawText(`id: ${containerId}`, 140, 135);
+					backPlotter.drawText(`id: ${containerId}`, 5, 5);
 				}
 			});
 
