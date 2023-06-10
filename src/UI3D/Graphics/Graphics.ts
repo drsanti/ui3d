@@ -205,15 +205,19 @@ export class Graphics extends GraphicsEventBus {
 
 	public setSize = async (width: number, height: number) => {
 
+		width *= 0.85;
+		height *= 0.85;
+
+
 		const renderingCanvas = this.getGraphicsCanvas().getRenderingCanvas();
 		renderingCanvas.width = width;
 		renderingCanvas.height = height;
 
-		const overlayCanvas = await this.getGraphicsCanvas().getOverlayCanvas();
+		const overlayCanvas = this.getGraphicsCanvas().getOverlayCanvas();
 		overlayCanvas.width = width;
 		overlayCanvas.height = height;
 
-		const backCanvas = await this.getGraphicsCanvas().getBackCanvas();
+		const backCanvas = this.getGraphicsCanvas().getBackCanvas();
 		backCanvas.width = width;
 		backCanvas.height = height;
 

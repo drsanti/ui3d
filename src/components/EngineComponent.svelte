@@ -9,17 +9,12 @@
 
 	let engine: Engine;
 
-	// const unsubscribe = engineStore.subscribe((egn) => {
-	// 	engine = egn;
-	// });
-
 	const toastSettings: ToastSettings = {
 		message: '',
 		background: 'variant-filled-success',
 		timeout: 3000
 	};
 
-	// let infoMessage: string = 'INFO:';
 	let stats: EngineStats;
 	let memory: any;
 
@@ -39,16 +34,15 @@
 				engine.onFrame((_states: EngineStats) => {
 					stats = _states;
 					memory = {
-						limit: stats.heap?.limitSize, // bytes
+						limit: stats.heap?.limitSize,
 						size: stats?.heap?.totalSize,
-						alloc: stats.heap?.allocated, // %
-						used: stats.heap?.consumed // %
+						alloc: stats.heap?.allocated,
+						used: stats.heap?.consumed
 					};
 				});
 			},
 
 			onDestroy: () => {
-				// unsubscribe();
 				toastSettings.message = `Engine disposed`;
 				Engine.getInstance().stop();
 			}

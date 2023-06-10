@@ -61,6 +61,6 @@
 
 <style>
 	.stats-wrapper {
-		@apply flex justify-around overflow-hidden py-1 bg-black;
+		@apply flex justify-evenly overflow-hidden py-1 w-screen;
 	}
 </style>
