@@ -26,7 +26,7 @@
 			gr.setBackground(null);
 			const model = engine.getResources().glTFs[0];
 			const s0 = gr.useScene(model, modelId);
-			s0.position.set(0, -1, -2);
+			s0.position.set(0, -1, 0);
 
 			const backCanvas = gr.getBackCanvas();
 
@@ -36,14 +36,12 @@
 			const tween = engine.createTween({
 				firstValue: -1,
 				lastValue: 1,
-				// ease: `elastic.inOut(1, 0.2)`, //Elastic.easeIn,
-				ease: `steps(8)`, //Elastic.easeIn,
+				ease: `elastic.inOut(1, 0.5)`,
 				yoyo: true,
 				repeat: -1,
-				duration: 1 + Math.random() * 2,
+				duration: 3 + Math.random() * 2,
 				onUpdate: (value: number) => {
-					s0.rotation.y = value * Math.PI * 2;
-
+					s0.rotation.y = value * Math.PI + Math.PI;
 					backPlotter.add(value);
 					backPlotter.drawText(`id: ${containerId}`, 140, 135);
 				}
@@ -56,10 +54,10 @@
 			const frontTween = engine.createTween({
 				firstValue: -1,
 				lastValue: 1,
-				ease: `elastic.inOut(1, 0.2)`, //Elastic.easeIn,
+				ease: `elastic.inOut(2, 0.2)`,
 				yoyo: true,
 				repeat: -1,
-				duration: 1 + Math.random() * 2,
+				duration: 3 + Math.random() * 2,
 				onUpdate: (value: number) => {
 					frontPlotter.add(value);
 				}

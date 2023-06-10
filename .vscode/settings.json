@@ -113,6 +113,7 @@
 		"negx",
 		"negy",
 		"negz",
+		"nojekyll",
 		"orbitcontrols",
 		"posx",
 		"posz",
@@ -121,6 +122,7 @@
 		"skeletonlabs",
 		"tailwindcss",
 		"tweenjs",
+		"Unsubscriber",
 		"wireframe",
 		"yoyo"
 	]

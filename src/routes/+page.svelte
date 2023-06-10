@@ -29,5 +29,5 @@
 
 <EngineComponent>
 	<GraphicsComponent modelId={2} />
-	<GraphicsComponent modelId={0} />
+	<!-- <GraphicsComponent modelId={0} /> -->
 </EngineComponent>

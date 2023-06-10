@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Toast, toastStore } from '@skeletonlabs/skeleton';
+	import { Toast } from '@skeletonlabs/skeleton';
 	import type { ToastSettings } from '@skeletonlabs/skeleton';
 	import { Engine, type EngineStats } from '../ui3d/Engine/Engine';
-	import { Linear, Elastic, Back } from 'gsap';
-
 	import { engineStore } from './store';
 	import type { Resources } from '../ui3d/Graphics/GraphicsResources';
+	import Stats from './Stats.svelte';
+	import Memory from './Memory.svelte';
 
 	let engine: Engine;
 
@@ -61,7 +61,10 @@
 	);
 </script>
 
-{#if stats}
+<Stats />
+<Memory />
+
+<!-- {#if stats}
 	<div class="flex justify-evenly overflow-hidden p-0 mx-2">
 		<div class="stats-container text-yellow-400">
 			<span class="stats-item">frames: {stats?.frames}</span>
@@ -83,8 +86,8 @@
 {:else}
 	<div class="flex justify-center overflow-hidden h-screen items-center bg-green-950">
 		<span class="text-yellow-300 text-xl">Initializing...</span>
-	</div>
-{/if}
+	</div> 
+{/if} -->
 <div class="border-t mt-1 border-gray-500 p-0 m-0">
 	<slot />
 </div>

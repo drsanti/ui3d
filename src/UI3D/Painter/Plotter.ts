@@ -19,7 +19,7 @@ export class Plotter extends Painter {
 
         super(canvas);
 
-        this.samples = 500;
+        this.samples = 250;
 
     }
 
@@ -40,12 +40,12 @@ export class Plotter extends Painter {
 
         if (this.isAutoRange) {
             if (data > this.max || data < this.min) {
-                console.log('auto...')
+                // console.log([data, this.min, this.max]);
                 this._counter = 0;
                 this.autoMinMax();
             }
             else {
-                if (++this._counter >= this.samples) {
+                if (++this._counter >= this.canvas.width) {
                     this._counter = 0;
                     this.autoMinMax();
                 }
@@ -72,7 +72,7 @@ export class Plotter extends Painter {
         const ctx = this.context;
         ctx.beginPath();
 
-        ctx.strokeStyle = this.createLinearGradient("white", "yellow", "red", "y");
+        ctx.strokeStyle = this.createLinearGradient("cyan", "yellow", "red", "y");
 
 
         ctx.lineWidth = 2.5;
