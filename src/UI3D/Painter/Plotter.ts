@@ -47,7 +47,7 @@ export class Plotter extends Painter {
             else {
                 if (++this._counter >= this.canvas.width) {
                     this._counter = 0;
-                    this.autoMinMax();
+                    // this.autoMinMax();
                 }
             }
         }

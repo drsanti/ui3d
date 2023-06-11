@@ -28,9 +28,9 @@ export type ModelLoadedCallback = (data: ModelData) => void;
 export type ModelErrorCallback = (error: string) => void;
 
 export interface ModelLoaderCallbacks {
-	loading?: ModelLoadingCallback
-	loaded?: ModelLoadedCallback
-	error?: ModelErrorCallback
+	onProgress?: ModelLoadingCallback
+	onLoaded?: ModelLoadedCallback
+	onError?: ModelErrorCallback
 }
 
 
@@ -100,7 +100,7 @@ export class GraphicsLoader {
 
 				const info = { path: gltfPath, size: bytes, sceneNames: names }
 				const modelData: ModelData = { glTF, info }
-				callbackOptions?.loaded?.(modelData);
+				callbackOptions?.onLoaded?.(modelData);
 				resolve(modelData);
 
 			}, (xhr: any) => {
@@ -109,10 +109,10 @@ export class GraphicsLoader {
 					path: gltfPath, percent: (xhr.loaded / xhr.total) * 100,
 					loaded: xhr.loaded, total: xhr.total
 				};
-				callbackOptions?.loading?.(info);
+				callbackOptions?.onProgress?.(info);
 			}, (error: any) => {
 				const msg = `Error loading GLTF model - ${error}`;
-				callbackOptions?.error?.(msg);
+				callbackOptions?.onError?.(msg);
 				reject(msg);
 				console.error();
 			}

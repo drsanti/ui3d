@@ -71,7 +71,7 @@ export interface EngineStats {
 export type EngineCallback = (stats: EngineStats) => void;
 
 
-export interface MountDestroyCallbacks {
+export interface MountDestroyLoadedCallbacks {
 	onLoaded?: (engine: Engine, resources: Resources) => any;	// Resources loaded
 	onMount?: (engine: Engine) => any;
 	onDestroy?: (engine: Engine) => any;
@@ -279,7 +279,7 @@ export class Engine {
 	// Graphics APIs Wrapper
 	//-----------------------------------------------------------------------------
 
-	public static init = (engineCallbackOptions?: MountDestroyCallbacks, cubeTextureCallbacks?: CubeTextureDownloaderCallbacks, modelLoaderCallbacks?: ModelLoaderCallbacks): Promise<Engine> => {
+	public static init = (engineCallbackOptions?: MountDestroyLoadedCallbacks, cubeTextureCallbacks?: CubeTextureDownloaderCallbacks, modelLoaderCallbacks?: ModelLoaderCallbacks): Promise<Engine> => {
 
 
 		return new Promise((resolve) => {

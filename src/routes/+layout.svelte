@@ -8,8 +8,13 @@
 
 	import { onMount } from 'svelte';
 
-	console.clear();
+	// console.clear();
 	onMount(async () => console.log(`%c layout.svelte loaded`, `background: #228`));
 </script>
+
+<svelte:head>
+	<title>Presentation</title>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai" rel="stylesheet" />
+</svelte:head>
 
 <slot />

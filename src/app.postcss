@@ -1,6 +1,50 @@
+@import '@fontsource/manrope';
+@import '@fontsource/jetbrains-mono';
 
-/*place global styles here */
+@tailwind base;
+@tailwind components;
+@tailwind variants;
+@tailwind utilities;
+
+@layer utilities {
+	.thai {
+		font-family: 'IBM Plex Sans Thai';
+	}
+}
+
+
+:root {
+	--r-main-font: 'Manrope';
+	--r-heading-font: 'Manrope';
+	/* --r-code-font: 'JetBrains-mono'; */
+	--r-link-color: lime;
+	--r-link-color-hover: lime;
+}
+
+
+
+.hljs-title,
+.hljs-keyword {
+	font-weight: normal;
+}
+
+.hljs {
+	background: none; 
+}
+
+.reveal pre,
+.reveal code {
+	overflow: hidden !important;
+}
+
+.reveal pre {
+	box-shadow: none;
+}
+
+
 html,
 body {
 	@apply h-full;
+	
 }
+
