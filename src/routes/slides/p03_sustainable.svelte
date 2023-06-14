@@ -1,15 +1,8 @@
 <script lang="ts">
 	import PngIcon from './icons/png/pngIcon.svelte';
 	import ArrowIcon from './icons/svg/arrowIcon.svelte';
-
-	import imgAi from '$lib/assets/icons/ai.png';
-	import imgAr from '$lib/assets/icons/ar.png';
-	import imgCps from '$lib/assets/icons/cps.png';
-	import imgDt from '$lib/assets/icons/dt.png';
-	import imgEff from '$lib/assets/icons/eff.png';
-	import imgEnv from '$lib/assets/icons/env.png';
-	import imgSun from '$lib/assets/icons/sun.png';
-	import imgBot from '$lib/assets/icons/bot.png';
+	import { pngIconsList as icons } from '$lib/assets/icons/png';
+	import { langStore } from './icons/languageStore';
 
 	const data = {
 		english: {
@@ -26,22 +19,17 @@
 		}
 	};
 
-	let info = data.english;
-	let lang: 'TH' | 'EN' = 'EN';
-	const changeLang = () => {
-		lang = lang === 'EN' ? 'TH' : 'EN';
-		info = lang === 'EN' ? data.english : data.thai;
-	};
+	$: content = $langStore === 'EN' ? data.english : data.thai;
 </script>
 
 <section data-auto-animate class="">
-	<div data-auto-animate-id="wrapper" on:mousedown={changeLang} class=" cursor-pointer select-none">
+	<div data-auto-animate-id="wrapper" class="select-none">
 		<!-- Icon and topic name -->
 		<div class="flex flex-col justify-center">
 			<div class="flex justify-center">
-				<PngIcon imgSrc={imgEnv} />
+				<PngIcon src={icons.pngEnv} />
 			</div>
-			<p class="text-6xl">{info.topic}</p>
+			<p class="text-6xl">{content.topic}</p>
 		</div>
 		<!-- Lines fragment-->
 		<div class="fragment">
@@ -59,23 +47,23 @@
 			<!-- Up -->
 			<div class="fade-up flex flex-row">
 				<span><ArrowIcon type={'Up'} stroke={'#8f8'} /></span>
-				<span class="text-right">{info.keywords[0]}</span>
+				<span class="text-right">{content.keywords[0]}</span>
 			</div>
 			<!-- Down -->
 			<div class="fragment fade-up flex flex-row">
 				<span><ArrowIcon type={'Down'} stroke={'#f88'} /></span>
-				<p class="text-left">{info.keywords[1]}</p>
+				<p class="text-left">{content.keywords[1]}</p>
 			</div>
 		</div>
 		<!--  -->
 		<div class="flex flex-row justify-around">
 			<div class="fragment fade-left flex flex-col justify-center items-center">
-				<PngIcon imgSrc={imgEff} />
-				<p class="text-[1.7rem] text-blue-400">{info.he}</p>
+				<PngIcon src={icons.pngEff} />
+				<p class="text-[1.7rem] text-blue-400">{content.he}</p>
 			</div>
 			<div class="fragment fade-right flex flex-col justify-center items-center">
-				<PngIcon imgSrc={imgSun} />
-				<p class="text-[1.7rem] text-blue-400">{info.lp}</p>
+				<PngIcon src={icons.pngSun} />
+				<p class="text-[1.7rem] text-blue-400">{content.lp}</p>
 			</div>
 		</div>
 	</div>

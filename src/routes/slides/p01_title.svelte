@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import './slides.css';
 	import PngFaceIcon from './icons/png/pngFadeIcons.svelte';
+	import { langStore } from './icons/languageStore';
 	//
 	const data = {
 		thai: {
@@ -34,21 +35,14 @@
 		}
 	};
 
-	let topic = data.english.topic;
+	let content = data.english.topic;
 	let speaker = data.english.speaker;
 
-	let topicLang: 'EN' | 'TH' = 'EN';
 	let spkLang: 'EN' | 'TH' = 'EN';
 
-	onMount(() => {
-		topicLang = 'EN';
-	});
-
-	const toggleTopicLang = () => {
-		topicLang = topicLang === 'EN' ? 'TH' : 'EN';
-		topic = topicLang === 'EN' ? data.english.topic : data.thai.topic;
-		console.log(topicLang);
-	};
+	$: {
+		content = $langStore === 'EN' ? data.english.topic : data.thai.topic;
+	}
 
 	const toggleLang = () => {
 		spkLang = spkLang === 'EN' ? 'TH' : 'EN';
@@ -69,12 +63,8 @@
 			<PngFaceIcon />
 		</div>
 		<!-- Topic Fragment-->
-		<div
-			on:mousedown={toggleTopicLang}
-			data-auto-animate-id="toppic"
-			class="text-title fragment fade-down mt-4"
-		>
-			<p>{topic.title}</p>
+		<div data-auto-animate-id="toppic" class="text-title fragment fade-down mt-4">
+			<p>{content.title}</p>
 		</div>
 
 		<!-- Subtopic Fragment-->
@@ -83,7 +73,7 @@
 				data-auto-animate-id="subtoppic"
 				class="text-subtitle py-1 px-8 {showBox ? `show-box` : `hide-box`}"
 			>
-				<p>{topic.subtitle}</p>
+				<p>{content.subtitle}</p>
 			</div>
 		</div>
 

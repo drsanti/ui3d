@@ -12,6 +12,7 @@
 	import 'reveal.js/plugin/highlight/monokai.css';
 
 	import Presentation from './Presentation.svelte';
+	import Languages from './Languages.svelte';
 
 	onMount(() => {
 		const _reveal = new Reveal({
@@ -34,11 +35,13 @@
 	});
 </script>
 
-<div class="reveal">
-	<div class="slides">
-		<Presentation />
+<Languages>
+	<div class="reveal">
+		<div class="slides">
+			<Presentation />
+		</div>
 	</div>
-</div>
+</Languages>
 
 <style>
 </style>

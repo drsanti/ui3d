@@ -10,6 +10,7 @@
 	import GraphicsComponent from '../../components/GraphicsComponent.svelte';
 	import P03Sustainable from './p03_sustainable.svelte';
 	import PngFadeIcons from './icons/png/pngFadeIcons.svelte';
+	import Languages from './Languages.svelte';
 </script>
 
 <P01Title />
