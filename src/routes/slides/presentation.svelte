@@ -8,10 +8,8 @@
 	import P01Title from './p01_title.svelte';
 	import EngineComponent from '../../components/EngineComponent.svelte';
 	import GraphicsComponent from '../../components/GraphicsComponent.svelte';
+	import P02Sustainable from './p02_sustainable.svelte';
 </script>
 
-<P01Title />
-
-<P01Title />
-
+<P02Sustainable />
 <P01Title />
