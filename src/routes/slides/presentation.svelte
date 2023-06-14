@@ -8,8 +8,9 @@
 	import P01Title from './p01_title.svelte';
 	import EngineComponent from '../../components/EngineComponent.svelte';
 	import GraphicsComponent from '../../components/GraphicsComponent.svelte';
-	import P02Sustainable from './p02_sustainable.svelte';
+	import P03Sustainable from './p03_sustainable.svelte';
+	import PngFadeIcons from './icons/png/pngFadeIcons.svelte';
 </script>
 
-<P02Sustainable />
 <P01Title />
+<P03Sustainable />

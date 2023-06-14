@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import './slides.css';
-	import { subclip } from 'three/src/animation/AnimationUtils';
+	import PngFaceIcon from './icons/png/pngFadeIcons.svelte';
+	//
 	const data = {
 		thai: {
 			topic: {
@@ -62,22 +63,22 @@
 </script>
 
 <section data-auto-animate>
-	<div>
-		<!-- Topic -->
-		<div on:mousedown={toggleTopicLang} data-auto-animate-id="toppic" class="text-title">
+	<div class="grid grid-cols-1">
+		<!-- Animated icons -->
+		<div data-auto-animate-id="icons" class="flex justify-center items-center">
+			<PngFaceIcon />
+		</div>
+		<!-- Topic Fragment-->
+		<div
+			on:mousedown={toggleTopicLang}
+			data-auto-animate-id="toppic"
+			class="text-title fragment fade-down mt-4"
+		>
 			<p>{topic.title}</p>
 		</div>
-	</div>
-</section>
 
-<section data-auto-animate>
-	<div>
-		<!-- Topic -->
-		<div on:mousedown={toggleTopicLang} data-auto-animate-id="toppic" class="text-title">
-			<p>{topic.title}</p>
-		</div>
-		<!-- Subtopic -->
-		<div on:mousedown={toggleBox} class="subtopic-container">
+		<!-- Subtopic Fragment-->
+		<div on:mousedown={toggleBox} class="subtopic-container fragment fade-up">
 			<div
 				data-auto-animate-id="subtoppic"
 				class="text-subtitle py-1 px-8 {showBox ? `show-box` : `hide-box`}"
@@ -85,26 +86,11 @@
 				<p>{topic.subtitle}</p>
 			</div>
 		</div>
-	</div>
-</section>
 
-<section data-auto-animate>
-	<div>
-		<!-- Topic -->
-		<div on:mousedown={toggleTopicLang} data-auto-animate-id="toppic" class="text-title">
-			<p>{topic.title}</p>
-		</div>
-		<!-- Subtopic -->
-		<div on:mousedown={toggleBox} class="subtopic-container">
-			<div
-				data-auto-animate-id="subtoppic"
-				class="text-subtitle py-1 px-8 {showBox ? `show-box` : `hide-box`}"
-			>
-				<p>{topic.subtitle}</p>
-			</div>
-		</div>
-		<!-- Speaker container -->
-		<div class="bg-black/50 py-4 mt-4 mx-8 border-2 border-gray-500 rounded-xl relative">
+		<!-- Speaker Fragment -->
+		<div
+			class="bg-black/50 py-4 mt-4 mx-8 border-2 border-gray-500 rounded-xl relative fragment fade-up"
+		>
 			<!-- Name and email -->
 			<div class="grid grid-cols-1">
 				<p class="text-[2.5rem]">{speaker.name}</p>

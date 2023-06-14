@@ -24,7 +24,7 @@
 
 			disableLayout: false,
 			center: true,
-			embedded: true,
+			embedded: false,
 			slideNumber: 'c/t'
 		});
 		_reveal.initialize({
