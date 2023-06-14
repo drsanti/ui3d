@@ -1,6 +1,15 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 
+	import imgAi from '$lib/assets/icons/ai.png';
+	import imgAr from '$lib/assets/icons/ar.png';
+	import imgCps from '$lib/assets/icons/cps.png';
+	import imgDt from '$lib/assets/icons/dt.png';
+	import imgEff from '$lib/assets/icons/eff.png';
+	import imgEnv from '$lib/assets/icons/env.png';
+	import imgSun from '$lib/assets/icons/sun.png';
+	import imgBot from '$lib/assets/icons/bot.png';
+
 	export let width = '15rem';
 	export let height = '15rem';
 	export let period = 1000;
@@ -99,10 +108,14 @@
 
 <div id="image-container" class="hidden">
 	<div>
-		<img src="./icons/ai.png" alt="" />
-		<img src="./icons/cyber-physical-system.png" alt="" />
-		<img src="./icons/ar.png" alt="" />
-		<img src="./icons/industrial-robot.png" alt="" />
+		<img src={imgAi} alt="ai" />
+		<img src={imgAr} alt="" />
+		<img src={imgBot} alt="" />
+		<img src={imgCps} alt="" />
+		<img src={imgDt} alt="" />
+		<img src={imgEff} alt="" />
+		<img src={imgEnv} alt="" />
+		<img src={imgSun} alt="" />
 	</div>
 </div>
 
