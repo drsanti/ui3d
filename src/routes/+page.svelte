@@ -3,8 +3,8 @@
 	import EngineComponent from '../components/EngineComponent.svelte';
 	import GraphicsComponent from '../components/GraphicsComponent.svelte';
 	import Grids from './grids.svelte';
-	import Slides from './slides/slides.svelte';
 	import Iphone from './iphone/iphone.svelte';
+	import RevealSlides from './slides/RevealSlides.svelte';
 	onMount(() => console.log(`%c page.svelte loaded`, `background: #228`));
 </script>
 
@@ -15,9 +15,6 @@
 	</EngineComponent>
 </div> -->
 
-<EngineComponent>
-	<!--  -->
-</EngineComponent>
-
-<!-- <Slides /> -->
+<!-- <EngineComponent /> -->
+<RevealSlides />
 <!-- <Iphone /> -->

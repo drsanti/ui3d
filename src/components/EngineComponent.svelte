@@ -6,12 +6,12 @@
 	import type { Resources } from '../ui3d/Graphics/GraphicsResources';
 	import Stats from './Stats.svelte';
 	import Memory from './Memory.svelte';
-	import type { ModelDownloadInfo } from '../ui3d/Graphics/GraphicsLoader';
-	import { action_destroyer } from 'svelte/internal';
+	import type { CubeTextureDownloadInfo, ModelDownloadInfo } from '../ui3d/Graphics/GraphicsLoader';
+	import DownloadInfo from './DownloadInfo.svelte';
 
 	let engine: Engine;
 
-	let downloadInfo: any;
+	let resourcesDownloaded = false;
 
 	const toastSettings: ToastSettings = {
 		message: '',
@@ -21,6 +21,10 @@
 
 	let stats: EngineStats;
 	let memory: any;
+
+	// let cubeTextureDownloadInfo: CubeTextureDownloadInfo;
+
+	// let modelDownloadInfo: ModelDownloadInfo;
 
 	Engine.init(
 		{
@@ -36,6 +40,7 @@
 
 			onLoaded: (_engine: Engine, resources: Resources) => {
 				toastSettings.message = `Engine loaded`;
+				resourcesDownloaded = true;
 
 				engine = _engine;
 				engineStore.set(engine);
@@ -52,88 +57,42 @@
 			}
 		},
 		{
-			onProgress(url, loaded, total, tag) {
-				addInfo(url, loaded, total, tag);
+			onProgress(info: CubeTextureDownloadInfo) {
+				// Cube Textures
+				progressTextureInfo(info);
 			}
 		},
 		{
 			onProgress: (info: ModelDownloadInfo) => {
-				const msg = `downloading ${info.path} ${(info.loaded / 1e6).toFixed(
-					2
-				)}MB ${info.percent.toFixed(2)}%`;
-				addDownloadInfo(msg);
+				// Model
+				progressModelInfo(info);
 			}
 		}
 	);
 
-	let downloadInfoArray: string[] = [];
-	let interval: number | undefined = undefined;
-	function addDownloadInfo(info: string) {
-		downloadInfoArray.push(info);
+	let parentModelDownloadProgress: (info: ModelDownloadInfo) => void;
+	let parentCubeTextureDownloadProgress: (info: CubeTextureDownloadInfo) => void;
 
-		const action = () => {
-			if (downloadInfoArray.length > 0) {
-				downloadInfo = downloadInfoArray.shift();
-			} else {
-				downloadInfoArray = [];
-				clearInterval(interval);
-				downloadInfo = 'model downloading completed.';
-			}
-		};
-
-		if (interval === undefined) {
-			console.log(downloadInfoArray.length);
-			interval = setInterval(() => action(), 500);
-		}
-
-		if (info.includes('100.00%')) {
-			clearInterval(interval);
-			interval = setInterval(() => action(), 10);
-		}
+	function progressModelInfo(info: ModelDownloadInfo) {
+		parentModelDownloadProgress(info);
+	}
+	function progressTextureInfo(info: CubeTextureDownloadInfo) {
+		parentCubeTextureDownloadProgress(info);
 	}
 
-	const infoDivs: HTMLElement[] = [];
-	let count = 1;
-	function addInfo(url: string, loaded: number, total: number, tag: string) {
-		const div = document.createElement('div');
-		const sp1 = document.createElement('span');
-		const sp2 = document.createElement('span');
-		const sp3 = document.createElement('span');
-		const sp4 = document.createElement('span');
-		sp1.innerHTML = `${url}`;
-		sp2.innerHTML = `${tag}`;
-		sp3.innerHTML = `${loaded}`;
-		sp4.innerHTML = `${total}`;
-		div.appendChild(sp1);
-		div.appendChild(sp2);
-		div.appendChild(sp3);
-		div.appendChild(sp4);
-		infoDivs.push(div);
-
-		sp1.className = 'px-2 text-green-600';
-		sp2.className = 'px-2 text-blue-600';
-		sp3.className = 'px-2 text-yellow-600';
-		sp4.className = 'px-2 text-cyan-600';
-
-		// console.log(info);
-		document.getElementById('downloadInfo')?.appendChild(div);
-
-		setTimeout(() => {
-			document.getElementById('downloadInfo')?.removeChild(div);
-		}, count * 100);
-		count++;
-	}
+	// End fo script
 </script>
 
-<div>{downloadInfo}</div>
-<Stats />
-<slot />
-<Memory />
-<div id="downloadInfo" />
-<Toast />
+{#if resourcesDownloaded}
+	<Stats />
+	<slot />
+	<Memory />
+{:else}
+	<DownloadInfo
+		bind:childModelDownloadProgress={parentModelDownloadProgress}
+		bind:childCubeTextureDownloadProgress={parentCubeTextureDownloadProgress}
+		{resourcesDownloaded}
+	/>
+{/if}
 
-<style>
-	span {
-		@apply p-2 m-2;
-	}
-</style>
+<Toast />

@@ -5,6 +5,7 @@
 
 {#if external}
 	<section data-markdown={name} />
+	<span class="h-screen text-red-500">Hello</span>
 {:else}
 	<section data-markdown>
 		<div data-template>

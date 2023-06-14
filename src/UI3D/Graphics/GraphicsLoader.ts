@@ -66,11 +66,13 @@ export interface TextureDownloadInfo {
 // }
 
 
-
+export interface CubeTextureDownloadInfo {
+	url: string, loaded: number, total: number, tag: string
+}
 
 export interface CubeTextureDownloaderCallbacks {
 	onStart?: (info?: string) => void;
-	onProgress?: (url: string, loaded: number, total: number, tag: string) => void;
+	onProgress?: (info: CubeTextureDownloadInfo) => void;
 	onDownloaded?: (cubeText: THREE.CubeTexture) => void;
 	onError?: (error: string, url?: string) => void;
 }
@@ -143,7 +145,8 @@ export class GraphicsLoader {
 					 */
 					//console.log(`%c${loaded}/${total} - ${url}`, `color: ${url.includes('park') ? '#8f8' : url.includes('bridge') ? '#88f': '#ff8'}`)
 					const tag = getTag(url);
-					callbackOptions?.onProgress?.(url, loaded, total, tag);
+					const info: CubeTextureDownloadInfo = { url, loaded, total, tag }
+					callbackOptions?.onProgress?.(info);
 				},
 
 				(url: string) => {

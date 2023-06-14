@@ -254,7 +254,7 @@ export class Engine {
 		div.style.left = "0";
 		div.style.bottom = "0";
 		div.style.right = "0";
-		console.log(`%cOverlay Container "${div.id}" is created`, `color:#a5f`);
+		// console.log(`%cOverlay Container "${div.id}" is created`, `color:#a5f`);
 		div.style.backgroundColor = backgroundColor ? backgroundColor : "rgba(0, 0, 0, 0.0)";
 		return div;
 	}
@@ -267,7 +267,7 @@ export class Engine {
 		div.style.left = "0";
 		div.style.bottom = "0";
 		div.style.right = "0";
-		console.log(`%cBack Container "${div.id}" is created`, `color:#a5f`);
+		// console.log(`%cBack Container "${div.id}" is created`, `color:#a5f`);
 		div.style.backgroundColor = backgroundColor ? backgroundColor : "rgba(0, 0, 0, 0.0)";
 		return div;
 	}
@@ -288,8 +288,8 @@ export class Engine {
 			const _svelte_onDestroy = onDestroy;
 
 			_svelte_onMount(async () => {
-				const t0 = performance.now();
-				console.log(`%cEngine downloading resources...`, `color: #6fa`);
+				// const t0 = performance.now();
+				// console.log(`%cEngine downloading resources...`, `color: #6fa`);
 
 				engineCallbackOptions?.onMount?.(this.getInstance());
 
@@ -299,7 +299,7 @@ export class Engine {
 
 				this.updateDOMRect();
 
-				console.log(`%cEngine takes ${((performance.now() - t0) / 1000).toFixed(3)} seconds to consume resources.`, `color: #6fa`);
+				// console.log(`%cEngine takes ${((performance.now() - t0) / 1000).toFixed(3)} seconds to consume resources.`, `color: #6fa`);
 
 				resolve(this.getInstance());
 

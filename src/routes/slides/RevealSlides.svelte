@@ -1,25 +1,34 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import Reveal from 'reveal.js';
 	import Markdown from 'reveal.js/plugin/markdown/markdown';
 	import Highlight from 'reveal.js/plugin/highlight/highlight';
 	import Notes from 'reveal.js/plugin/notes/notes';
 
+	// import 'reveal.js/dist/reset.css';
 	import 'reveal.js/dist/reveal.css';
-	import 'reveal.js/dist/theme/black.css';
+	import 'reveal.js/dist/theme/dracula.css';
 	import 'reveal.js/plugin/highlight/monokai.css';
 
-	import { onMount } from 'svelte';
-	import Presentation from './presentation.svelte';
+	import Presentation from './Presentation.svelte';
 
 	onMount(() => {
-		const deck = new Reveal({
-			autoAnimateEasing: 'ease',
-			autoAnimateDuration: 1,
+		const _reveal = new Reveal({
+			autoAnimateEasing: 'ease-out',
+			autoAnimateDuration: 0.25,
 			hash: true,
 			controls: true,
-			progress: true
+			progress: true,
+			fragments: true,
+			center: false,
+
+			embedded: true,
+			disableLayout: true,
+			slideNumber: 'c/t'
 		});
-		deck.initialize({
+		_reveal.initialize({
+			progress: true,
 			plugins: [Markdown, Highlight, Notes]
 		});
 	});
@@ -27,8 +36,9 @@
 
 <div class="reveal">
 	<div class="slides">
-		<!-- <section>Slide 1</section>
-		<section>Slide 2</section> -->
 		<Presentation />
 	</div>
 </div>
+
+<style>
+</style>
