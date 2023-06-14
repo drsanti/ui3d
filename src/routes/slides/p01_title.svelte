@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import './slides.css';
+	import { subclip } from 'three/src/animation/AnimationUtils';
 	const data = {
 		thai: {
 			topic: {
@@ -56,100 +57,103 @@
 	let showBox = false;
 	const toggleBox = () => {
 		showBox = !showBox;
+		console.log(showBox);
 	};
 </script>
 
 <section data-auto-animate>
-	<!-- Main container -->
-	<div class="relative flex h-screen justify-center items-center debug">
-		<!-- Content container -->
-		<div class="grid grid-cols-1">
-			<div class="text-title debug">
-				<p>{topic.title}</p>
-			</div>
-			<div class="text-subtitle debug">
+	<div>
+		<!-- Topic -->
+		<div on:mousedown={toggleTopicLang} data-auto-animate-id="toppic" class="text-title">
+			<p>{topic.title}</p>
+		</div>
+	</div>
+</section>
+
+<section data-auto-animate>
+	<div>
+		<!-- Topic -->
+		<div on:mousedown={toggleTopicLang} data-auto-animate-id="toppic" class="text-title">
+			<p>{topic.title}</p>
+		</div>
+		<!-- Subtopic -->
+		<div on:mousedown={toggleBox} class="subtopic-container">
+			<div
+				data-auto-animate-id="subtoppic"
+				class="text-subtitle py-1 px-8 {showBox ? `show-box` : `hide-box`}"
+			>
 				<p>{topic.subtitle}</p>
 			</div>
 		</div>
 	</div>
 </section>
 
-<!-- 
-<section data-auto-animate class="flex h-2/3 border">
-	<div data-id="div" class="flex justify-center items-center h-full relative">
-		<div class="flex justify-center items-center flex-col cursor-pointer">
-			<h1 data-id="h1" on:mousedown={toggleTopicLang}>
-				{topic.title}
-			</h1>
+<section data-auto-animate>
+	<div>
+		<!-- Topic -->
+		<div on:mousedown={toggleTopicLang} data-auto-animate-id="toppic" class="text-title">
+			<p>{topic.title}</p>
 		</div>
-	</div>
-</section>
-
-<section data-auto-animate class="flex h-2/3">
-	<div data-id="div" class="flex justify-center items-center h-full relative">
-		<div class="flex justify-center items-center flex-col cursor-pointer">
-			<h1 data-id="h1" on:mousedown={toggleTopicLang}>
-				{topic.title}
-			</h1>
-
-			<div class={showBox ? 'show-box' : 'hide-box'}>
-				<p on:mousedown={toggleBox} class="text-2xl">{topic.subtitle}</p>
+		<!-- Subtopic -->
+		<div on:mousedown={toggleBox} class="subtopic-container">
+			<div
+				data-auto-animate-id="subtoppic"
+				class="text-subtitle py-1 px-8 {showBox ? `show-box` : `hide-box`}"
+			>
+				<p>{topic.subtitle}</p>
 			</div>
 		</div>
-	</div>
-</section>
-
-<section data-auto-animate class="flex h-2/3">
-	<div data-id="div" class="flex flex-col justify-center items-center h-full relative">
-		<div class="flex w-full justify-center items-center flex-col cursor-pointer">
-			<h1 data-id="h1" on:mousedown={toggleTopicLang}>
-				{topic.title}
-			</h1>
-
-			<div class={showBox ? 'show-box' : 'hide-box'}>
-				<p on:mousedown={toggleBox} class="text-2xl">{topic.subtitle}</p>
+		<!-- Speaker container -->
+		<div class="bg-black/50 py-4 mt-4 mx-8 border-2 border-gray-500 rounded-xl relative">
+			<!-- Name and email -->
+			<div class="grid grid-cols-1">
+				<p class="text-[2.5rem]">{speaker.name}</p>
+				<p class="text-[2.0rem]">{speaker.email}</p>
 			</div>
-		</div>
-
-		<div class="flex flex-col w-2/3 py-8 px-8 rounded-2xl bg-black/50 relative">
-			<div on:mousedown={toggleLang} class="lang-box cursor-pointer">
+			<!-- Additional information -->
+			<div class="grid grid-cols-1 mt-4 text-[1.5rem]">
+				<p>{speaker.dept}</p>
+				<p>{speaker.faculty}</p>
+				<p>{speaker.university}</p>
+			</div>
+			<!-- EN/TH -->
+			<div
+				on:mousedown={toggleLang}
+				class="absolute flex justify-center items-center w-10 h-10 bg-black/50 border border-gray-500 inset-1 rounded-md text-[1rem] hover:text-blue-500 cursor-pointer"
+			>
 				{spkLang}
 			</div>
-			<p class="text-3xl">{speaker.name}</p>
-			<p class="text-xl">{speaker.email}</p>
-			<p class="text-xl">{speaker.dept}</p>
-			<p class="text-xl">{speaker.faculty}</p>
-			<p class="text-xl">{speaker.university}</p>
 		</div>
 	</div>
 </section>
 
 <style>
-	.show-box {
-		@apply flex border-2 border-green-600 bg-green-950 px-8 h-14 justify-center items-center rounded-full;
-	}
-	.hide-box {
-		@apply flex w-fit border-4 border-green-600/0 bg-green-950/0 px-8 h-14 justify-center items-center rounded-full;
-	}
-
-	.lang-box {
-		@apply flex absolute w-8 h-8 border-2 border-gray-600/80 rounded-lg inset-2 text-lg text-gray-400 px-5 items-center justify-center;
-	}
-
 	section {
-		text-transform: none !important;
-		font-family: 'IBM Plex Sans Thai' !important;
+		@apply select-none;
 	}
-</section> -->
-
-<style>
 	.debug {
 		@apply border border-green-700;
 	}
 	.text-title {
-		@apply text-4xl;
+		@apply text-6xl cursor-pointer;
 	}
 	.text-subtitle {
-		@apply text-xl;
+		@apply text-4xl cursor-pointer;
+	}
+
+	.speaker-container {
+		@apply relative text-sm w-[500px] mt-4 bg-black/30 mx-2 py-4 rounded-xl border-2 border-gray-500/50;
+	}
+	.show-box {
+		@apply border-2 box-border border-green-500 rounded-full bg-black/60;
+	}
+	.hide-box {
+		@apply border-2 box-border border-green-500/0 rounded-full bg-black/0;
+	}
+	.lang-button {
+		@apply absolute cursor-pointer border w-8 h-6 text-sm inset-1 flex justify-center items-center rounded-md border-gray-600;
+	}
+	.subtopic-container {
+		@apply flex cursor-pointer select-none justify-center items-center;
 	}
 </style>

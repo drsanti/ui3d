@@ -21,10 +21,10 @@
 			controls: true,
 			progress: true,
 			fragments: true,
-			center: false,
 
+			disableLayout: false,
+			center: true,
 			embedded: true,
-			disableLayout: true,
 			slideNumber: 'c/t'
 		});
 		_reveal.initialize({
