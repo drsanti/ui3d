@@ -83,7 +83,7 @@
 	});
 </script>
 
-<div class="flex flex-row justify-center items-center">
+<div class="flex flex-row justify-center items-center m-4">
 	<div
 		id="image-display-a"
 		class="flex {showA

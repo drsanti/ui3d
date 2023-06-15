@@ -9,15 +9,16 @@
 	// import 'reveal.js/dist/reset.css';
 	import 'reveal.js/dist/reveal.css';
 	import 'reveal.js/dist/theme/night.css';
-	import 'reveal.js/plugin/highlight/monokai.css';
-
 	import Presentation from './Presentation.svelte';
 	import Languages from './Languages.svelte';
+	import EngineComponent from '../../../components/EngineComponent.svelte';
+	// import 'reveal.js/plugin/highlight/monokai.css';
 
 	onMount(() => {
 		const _reveal = new Reveal({
 			autoAnimateEasing: 'ease-out',
-			autoAnimateDuration: 0.25,
+			autoAnimateDuration: 0.8,
+			autoAnimateUnmatched: true,
 			hash: true,
 			controls: true,
 			progress: true,
@@ -30,11 +31,13 @@
 		});
 		_reveal.initialize({
 			progress: true,
+
 			plugins: [Markdown, Highlight, Notes]
 		});
 	});
 </script>
 
+<!-- <EngineComponent> -->
 <Languages>
 	<div class="reveal">
 		<div class="slides">
@@ -43,5 +46,13 @@
 	</div>
 </Languages>
 
+<!-- </EngineComponent> -->
+
 <style>
+	.reveal {
+		@apply bg-blue-500/20;
+	}
+	.slides {
+		@apply border-2 rounded-2xl border-gray-500/50;
+	}
 </style>

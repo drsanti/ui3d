@@ -111,7 +111,7 @@
 		@apply border border-green-700;
 	}
 	.text-title {
-		@apply text-6xl cursor-pointer;
+		@apply text-6xl;
 	}
 	.text-subtitle {
 		@apply text-4xl cursor-pointer;
