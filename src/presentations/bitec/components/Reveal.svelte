@@ -8,19 +8,24 @@
 
 	import 'reveal.js/dist/reset.css';
 	import 'reveal.js/dist/reveal.css';
-	import 'reveal.js/dist/theme/dracula.css';
+	import 'reveal.js/dist/theme/moon.css';
 	import 'reveal.js/plugin/highlight/monokai.css';
 	import Presentation from './Presentation.svelte';
 	import Languages from './Languages.svelte';
 
 	onMount(() => {
 		const _reveal = new Reveal({
+			controlsTutorial: true,
+			progress: true,
+			controlsLayout: 'edges',
+			transition: 'convex', // none/fade/slide/convex/concave/zoom
+			backgroundTransition: 'none', // none/fade/slide/convex/concave/zoom
+
 			autoAnimateEasing: 'ease-out',
 			autoAnimateDuration: 0.8,
 			autoAnimateUnmatched: true,
 			hash: true,
 			controls: true,
-			progress: true,
 			fragments: true,
 
 			disableLayout: false,
@@ -29,8 +34,6 @@
 			slideNumber: 'c/t'
 		});
 		_reveal.initialize({
-			progress: true,
-
 			plugins: [Markdown, Highlight, Notes]
 		});
 	});
