@@ -9,6 +9,7 @@
 	import { data as tech } from './technology.data';
 	import IconLeft from '../items/IconLeft.svelte';
 	import { techIconsArray, techIconsList } from '$lib/assets/icons/png/tech';
+	import Fragment from '../Fragment.svelte';
 
 	let topicData = topic.english;
 	let techData = tech.english;

@@ -19,11 +19,11 @@
 		content = $langStore === 'EN' ? sustainableData.english : sustainableData.thai;
 	}
 
-	const tw =
-		' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
+	const tw = ' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
 	const twg = 'text-gray-400 text-[2.0rem] pt-[0.8rem] ml-1';
 </script>
 
+<!-- Icon, Title and Subtitle -->
 <PageAutoAnimate>
 	<IconTop icon={icons.pngEnv} scale={2}>
 		<TitleText>{topicData.title}</TitleText>
@@ -32,19 +32,15 @@
 		</TitleText>
 	</IconTop>
 </PageAutoAnimate>
-<PageAutoAnimate>
-	<IconTop icon={icons.pngEnv} scale={2}>
-		<TitleText>{topicData.title}</TitleText>
-		<TitleText tw={'text-[3rem] text-green-400 underline'}>
-			{topicData.subtitle}
-		</TitleText>
-	</IconTop>
-</PageAutoAnimate>
 
+<!-- Sustainable Manufacturing -->
 <PageAutoAnimate>
+	<!-- Icon and Sustainable Manufacturing -->
 	<IconTop icon={icons.pngEnv} scale={1.5}>
 		<TitleText tw={'text-[3.2rem]'}>{content.topic}</TitleText>
 	</IconTop>
+
+	<!-- Lines -->
 	<Fragment>
 		<div class="mx-40">
 			<div class="h-1 bg-blue-500" />
@@ -55,6 +51,8 @@
 			</div>
 		</div>
 	</Fragment>
+
+	<!-- Highest Efficiency and Lowest Pollution with Icons -->
 	<Fragment>
 		<div class="flex flex-row justify-around my-4">
 			<div class="flex flex-row">
@@ -67,6 +65,8 @@
 			</div>
 		</div>
 	</Fragment>
+
+	<!--  Maximize the Output and Renewable Energy -->
 	<Fragment>
 		<div class="flex flex-row text-[2rem] justify-around my-2">
 			<p>{content.he}</p>

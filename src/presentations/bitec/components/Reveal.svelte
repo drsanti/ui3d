@@ -51,7 +51,7 @@
 	.reveal {
 		@apply bg-blue-500/20;
 	}
-	.slides {
+	/* .slides {
 		@apply border-2 rounded-2xl border-gray-500/50;
-	}
+	} */
 </style>
