@@ -6,13 +6,12 @@
 	import Highlight from 'reveal.js/plugin/highlight/highlight';
 	import Notes from 'reveal.js/plugin/notes/notes';
 
-	// import 'reveal.js/dist/reset.css';
+	import 'reveal.js/dist/reset.css';
 	import 'reveal.js/dist/reveal.css';
-	import 'reveal.js/dist/theme/night.css';
+	import 'reveal.js/dist/theme/dracula.css';
+	import 'reveal.js/plugin/highlight/monokai.css';
 	import Presentation from './Presentation.svelte';
 	import Languages from './Languages.svelte';
-	import EngineComponent from '../../../components/EngineComponent.svelte';
-	// import 'reveal.js/plugin/highlight/monokai.css';
 
 	onMount(() => {
 		const _reveal = new Reveal({
