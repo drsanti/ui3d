@@ -2,18 +2,26 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { pngIconsArray as iconsArr } from '$lib/assets/icons/png';
 
-	export let width = '15rem';
-	export let height = '15rem';
+	export let images: string[] = [];
+	export let scale = 1;
+	export let width = 256 * scale;
+	export let height = 256 * scale;
 	export let period = 1000;
 
-	let images: HTMLImageElement[] = [];
+	const twWidth = `w-[${width}px]`;
+	const twHeight = `h-[${height}px]`;
+
+	const idA = `display-a-${Math.round(Math.random() * 100000)}`;
+	const idB = `display-b-${Math.round(Math.random() * 100000)}`;
+
+	export let imgElements: HTMLImageElement[] = [];
 	let interval: number;
 	let imageDisplayA: HTMLDivElement;
 	let imageDisplayB: HTMLDivElement;
 	let showA = false;
 	let showB = false;
 	let indexA = 0;
-	let indexB = 1;
+	let indexB = 0;
 
 	let state = 0;
 
@@ -25,11 +33,13 @@
 	};
 
 	const addNewImage = (node: HTMLElement, index: number) => {
-		node.appendChild(images[index]);
+		node.appendChild(imgElements[index]);
 	};
 
 	const nextIndex = (currentIndex: number) => {
-		return (currentIndex + 1) % images.length;
+		const idx = (currentIndex + 1) % imgElements.length;
+
+		return idx;
 	};
 
 	const fadeImage = () => {
@@ -58,9 +68,9 @@
 			fadeImage();
 		}, period);
 
-		timeout = setTimeout(() => {
-			clearInterval(interval);
-		}, 5000);
+		// timeout = setTimeout(() => {
+		// 	clearInterval(interval);
+		// }, 5000);
 	};
 
 	const stop = () => {
@@ -69,30 +79,37 @@
 	};
 
 	onMount(() => {
-		iconsArr.forEach((src) => {
+		const names = images.length > 0 ? images : iconsArr;
+
+		if (names.length < 2) {
+			console.log(`%cRequires 2 or more images.`, `color: #fc2`);
+		}
+
+		names.forEach((src) => {
 			const img = document.createElement('img');
 			img.src = src;
-			images.push(img);
+			imgElements.push(img);
 			showA = true;
 			showB = true;
 		});
 
-		images.forEach((im) => {
-			im.style.width = width;
-			im.style.height = height;
+		imgElements.forEach((im) => {
+			im.style.width = `${width}px`;
+			im.style.height = `${height}px`;
 		});
 
-		imageDisplayA = document.getElementById('image-display-a') as HTMLDivElement;
-		imageDisplayB = document.getElementById('image-display-b') as HTMLDivElement;
+		imageDisplayA = document.getElementById(idA) as HTMLDivElement;
+		imageDisplayB = document.getElementById(idB) as HTMLDivElement;
 
 		removeChildren(imageDisplayA);
 		removeChildren(imageDisplayB);
 
-		imageDisplayA.style.width = images[0].style.width;
-		imageDisplayA.style.height = images[0].style.height;
+		imageDisplayA.style.width = imgElements[0].style.width;
+		imageDisplayA.style.height = imgElements[0].style.height;
 
 		imageDisplayA.style.zIndex = '100';
 
+		indexB = nextIndex(indexB);
 		fadeImage();
 		start();
 	});
@@ -111,21 +128,13 @@
 	};
 </script>
 
-<div class="flex flex-row justify-center items-center">
-	<div
-		on:mousedown={action}
-		id="image-display-a"
-		class="flex {showA
-			? `opacity-100`
-			: `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer"
-	/>
-	<div
-		on:mousedown={action}
-		id="image-display-b"
-		class="flex {showB
-			? `opacity-100`
-			: `opacity-0`} transition-opacity duration-500 rotate-back-and-forth absolute cursor-pointer"
-	/>
+<div class="flex flex-col justify-end relative items-center p-0 m-0">
+	<div class="pb-8 absolute {twWidth} {twHeight}">
+		<div on:mousedown={action} id={idA} class="flex {showA ? `opacity-100` : `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer object-contain" />
+	</div>
+	<div class="absolute {twWidth} {twHeight}">
+		<div on:mousedown={action} id={idB} class="flex {showB ? `opacity-100` : `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer object-contain" />
+	</div>
 </div>
 
 <style>

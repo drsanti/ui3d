@@ -1,7 +1,5 @@
 {
-	"prettier.documentSelectors": [
-		"**/*.svelte"
-	],
+	"prettier.documentSelectors": ["**/*.svelte"],
 	"tailwindCSS.classAttributes": [
 		"class",
 		"accent",
@@ -122,6 +120,7 @@
 		"negz",
 		"noescape",
 		"nojekyll",
+		"nuratch",
 		"orbitcontrols",
 		"pathe",
 		"posx",

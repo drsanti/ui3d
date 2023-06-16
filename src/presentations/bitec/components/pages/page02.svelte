@@ -20,8 +20,7 @@
 		title = $langStore === 'EN' ? tech.title.english : tech.title.thai;
 	}
 
-	const tw =
-		' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
+	const tw = ' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
 	const twg = 'text-gray-400 text-[2.0rem] pt-[0.8rem] ml-1';
 </script>
 
@@ -52,7 +51,7 @@
 				<span class={twg}>(G2/4)</span>
 			</div>
 		</IconTop>
-		<div class="flex flex-col ml-20 text-[2rem]">
+		<div class="flex flex-col ml-40 text-[2rem]">
 			<IconLeft scale={0.5} {tw} icon={techIconsList.ai}>{techData.ai}</IconLeft>
 			<IconLeft scale={0.5} {tw} icon={techIconsList.ml}>{techData.ml}</IconLeft>
 			<IconLeft scale={0.5} {tw} icon={techIconsList.ccs}>{techData.ccs}</IconLeft>
@@ -66,7 +65,7 @@
 				<span class={twg}>(G3/4)</span>
 			</div>
 		</IconTop>
-		<div class="flex flex-col ml-20 text-[2rem]">
+		<div class="flex flex-col ml-40 text-[2rem]">
 			<IconLeft scale={0.5} {tw} icon={techIconsList.vr}>{techData.vr}</IconLeft>
 			<IconLeft scale={0.5} {tw} icon={techIconsList.ar}>{techData.ar}</IconLeft>
 			<IconLeft scale={0.5} {tw} icon={techIconsList.dt}>{techData.dt}</IconLeft>
@@ -80,7 +79,7 @@
 				<span class={twg}>(G4/4)</span>
 			</div>
 		</IconTop>
-		<div class="flex flex-col ml-20 text-[2rem]">
+		<div class="flex flex-col ml-40 text-[2rem]">
 			<IconLeft scale={0.5} {tw} icon={techIconsList.cbm}>{techData.cbm}</IconLeft>
 			<IconLeft scale={0.5} {tw} icon={techIconsList.hmc}>{techData.hmc}</IconLeft>
 			<IconLeft scale={0.5} {tw} icon={techIconsList.eft}>{techData.eft}</IconLeft>

@@ -6,7 +6,7 @@
 	import Highlight from 'reveal.js/plugin/highlight/highlight';
 	import Notes from 'reveal.js/plugin/notes/notes';
 
-	import 'reveal.js/dist/reset.css';
+	// import 'reveal.js/dist/reset.css';
 	import 'reveal.js/dist/reveal.css';
 	import 'reveal.js/dist/theme/moon.css';
 	import 'reveal.js/plugin/highlight/monokai.css';
@@ -16,6 +16,7 @@
 	onMount(() => {
 		const _reveal = new Reveal({
 			controlsTutorial: true,
+			maxScale: 1,
 			progress: true,
 			controlsLayout: 'edges',
 			transition: 'convex', // none/fade/slide/convex/concave/zoom
@@ -51,9 +52,12 @@
 <!-- </EngineComponent> -->
 
 <style>
-	.reveal {
+	/* .reveal {
 		@apply bg-blue-500/20;
 	}
+	h1 {
+		@apply normal-case;
+	} */
 	/* .slides {
 		@apply border-2 rounded-2xl border-gray-500/50;
 	} */

@@ -1,7 +1,7 @@
 export const data = {
 	thai: {
 		title: 'โรงงานอุตสาหกรรมแห่งอนาคต',
-		subtitle: 'การพัฒนาอุตสาหกรรมการผลิตแบบยั่งยืนและดีกว่า'
+		subtitle: 'อุตสาหกรรมการผลิตแบบยั่งยืนและดีขึ้น'
 	},
 	english: {
 		title: 'Factory of the Future',

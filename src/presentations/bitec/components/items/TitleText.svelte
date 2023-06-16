@@ -1,7 +1,9 @@
 <script lang="ts">
-	export let tw = 'text-6xl text-gray-50';
+	export let tw = 'normal-case';
 </script>
 
-<p class="{tw} ">
-	<slot />
-</p>
+<span class="text-7xl {tw}">
+	<div class="my-4">
+		<slot />
+	</div>
+</span>
