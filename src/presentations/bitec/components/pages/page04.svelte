@@ -9,8 +9,6 @@
 
 	import { data as topic } from './topic.data';
 	import { data as smart } from './smart.data';
-	import ArrowUp from '../items/arrowUp.svelte';
-	import ArrowDown from '../items/arrowDown.svelte';
 	import PngFadeIcons from '../items/PngFadeIcons.svelte';
 	import PageVertical from '../PageVertical.svelte';
 
@@ -23,6 +21,7 @@
 
 	const tw = ' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
 	const twg = 'text-gray-400 text-[2.0rem] pt-[0.8rem] ml-1';
+	const twLc = 'bg-yellow-500/80';
 </script>
 
 <!-- Icon, Title and Subtitle -->
@@ -47,32 +46,32 @@
 
 		<Fragment>
 			<div class="mx-40">
-				<div class="h-1 bg-yellow-500" />
+				<div class="h-1 {twLc}" />
 				<div class="flex flex-row justify-around">
-					<div class="w-1 h-[62px] bg-yellow-500" />
+					<div class="w-1 h-[62px] {twLc}" />
 					<div class="w-128" />
-					<div class="w-1 h-[62px] bg-yellow-500" />
+					<div class="w-1 h-[62px] {twLc}" />
 				</div>
 			</div>
 		</Fragment>
 
-		<!-- Highest Efficiency and Lowest Pollution with Icons -->
+		<!-- Technologies | Human -->
 		<Fragment>
 			<div class="flex flex-row justify-around my-4 text-[3rem]">
-				<div class="flex flex-row">
+				<div class="flex flex-row ml-10">
 					<IconBottom icon={icons.pngWfb}>{content.keywords[0]}</IconBottom>
 				</div>
-				<div class="flex flex-row">
+				<div class="flex flex-row mr-20">
 					<IconBottom icon={icons.pngVrh}>{content.keywords[1]}</IconBottom>
 				</div>
 			</div>
 		</Fragment>
 
-		<!--  Maximize the Output and Renewable Energy -->
+		<!--  Applying | Knowledge -->
 		<Fragment>
 			<div class="flex flex-row text-[2rem] justify-around my-2">
-				<p>{content.desc[0]}</p>
-				<p>{content.desc[1]}</p>
+				<div class="ml-10">{content.desc[0]}</div>
+				<div class="mr-16">{content.desc[1]}</div>
 			</div>
 		</Fragment>
 	</PageVertical>

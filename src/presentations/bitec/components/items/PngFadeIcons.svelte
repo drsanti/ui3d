@@ -58,6 +58,8 @@
 			showA = true;
 			state = 0;
 		}
+
+		// console.log(showA, showB)
 	};
 
 	let timeout = 0;
@@ -107,7 +109,7 @@
 		imageDisplayA.style.width = imgElements[0].style.width;
 		imageDisplayA.style.height = imgElements[0].style.height;
 
-		imageDisplayA.style.zIndex = '100';
+		// imageDisplayA.style.zIndex = '100';
 
 		indexB = nextIndex(indexB);
 		fadeImage();
@@ -130,10 +132,22 @@
 
 <div class="flex flex-col justify-end relative items-center p-0 m-0">
 	<div class="pb-8 absolute {twWidth} {twHeight}">
-		<div on:mousedown={action} id={idA} class="flex {showA ? `opacity-100` : `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer object-contain" />
+		<div
+			on:mousedown={action}
+			id={idA}
+			class="flex {showA
+				? `opacity-100`
+				: `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer object-contain"
+		/>
 	</div>
 	<div class="absolute {twWidth} {twHeight}">
-		<div on:mousedown={action} id={idB} class="flex {showB ? `opacity-100` : `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer object-contain" />
+		<div
+			on:mousedown={action}
+			id={idB}
+			class="flex {showB
+				? `opacity-100`
+				: `opacity-0`} transition-opacity duration-500 rotate-back-and-forth cursor-pointer object-contain"
+		/>
 	</div>
 </div>
 

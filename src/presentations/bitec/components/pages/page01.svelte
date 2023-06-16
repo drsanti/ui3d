@@ -20,19 +20,6 @@
 	}
 </script>
 
-<!-- <PageAutoAnimate>
-	<PngFadeIcons />
-	<Fragment>
-		<TitleText>{content.title}</TitleText>
-	</Fragment>
-	<Fragment>
-		<p>{content.subtitle}</p>
-	</Fragment>
-	<Fragment tw={'text-[1.8rem]'}>
-		<DrSantiInfo />
-	</Fragment>
-</PageAutoAnimate> -->
-
 <PageAutoAnimate>
 	<PageVertical>
 		<PngFadeIcons />
@@ -46,7 +33,11 @@
 	<PageVertical tw={'text-[1.8rem]'}>
 		<div class="flex justify-center">
 			<div class="relative w-[256px] h-[256px]">
-				<img class="border-8 border-gray-300/30 rounded-full absolute inset-0 object-cover object-top w-full h-full" src={santi} alt="" />
+				<img
+					class="border-8 border-gray-300/30 rounded-full absolute inset-0 object-cover object-top w-full h-full"
+					src={santi}
+					alt=""
+				/>
 			</div>
 		</div>
 		<div class="h-4" />

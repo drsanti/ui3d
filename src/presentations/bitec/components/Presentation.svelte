@@ -7,6 +7,7 @@
 	import Page02 from './pages/page02.svelte';
 	import Page03 from './pages/page03.svelte';
 	import Page04 from './pages/page04.svelte';
+	import Page05 from './pages/page05.svelte';
 
 	// import section from './section.svelte';
 </script>
@@ -14,8 +15,8 @@
 <!-- <Page01 />
 <Page02 /> -->
 <!-- <Page03 /> -->
-<Page04 />
-
+<!-- <Page04 /> -->
+<Page05 />
 <!-- <PageAutoAnimate animate={true}>
 	<p data-id="1" class="text-red-500">Hello</p>
 </PageAutoAnimate>

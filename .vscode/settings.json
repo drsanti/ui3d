@@ -118,6 +118,7 @@
 		"negx",
 		"negy",
 		"negz",
+		"noclicked",
 		"noescape",
 		"nojekyll",
 		"nuratch",
@@ -133,6 +134,7 @@
 		"tweenjs",
 		"Unsubscriber",
 		"wireframe",
+		"wwwh",
 		"yoyo"
 	]
 }

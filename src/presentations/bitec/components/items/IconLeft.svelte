@@ -13,7 +13,7 @@
 	<div class="flex justify-center items-center{tw}">
 		<PngIcon {icon} {scale} {width} {height} {period} />
 	</div>
-	<div class="flex flex-col justify-center items-center">
+	<div class="flex flex-col justify-center items-start ml-8 text-left">
 		<slot />
 	</div>
 </div>

@@ -13,7 +13,9 @@ import pngSf from '$lib/assets/icons/png/smart-factory.png';
 import pngIbt from '$lib/assets/icons/png/iot-robot.png';
 import pngWfb from '$lib/assets/icons/png/wifi-bot.png';
 import pngVrh from '$lib/assets/icons/png/vr-human.png';
-
+import pngQtn from '$lib/assets/icons/png/question.png';
+import pngQtm from '$lib/assets/icons/png/question-mark.png';
+import pngQtc from '$lib/assets/icons/png/conversation.png';
 
 export {
     pngAi,
@@ -31,6 +33,9 @@ export {
     pngIbt,
     pngWfb,
     pngVrh,
+    pngQtn,
+    pngQtm,
+    pngQtc,
 }
 
 
@@ -50,6 +55,9 @@ export const pngIconsArray = [
     pngIbt,
     pngWfb,
     pngVrh,
+    pngQtn,
+    pngQtm,
+    pngQtc,
 ];
 
 const pngIconsList = {
@@ -68,5 +76,8 @@ const pngIconsList = {
     pngIbt: pngIbt,
     pngWfb: pngWfb,
     pngVrh: pngVrh,
+    pngQtn: pngQtn,
+    pngQtm: pngQtm,
+    pngQtc: pngQtc,
 }
 export { pngIconsList };

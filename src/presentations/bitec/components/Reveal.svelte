@@ -16,7 +16,7 @@
 	onMount(() => {
 		const _reveal = new Reveal({
 			controlsTutorial: true,
-			maxScale: 1,
+			maxScale: 0.75,
 			progress: true,
 			controlsLayout: 'edges',
 			transition: 'convex', // none/fade/slide/convex/concave/zoom
