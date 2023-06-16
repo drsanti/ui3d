@@ -1,4 +1,6 @@
 <script lang="ts">
+	// import { Client, Message } from 'paho-mqtt';
+
 	import { pngIconsList as icons } from '$lib/assets/icons/png';
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
 	import TitleText from '../items/TitleText.svelte';
@@ -8,8 +10,8 @@
 	import PngFadeIcons from '../items/PngFadeIcons.svelte';
 	import IconLeft from '../items/IconLeft.svelte';
 	import TextClickBorder from '../items/TextClickBorder.svelte';
-	import TextClickHighlight from '../items/TextClickFlash.svelte';
 	import TextClickFlash from '../items/TextClickFlash.svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	const data = {
 		english: {
@@ -49,6 +51,73 @@
 		content = $langStore === 'EN' ? data.english : data.thai;
 	}
 	const twWH = `flex flex-col space-y-10 pt-6`;
+
+	let pid = 0;
+	setInterval(() => {
+		// window.location.assign(`/#/0/0/${pid++}`);
+		// pid %= 10;
+		//goto('/#/0/0/8');
+		// console.log(window.location.href);
+		if (client.isConnected()) {
+			const message = new Message(`/#/0/0/${pid++}`);
+			message.destinationName = 'slide-changed';
+			client.send(message);
+		}
+	}, 2000);
+
+	/**
+	 * 	host: '178.128.98.237',
+		port: '8083',
+		username: 'dtwin',
+		password: 'dtwin'
+	 */
+
+	import { Client, Message } from 'paho-mqtt';
+
+	let client: Client;
+	onMount(() => {
+		const brokerUrl = 'ws://178.128.98.237:8083/mqtt';
+		const clientId = 'user-1';
+		const username = 'dtwin';
+		const password = 'dtwin';
+
+		client = new Client(brokerUrl, clientId);
+
+		client.onConnectionLost = (responseObject: any) => {
+			console.log(`Connection lost: ${responseObject.errorMessage}`);
+		};
+
+		client.onMessageArrived = (message: Message) => {
+			console.log(`Received message on topic "${message.destinationName}": ${message.payloadString}`);
+			window.location.assign(message.payloadString);
+		};
+
+		client.connect({
+			onSuccess: () => {
+				console.log('Connected to MQTT broker');
+				client.subscribe('slide-changed');
+			},
+			onFailure: (responseObject: any) => {
+				console.log(`Failed to connect: ${responseObject.errorMessage}`);
+			},
+			userName: username,
+			password: password
+		});
+	});
+	onDestroy(() => {
+		client.disconnect();
+	});
+
+	// const onConnectionLost: OnConnectFailure = (responseObject: any) => {
+	// 	if (responseObject.errorCode !== 0) {
+	// 		console.log(`Connection lost: ${responseObject.errorMessage}`);
+	// 	}
+	// };
+
+	// const onMessageArrived: OnMessageArrived = (message: Message) => {
+	// 	console.log(`Received message on topic "${message.destinationName}": ${message.payloadString}`);
+	// 	// Handle the received message
+	// };
 </script>
 
 <!-- Icon, Title and Subtitle -->
