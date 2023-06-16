@@ -55,11 +55,12 @@
 	let pid = 0;
 	setInterval(() => {
 		// window.location.assign(`/#/0/0/${pid++}`);
-		// pid %= 10;
+
 		//goto('/#/0/0/8');
 		// console.log(window.location.href);
 		if (client.isConnected()) {
 			const message = new Message(`/#/0/0/${pid++}`);
+			pid %= 10;
 			message.destinationName = 'slide-changed';
 			client.send(message);
 		}
@@ -76,7 +77,7 @@
 
 	let client: Client;
 	onMount(() => {
-		const brokerUrl = 'ws://178.128.98.237:8083/mqtt';
+		const brokerUrl = 'wss://178.128.98.237:8083/mqtt';
 		const clientId = 'user-1';
 		const username = 'dtwin';
 		const password = 'dtwin';
