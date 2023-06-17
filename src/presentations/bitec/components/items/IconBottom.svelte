@@ -4,6 +4,7 @@
 	export let icon = icons.pngAi;
 	export let width = 128;
 	export let height = 128;
+	export let tw = '';
 	import PngIcon from './PngIcon.svelte';
 </script>
 
@@ -11,7 +12,7 @@
 	<div class="flex flex-col justify-center items-center">
 		<slot />
 	</div>
-	<div class="flex justify-center items-center">
+	<div class="{tw} flex justify-center items-center">
 		<PngIcon {icon} {scale} {width} {height} />
 	</div>
 </div>

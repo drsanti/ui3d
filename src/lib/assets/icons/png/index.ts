@@ -22,12 +22,18 @@ import pngQdt from '$lib/assets/icons/png/question-3dots.png';
 import pngEnw from '$lib/assets/icons/png/engineer-w.png';
 import pngEnm from '$lib/assets/icons/png/engineer-m.png';
 import pngEnp from '$lib/assets/icons/png/engineer-p.png';
+import pngMat from '$lib/assets/icons/png/material-wheelbarrow.png';
+import pngPpk from '$lib/assets/icons/png/product-packaging.png';
+import pngBcv from '$lib/assets/icons/png/robot-conveyor.png';
+import pngBtg from '$lib/assets/icons/png/battery-three.png';
+import pngTbs from '$lib/assets/icons/png/team-brainstorm.png';
 
 export {
     pngAi, pngAr, pngBot, pngCps, pngDt, pngEff,
     pngEnv, pngSun, pngFbot, pngJig, pngFac, pngSf,
     pngIbt, pngWfb, pngVrh, pngQtn, pngQtm, pngQtc,
-    pngQyr, pngQbg, pngQdt, pngEnw, pngEnm, pngEnp
+    pngQyr, pngQbg, pngQdt, pngEnw, pngEnm, pngEnp,
+    pngMat, pngPpk, pngBcv, pngBtg, pngTbs,
 
 }
 
@@ -37,7 +43,8 @@ export const pngIconsArray = [
     pngEff, pngEnv, pngSun, pngFbot, pngJig,
     pngFac, pngSf, pngIbt, pngWfb, pngVrh,
     pngQtn, pngQtm, pngQtc, pngQyr, pngQbg,
-    pngQdt, pngEnw, pngEnm, pngEnp
+    pngQdt, pngEnw, pngEnm, pngEnp,
+    pngMat, pngPpk, pngBcv, pngBtg, pngTbs,
 ];
 
 const pngIconsList = {
@@ -46,6 +53,8 @@ const pngIconsList = {
     pngFbot: pngFbot, pngJig: pngJig, pngFac: pngFac, pngSf: pngSf,
     pngIbt: pngIbt, pngWfb: pngWfb, pngVrh: pngVrh, pngQtn: pngQtn,
     pngQtm: pngQtm, pngQtc: pngQtc, pngQyr: pngQyr, pngQbg: pngQbg,
-    pngQdt: pngQdt, pngEnw: pngEnw, pngEnm: pngEnm, pngEnp: pngEnp
+    pngQdt: pngQdt, pngEnw: pngEnw, pngEnm: pngEnm, pngEnp: pngEnp,
+    pngMat: pngMat, pngPpk: pngPpk, pngBcv: pngBcv, pngBtg: pngBtg,
+    pngTbs: pngTbs,
 }
 export { pngIconsList };

@@ -8,12 +8,7 @@
 	import TextClickFlash from '../items/TextClickFlash.svelte';
 	import PageVertical from '../PageVertical.svelte';
 	import Questions from './questions.svelte';
-	import PngIcon from '../items/PngIcon.svelte';
-	import { onMount } from 'svelte';
-	import { revealStore } from '../revealStore';
-	import Reveal from '../Reveal.svelte';
 	import ArrowDownDouble from '../items/arrowRightDouble.svelte';
-	import ArrowRightDouble from '../items/arrowRightDouble.svelte';
 
 	const data = {
 		english: {

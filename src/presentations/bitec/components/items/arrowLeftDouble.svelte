@@ -3,9 +3,11 @@
 	export let height = 52;
 	export let scale = 1;
 	export let color = 'currentColor';
+	export let tw = '';
 </script>
 
 <svg
+	class={tw}
 	xmlns="http://www.w3.org/2000/svg"
 	width={width * scale}
 	height={height * scale}

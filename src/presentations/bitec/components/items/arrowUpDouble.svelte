@@ -3,15 +3,40 @@
 	export let height = 52;
 	export let scale = 1;
 	export let color = 'currentColor';
+	export let tw = '';
 </script>
 
 <svg
+	class="{tw} "
 	xmlns="http://www.w3.org/2000/svg"
 	width={width * scale}
 	height={height * scale}
 	viewBox="0 0 24 24"
-	><path
-		fill={color}
-		d="M6.7 11.7q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212T12 5.425q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275L12 7.825L8.1 11.7q-.275.275-.688.288T6.7 11.7Zm0 6q-.275-.275-.275-.7t.275-.7l4.6-4.6q.15-.15.325-.212t.375-.063q.2 0 .375.063t.325.212l4.6 4.6q.275.275.288.688t-.288.712q-.275.275-.7.275t-.7-.275L12 13.825L8.1 17.7q-.275.275-.688.288T6.7 17.7Z"
-	/></svg
+	><g transform="rotate(-90 12 12) translate(24 0) scale(-1 1)"
+		><g
+			fill="none"
+			stroke={color}
+			stroke-dasharray="8"
+			stroke-dashoffset="8"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="2"
+			><path d="M12 12L17 7M12 12L17 17"
+				><animate
+					fill="freeze"
+					attributeName="stroke-dashoffset"
+					dur="0.3s"
+					values="8;0"
+				/></path
+			><path d="M6 12L11 7M6 12L11 17"
+				><animate
+					fill="freeze"
+					attributeName="stroke-dashoffset"
+					begin="0.3s"
+					dur="0.3s"
+					values="8;0"
+				/></path
+			></g
+		></g
+	></svg
 >

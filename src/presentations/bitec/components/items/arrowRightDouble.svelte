@@ -12,8 +12,31 @@
 	width={width * scale}
 	height={height * scale}
 	viewBox="0 0 24 24"
-	><path
-		fill={color}
-		d="M12 12.575q-.2 0-.375-.062T11.3 12.3L6.7 7.7q-.275-.275-.288-.688T6.7 6.3q.275-.275.7-.275t.7.275l3.9 3.875L15.9 6.3q.275-.275.688-.287t.712.287q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062Zm0 6q-.2 0-.375-.062T11.3 18.3l-4.6-4.6q-.275-.275-.288-.687T6.7 12.3q.275-.275.7-.275t.7.275l3.9 3.875l3.9-3.875q.275-.275.688-.288t.712.288q.275.275.275.7t-.275.7l-4.6 4.6q-.15.15-.325.213t-.375.062Z"
-	/></svg
+	><g transform="translate(24 0) scale(-1 1)"
+		><g
+			fill="none"
+			stroke={color}
+			stroke-dasharray="8"
+			stroke-dashoffset="8"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			stroke-width="2"
+			><path d="M12 12L17 7M12 12L17 17"
+				><animate
+					fill="freeze"
+					attributeName="stroke-dashoffset"
+					dur="0.3s"
+					values="8;0"
+				/></path
+			><path d="M6 12L11 7M6 12L11 17"
+				><animate
+					fill="freeze"
+					attributeName="stroke-dashoffset"
+					begin="0.3s"
+					dur="0.3s"
+					values="8;0"
+				/></path
+			></g
+		></g
+	></svg
 >
