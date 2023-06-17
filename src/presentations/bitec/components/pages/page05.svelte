@@ -1,17 +1,15 @@
 <script lang="ts">
-	// import { Client, Message } from 'paho-mqtt';
-
 	import { pngIconsList as icons } from '$lib/assets/icons/png';
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
-	import TitleText from '../items/TitleText.svelte';
 	import { langStore } from '../languageStore';
 	import Fragment from '../Fragment.svelte';
 
-	import PngFadeIcons from '../items/PngFadeIcons.svelte';
 	import IconLeft from '../items/IconLeft.svelte';
-	import TextClickBorder from '../items/TextClickBorder.svelte';
 	import TextClickFlash from '../items/TextClickFlash.svelte';
-	import { onMount, onDestroy } from 'svelte';
+	import PageVertical from '../PageVertical.svelte';
+	import Questions from './questions.svelte';
+	import PngIcon from '../items/PngIcon.svelte';
+	import ArrowDownDouble from '../items/arrowDownDouble.svelte';
 
 	const data = {
 		english: {
@@ -27,10 +25,11 @@
 				'Why are we need new technologies even<br>if everything is functioning perfectly?',
 				'When will we implement new technologies<br>in our organization?',
 				'How do technologies enhance our<br>operational efficiency and productivity?'
-			]
+			],
+			qa: ['How many questions are there?', 'What are the answers?']
 		},
 		thai: {
-			title: 'เทคฌนโลยี',
+			title: 'เทคโนโลยี',
 			wwwh: {
 				what: 'อะไร',
 				when: 'เมื่อไร',
@@ -38,11 +37,12 @@
 				how: 'อย่างไร'
 			},
 			questions: [
-				'มีเทคโนโลยีอะไรบ้างที่เรากำลังใช้<br>ประโยชน์อยู่ตอนนี้?',
+				'มีเทคโนโลยีอะไรบ้างที่เรากำลังใช้<br>ประโยชน์อยู่ตอนนี้',
 				'ทำไมเราถึงต้องการเทคโนโลยีใหม่<br>ในเมื่อทุกอย่างยังทำงานได้ดี',
 				'เมื่อไรเราจะใช้เทคโนโลยีใหม่<br>ในหน่วยงาน/โรงงานของเรา',
 				'เทคโนโลยีจะมาเพิ่มประสิทธิภาพและ<br>ความสามารถการผลิตได้อย่างไร'
-			]
+			],
+			qa: ['ณ ตอนนี้เรามีทั้งหมดกี่คำถาม', 'คำตอบของคำถามเหล่านั้นคืออะไร']
 		}
 	};
 
@@ -51,133 +51,49 @@
 		content = $langStore === 'EN' ? data.english : data.thai;
 	}
 	const twWH = `flex flex-col space-y-10 pt-6`;
-
-	let pid = 0;
-	setInterval(() => {
-		// window.location.assign(`/#/0/0/${pid++}`);
-
-		//goto('/#/0/0/8');
-		// console.log(window.location.href);
-		if (client.isConnected()) {
-			const message = new Message(`/#/0/0/${pid++}`);
-			pid %= 10;
-			message.destinationName = 'slide-changed';
-			client.send(message);
-		}
-	}, 2000);
-
-	/**
-	 * 	host: '178.128.98.237',
-		port: '8083',
-		username: 'dtwin',
-		password: 'dtwin'
-	 */
-
-	import { Client, Message } from 'paho-mqtt';
-
-	let client: Client;
-	onMount(() => {
-		const brokerUrl = 'wss://178.128.98.237:8083/mqtt';
-		const clientId = 'user-1';
-		const username = 'dtwin';
-		const password = 'dtwin';
-
-		client = new Client(brokerUrl, clientId);
-
-		client.onConnectionLost = (responseObject: any) => {
-			console.log(`Connection lost: ${responseObject.errorMessage}`);
-		};
-
-		client.onMessageArrived = (message: Message) => {
-			console.log(`Received message on topic "${message.destinationName}": ${message.payloadString}`);
-			window.location.assign(message.payloadString);
-		};
-
-		client.connect({
-			onSuccess: () => {
-				console.log('Connected to MQTT broker');
-				client.subscribe('slide-changed');
-			},
-			onFailure: (responseObject: any) => {
-				console.log(`Failed to connect: ${responseObject.errorMessage}`);
-			},
-			userName: username,
-			password: password
-		});
-	});
-	onDestroy(() => {
-		client.disconnect();
-	});
-
-	// const onConnectionLost: OnConnectFailure = (responseObject: any) => {
-	// 	if (responseObject.errorCode !== 0) {
-	// 		console.log(`Connection lost: ${responseObject.errorMessage}`);
-	// 	}
-	// };
-
-	// const onMessageArrived: OnMessageArrived = (message: Message) => {
-	// 	console.log(`Received message on topic "${message.destinationName}": ${message.payloadString}`);
-	// 	// Handle the received message
-	// };
 </script>
 
-<!-- Icon, Title and Subtitle -->
 <PageAutoAnimate>
-	<Fragment>
-		<div class="grid grid-cols-3 items-center justify-between h-48">
-			<div class={twWH}>
-				<Fragment tw={'text-red-400'}>
-					<TextClickBorder>{content.wwwh.what}</TextClickBorder>
-				</Fragment>
-				<Fragment tw={'text-green-400'}>
-					<TextClickBorder>{content.wwwh.when}</TextClickBorder>
-				</Fragment>
-			</div>
-			<div class="flex flex-col justify-center items-center">
-				<div class="mb-12">
-					<PngFadeIcons images={[icons.pngQtc, icons.pngQtm, icons.pngQtn]} />
-				</div>
-				<TitleText tw={'text-[4rem]'}>Technologies</TitleText>
-			</div>
-			<div class={twWH}>
-				<Fragment tw={'text-blue-400'}>
-					<TextClickBorder>{content.wwwh.why}</TextClickBorder>
-				</Fragment>
-				<Fragment tw={'text-yellow-400'}>
-					<TextClickBorder>{content.wwwh.how}</TextClickBorder>
-				</Fragment>
-			</div>
-		</div>
-	</Fragment>
-	<Fragment>
-		<div class="bg-green-200/60 h-1 mt-4 mx-28" />
-	</Fragment>
+	<PageVertical>
+		<!-- Question Component -------------------------------------------------->
+		<Questions title={'tech'} fragment={true} />
 
-	<div class="text-[2rem] grid grid-rows-4 gap-y-0 mt-4 ml-28">
-		{#each content.questions as q}
+		<!-- Horizontal line ----------------------------------------------------->
+		<Fragment>
+			<div class="bg-[#f85] h-1 mt-4 mx-28" />
+		</Fragment>
+
+		<!-- 4 Questions --------------------------------------------------------->
+		<div class="text-[2rem] grid grid-rows-4 gap-y-0 mt-4 ml-28">
+			{#each content.questions as q}
+				<Fragment>
+					<IconLeft icon={icons.pngQdt} scale={0.7}>
+						<TextClickFlash>{@html q}</TextClickFlash>
+					</IconLeft>
+				</Fragment>
+			{/each}
+		</div>
+	</PageVertical>
+	<PageVertical>
+		<Questions title={'tech'} fragment={false} />
+		<Fragment>
+			<div class="bg-[#f85] h-1 mt-4 mx-28" />
+			<div class="flex flex-row justify-evenly">
+				<ArrowDownDouble color={'#f85'} scale={2} />
+				<ArrowDownDouble color={'#f85'} scale={2} />
+			</div>
+		</Fragment>
+		<div class="flex flex-col justify-center items-start pl-32 py-2">
 			<Fragment>
-				<IconLeft icon={icons.pngQtn} scale={0.7}>
-					<TextClickFlash>{@html q}</TextClickFlash>
+				<IconLeft scale={0.7} icon={icons.pngQtm}>
+					<TextClickFlash>{content.qa[0]}</TextClickFlash>
 				</IconLeft>
 			</Fragment>
-		{/each}
-	</div></PageAutoAnimate
->
-
-<style>
-	@keyframes scale {
-		0% {
-			transform: scale(1);
-		}
-		50% {
-			transform: scale(1.2);
-		}
-		100% {
-			transform: scale(1);
-		}
-	}
-
-	.sc {
-		animation: scale 2s infinite;
-	}
-</style>
+			<Fragment>
+				<IconLeft scale={0.7} icon={icons.pngQyr}>
+					<TextClickFlash>{content.qa[1]}</TextClickFlash>
+				</IconLeft>
+			</Fragment>
+		</div>
+	</PageVertical>
+</PageAutoAnimate>

@@ -5,12 +5,12 @@
 	export let type: 'Up' | 'Down' = 'Up';
 	export let width = 52;
 	export let height = 52;
-	export let stroke = 'currentColor';
+	export let color = 'currentColor';
 </script>
 
 {#if type === 'Up'}
-	<ArrowUp {width} {height} {stroke} />
+	<ArrowUp {width} {height} {color} />
 {/if}
 {#if type === 'Down'}
-	<ArrowDown {width} {height} {stroke} />
+	<ArrowDown {width} {height} {color} />
 {/if}

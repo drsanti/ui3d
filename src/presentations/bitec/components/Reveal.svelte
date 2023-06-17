@@ -12,6 +12,7 @@
 	import 'reveal.js/plugin/highlight/monokai.css';
 	import Presentation from './Presentation.svelte';
 	import Languages from './Languages.svelte';
+	import { revealStore } from './revealStore';
 
 	onMount(() => {
 		const _reveal = new Reveal({
@@ -37,6 +38,8 @@
 		_reveal.initialize({
 			plugins: [Markdown, Highlight, Notes]
 		});
+
+		revealStore.set(_reveal);
 	});
 </script>
 

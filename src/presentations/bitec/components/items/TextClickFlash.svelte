@@ -1,7 +1,7 @@
 <script lang="ts">
 	import chroma from 'chroma-js';
 	import { Engine } from '../../../../ui3d/Engine/Engine';
-	export let duration = 0.5;
+	export let duration = 1;
 	export let tw = '';
 	const toggle = () => {
 		start();

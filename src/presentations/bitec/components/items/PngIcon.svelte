@@ -7,6 +7,7 @@
 	export let height = 128;
 
 	export let period = 5000;
+	export let tw = '';
 
 	let image: HTMLImageElement;
 	let cls = 'animate';
@@ -16,7 +17,7 @@
 	});
 
 	let animating = false;
-	let timeout: number;
+	let timeout: number | NodeJS.Timeout;
 	const start = () => {
 		cls = 'animate';
 		clearTimeout(timeout);
@@ -36,7 +37,7 @@
 	start();
 </script>
 
-<span class="flex justify-center items-center">
+<span class="{tw} flex justify-center items-center">
 	<img
 		on:mousedown={toggle}
 		src={icon}
