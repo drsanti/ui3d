@@ -9,6 +9,7 @@
 	import PageVertical from '../PageVertical.svelte';
 	import Questions from './questions.svelte';
 	import ArrowDownDouble from '../items/arrowRightDouble.svelte';
+	import ArrowDouble from '../items/arrowDouble.svelte';
 
 	const data = {
 		english: {
@@ -96,8 +97,8 @@
 			<div class="bg-[#88f] h-1 mt-4 mx-28" />
 
 			<div class="flex flex-row justify-evenly">
-				<ArrowDownDouble color={'#88f'} scale={2} />
-				<ArrowDownDouble color={'#88f'} scale={2} />
+				<ArrowDouble arrow={'down'} color={'#88f'} scale={2} />
+				<ArrowDouble arrow={'down'} color={'#88f'} scale={2} />
 			</div>
 		</Fragment>
 		<div class="flex flex-col justify-center items-start pl-32 py-2">

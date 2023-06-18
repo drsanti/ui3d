@@ -1,8 +1,4 @@
 <script lang="ts">
-	import EngineComponent from '../../../components/EngineComponent.svelte';
-	import Languages from '../../../routes/slides/Languages.svelte';
-	import PageAutoAnimate from './PageAutoAnimate.svelte';
-	import PageVertical from './PageVertical.svelte';
 	import Page01 from './pages/page01.svelte';
 	import Page02 from './pages/page02.svelte';
 	import Page03 from './pages/page03.svelte';
@@ -10,34 +6,19 @@
 	import Page05 from './pages/page05.svelte';
 	import Page06 from './pages/page06.svelte';
 	import Page07 from './pages/page07.svelte';
-
-	// import section from './section.svelte';
+	import Page08 from './pages/page08.svelte';
+	import Page09 from './pages/page09.svelte';
+	import Page10 from './pages/page10.svelte';
 </script>
 
-<!-- <Page01 />
+<Page01 />
 <Page02 />
 <Page03 />
 <Page04 />
 <Page05 />
-<Page06 /> -->
+<Page06 />
 <Page07 />
-<!-- <Page05 /> -->
-<!-- <PageAutoAnimate animate={true}>
-	<p data-id="1" class="text-red-500">Hello</p>
-</PageAutoAnimate>
-<PageAutoAnimate animate={true}>
-	<p data-id="1" class="text-green-500">World</p>
-	<p class="text-green-500">Second line</p>
-</PageAutoAnimate> -->
 
-<!-- <PageAutoAnimate>
-	<PageVertical>Page 1.1 ภาษาไทย</PageVertical>
-	<PageVertical>Page 1.2</PageVertical>
-	<PageVertical>Page 1.3</PageVertical>
-</PageAutoAnimate>
-
-<PageAutoAnimate>
-	<PageVertical>Page 2.1</PageVertical>
-	<PageVertical>Page 2.2</PageVertical>
-	<PageVertical>Page 2.3</PageVertical>
-</PageAutoAnimate> -->
+<Page08 />
+<Page09 />
+<Page10 />

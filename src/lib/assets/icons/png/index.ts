@@ -27,24 +27,47 @@ import pngPpk from '$lib/assets/icons/png/product-packaging.png';
 import pngBcv from '$lib/assets/icons/png/robot-conveyor.png';
 import pngBtg from '$lib/assets/icons/png/battery-three.png';
 import pngTbs from '$lib/assets/icons/png/team-brainstorm.png';
+import pngCsv from '$lib/assets/icons/png/cloud-server.png';
+import pngCbs from '$lib/assets/icons/png/cyber-security.png';
+import pngClc from '$lib/assets/icons/png/check3-clock.png';
+import pngApv from '$lib/assets/icons/png/approved-circle.png';
+import pngYnc from '$lib/assets/icons/png/yes-no-circles.png';
+import pngFmn from '$lib/assets/icons/png/Factory-modern.png';
+import pngAie from '$lib/assets/icons/png/ai-electron.png';
+import pngMwf from '$lib/assets/icons/png/machine-wifi.png';
+import pngSfw from '$lib/assets/icons/png/software-blue-red.png';
+import pngSm4 from '$lib/assets/icons/png/sensor-motionx4.png';
+import pngDsb from '$lib/assets/icons/png/dashboard-2x2.png';
+import pngDab from '$lib/assets/icons/png/data-bars.png';
+import pngAim from '$lib/assets/icons/png/ai-machine-learning.png';
+import pngKed from '$lib/assets/icons/png/key-data-indicator.png';
+
+import pngWnm from '$lib/assets/icons/png/winner-machine.png';
+import pngWnb from '$lib/assets/icons/png/winner-robot.png';
+import pngWnt from '$lib/assets/icons/png/winner-team.png';
 
 export {
     pngAi, pngAr, pngBot, pngCps, pngDt, pngEff,
     pngEnv, pngSun, pngFbot, pngJig, pngFac, pngSf,
     pngIbt, pngWfb, pngVrh, pngQtn, pngQtm, pngQtc,
     pngQyr, pngQbg, pngQdt, pngEnw, pngEnm, pngEnp,
-    pngMat, pngPpk, pngBcv, pngBtg, pngTbs,
+    pngMat, pngPpk, pngBcv, pngBtg, pngTbs, pngCsv,
+    pngCbs, pngClc, pngApv, pngYnc, pngFmn, pngAie,
+    pngMwf, pngSfw, pngSm4, pngDsb, pngDab, pngAim,
+    pngKed, pngWnm, pngWnb, pngWnt,
 
 }
 
 
 export const pngIconsArray = [
-    pngAi, pngAr, pngBot, pngCps, pngDt,
-    pngEff, pngEnv, pngSun, pngFbot, pngJig,
-    pngFac, pngSf, pngIbt, pngWfb, pngVrh,
-    pngQtn, pngQtm, pngQtc, pngQyr, pngQbg,
-    pngQdt, pngEnw, pngEnm, pngEnp,
-    pngMat, pngPpk, pngBcv, pngBtg, pngTbs,
+    pngAi, pngAr, pngBot, pngCps, pngDt, pngEff,
+    pngEnv, pngSun, pngFbot, pngJig, pngFac, pngSf,
+    pngIbt, pngWfb, pngVrh, pngQtn, pngQtm, pngQtc,
+    pngQyr, pngQbg, pngQdt, pngEnw, pngEnm, pngEnp,
+    pngMat, pngPpk, pngBcv, pngBtg, pngTbs, pngCsv,
+    pngCbs, pngClc, pngApv, pngYnc, pngFmn, pngAie,
+    pngMwf, pngSfw, pngSm4, pngDsb, pngDab, pngAim,
+    pngKed, pngWnm, pngWnb, pngWnt,
 ];
 
 const pngIconsList = {
@@ -55,6 +78,10 @@ const pngIconsList = {
     pngQtm: pngQtm, pngQtc: pngQtc, pngQyr: pngQyr, pngQbg: pngQbg,
     pngQdt: pngQdt, pngEnw: pngEnw, pngEnm: pngEnm, pngEnp: pngEnp,
     pngMat: pngMat, pngPpk: pngPpk, pngBcv: pngBcv, pngBtg: pngBtg,
-    pngTbs: pngTbs,
+    pngTbs: pngTbs, pngCsv: pngCsv, pngCbs: pngCbs, pngClc: pngClc,
+    pngApv: pngApv, pngYnc: pngYnc, pngFmn: pngFmn, pngAie: pngAie,
+    pngMwf: pngMwf, pngSfw: pngSfw, pngSm4: pngSm4, pngDsb: pngDsb,
+    pngDab: pngDab, pngAim: pngAim, pngKed: pngKed, pngWnm: pngWnm,
+    pngWnb: pngWnb, pngWnt: pngWnt,
 }
 export { pngIconsList };

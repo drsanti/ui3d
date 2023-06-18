@@ -15,7 +15,7 @@
 	const idB = `display-b-${Math.round(Math.random() * 100000)}`;
 
 	export let imgElements: HTMLImageElement[] = [];
-	let interval: number;
+	let interval: number | NodeJS.Timer;
 	let imageDisplayA: HTMLDivElement;
 	let imageDisplayB: HTMLDivElement;
 	let showA = false;
@@ -84,7 +84,7 @@
 		const names = images.length > 0 ? images : iconsArr;
 
 		if (names.length < 2) {
-			console.log(`%cRequires 2 or more images.`, `color: #fc2`);
+			console.log(`%cRequires 3 or more images.`, `color: #fc2`);
 		}
 
 		names.forEach((src) => {
