@@ -1,19 +1,29 @@
 import { Client, Message } from 'paho-mqtt';
 import { revealStore } from '../revealStore';
-
+import { speakerStore } from '../languageStore';
 
 let oldLoc = '';
 let newLoc = window.location.hash;;
 
 
+let isSpeaker: boolean;
+speakerStore.subscribe((speaker) => {
+    isSpeaker = speaker;
+    console.log(`isSpeaker: ${isSpeaker}`);
+})
+
 const doSyncPage = () => {
-    newLoc = window.location.hash;
-    if (newLoc !== oldLoc) {
-        oldLoc = newLoc;
-        if (client.isConnected()) {
-            const message = new Message(window.location.hash);
-            message.destinationName = 'slide-changed';
-            client.send(message);
+
+    if (isSpeaker === true) {
+
+        newLoc = window.location.hash;
+        if (newLoc !== oldLoc) {
+            oldLoc = newLoc;
+            if (client.isConnected()) {
+                const message = new Message(window.location.hash);
+                message.destinationName = 'slide-changed';
+                client.send(message);
+            }
         }
     }
 }
