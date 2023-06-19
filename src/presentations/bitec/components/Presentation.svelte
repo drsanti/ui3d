@@ -9,6 +9,7 @@
 	import Page08 from './pages/page08.svelte';
 	import Page09 from './pages/page09.svelte';
 	import Page10 from './pages/page10.svelte';
+	import Page11 from './pages/page11.svelte';
 </script>
 
 <Page01 />
@@ -22,3 +23,5 @@
 <Page08 />
 <Page09 />
 <Page10 />
+
+<Page11 />

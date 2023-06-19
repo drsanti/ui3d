@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { pngIconsList as icons, pngEnv, pngFac, pngSun } from '$lib/assets/icons/png';
+	import {
+		pngIconsList as icons,
+		pngEnv,
+		pngFac,
+		pngSun
+	} from '$lib/assets/icons/png';
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
 	import IconTop from '../items/IconTop.svelte';
 	import TitleText from '../items/TitleText.svelte';
@@ -13,6 +18,7 @@
 	import ArrowDown from '../../../../routes/slides/icons/svg/arrowDown.svelte';
 	import PngFadeIcons from '../items/PngFadeIcons.svelte';
 	import PageVertical from '../PageVertical.svelte';
+	import TextClickFlash from '../items/TextClickFlash.svelte';
 
 	let content = sustainableData.english;
 	let topicData = topic.english;
@@ -21,7 +27,8 @@
 		content = $langStore === 'EN' ? sustainableData.english : sustainableData.thai;
 	}
 
-	const tw = ' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
+	const tw =
+		' border-4 border-gray-500/50 rounded-full bg-black/50 mr-4 my-1 px-3 h-24 hover:border-yellow-300/50 hover:bg-red-600/20';
 	const twg = 'text-gray-400 text-[2.0rem] pt-[0.8rem] ml-1';
 </script>
 
@@ -34,16 +41,19 @@
 				{topicData.subtitle}
 			</TitleText>
 			<Fragment>
-				<TitleText tw={'text-[4.5rem]'}>
+				<TextClickFlash tw={'text-[4.5rem]'}>
 					{content.topic}
-				</TitleText>
+				</TextClickFlash>
 			</Fragment>
 		</IconTop>
 	</PageVertical>
 
 	<PageVertical>
-		<PngFadeIcons scale={0.7} images={[icons.pngFac, icons.pngEnv, icons.pngEff, icons.pngSun]} />
-		<TitleText tw={'text-[3.7rem]'}>{content.topic}</TitleText>
+		<PngFadeIcons
+			scale={0.7}
+			images={[icons.pngFac, icons.pngEnv, icons.pngEff, icons.pngSun]}
+		/>
+		<TextClickFlash tw={'text-[3.7rem]'}>{content.topic}</TextClickFlash>
 
 		<Fragment>
 			<div class="mx-40">

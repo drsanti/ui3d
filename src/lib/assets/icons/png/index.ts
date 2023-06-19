@@ -45,6 +45,28 @@ import pngKed from '$lib/assets/icons/png/key-data-indicator.png';
 import pngWnm from '$lib/assets/icons/png/winner-machine.png';
 import pngWnb from '$lib/assets/icons/png/winner-robot.png';
 import pngWnt from '$lib/assets/icons/png/winner-team.png';
+import pngPmw from '$lib/assets/icons/png/power-meter-wireless.png';
+
+import pngIop from '$lib/assets/icons/png/iot-plug-and-socket.png';
+import pngIoc from '$lib/assets/icons/png/iot-cloud.png';
+import pngPlc from '$lib/assets/icons/png/plc-cyan.png';
+import pngSmg from '$lib/assets/icons/png/smart-meter-gauge.png';
+import pngSrb from '$lib/assets/icons/png/server-blue.png'; // server blue
+import pngSrd from '$lib/assets/icons/png/server-database-storage.png';
+import pngNio from '$lib/assets/icons/png/internet-of-things.png';
+import pngNlc from '$lib/assets/icons/png/network-local-wifi.png';
+
+import pngDxc from '$lib/assets/icons/png/excel.png';
+import pngDbs from '$lib/assets/icons/png/database-3colors.png';
+import pngDcd from '$lib/assets/icons/png/database-cloud.png';
+
+import humanNote from '$lib/assets/icons/png/human-note.png';
+import stockManage from '$lib/assets/icons/png/stock-management.png';
+
+
+
+
+
 
 export {
     pngAi, pngAr, pngBot, pngCps, pngDt, pngEff,
@@ -54,7 +76,9 @@ export {
     pngMat, pngPpk, pngBcv, pngBtg, pngTbs, pngCsv,
     pngCbs, pngClc, pngApv, pngYnc, pngFmn, pngAie,
     pngMwf, pngSfw, pngSm4, pngDsb, pngDab, pngAim,
-    pngKed, pngWnm, pngWnb, pngWnt,
+    pngKed, pngWnm, pngWnb, pngWnt, pngPmw, pngIop,
+    pngIoc, pngPlc, pngSmg, pngSrb, pngSrd, pngNio,
+    pngNlc, pngDxc, pngDbs, pngDcd, humanNote, stockManage,
 
 }
 
@@ -67,7 +91,11 @@ export const pngIconsArray = [
     pngMat, pngPpk, pngBcv, pngBtg, pngTbs, pngCsv,
     pngCbs, pngClc, pngApv, pngYnc, pngFmn, pngAie,
     pngMwf, pngSfw, pngSm4, pngDsb, pngDab, pngAim,
-    pngKed, pngWnm, pngWnb, pngWnt,
+    pngKed, pngWnm, pngWnb, pngWnt, pngPmw, pngIop,
+    pngIoc, pngPlc, pngSmg, pngSrb, pngSrd, pngNio,
+    pngNlc, pngDxc, pngDbs, pngDcd, humanNote, stockManage,
+
+
 ];
 
 const pngIconsList = {
@@ -82,6 +110,12 @@ const pngIconsList = {
     pngApv: pngApv, pngYnc: pngYnc, pngFmn: pngFmn, pngAie: pngAie,
     pngMwf: pngMwf, pngSfw: pngSfw, pngSm4: pngSm4, pngDsb: pngDsb,
     pngDab: pngDab, pngAim: pngAim, pngKed: pngKed, pngWnm: pngWnm,
-    pngWnb: pngWnb, pngWnt: pngWnt,
+    pngWnb: pngWnb, pngWnt: pngWnt, pngPmw: pngPmw, pngIop: pngIop,
+    pngIoc: pngIoc, pngPlc: pngPlc, pngSmg: pngSmg, pngSrb: pngSrb,
+    pngSrd: pngSrd, pngNio: pngNio, pngNlc: pngNlc, pngDxc: pngDxc,
+    pngDbs: pngDbs, pngDcd: pngDcd, humanNote: humanNote,
+    stockManage: stockManage,
+
+
 }
 export { pngIconsList };

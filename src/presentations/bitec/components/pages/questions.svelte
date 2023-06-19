@@ -3,6 +3,7 @@
 	import Fragment from '../Fragment.svelte';
 	import PngFadeIcons from '../items/PngFadeIcons.svelte';
 	import TextClickBorder from '../items/TextClickBorder.svelte';
+	import TextClickFlash from '../items/TextClickFlash.svelte';
 	import TitleText from '../items/TitleText.svelte';
 	import { langStore } from '../languageStore';
 	export let tw = '';
@@ -43,11 +44,26 @@
 		_title = getTitle();
 		_icons =
 			title === 'tech'
-				? [icons.pngQtc, icons.pngAi, icons.pngQtm, icons.pngAr, icons.pngQtn, icons.pngIbt]
-				: [icons.pngQtc, icons.pngEnw, icons.pngQtm, icons.pngEnm, icons.pngQtn, icons.pngEnp];
+				? [
+						icons.pngQtc,
+						icons.pngAi,
+						icons.pngQtm,
+						icons.pngAr,
+						icons.pngQtn,
+						icons.pngIbt
+				  ]
+				: [
+						icons.pngQtc,
+						icons.pngEnw,
+						icons.pngQtm,
+						icons.pngEnm,
+						icons.pngQtn,
+						icons.pngEnp
+				  ];
 	}
 
-	const getTitle = () => (title === 'tech' ? content.title.tech : content.title.human);
+	const getTitle = () =>
+		title === 'tech' ? content.title.tech : content.title.human;
 
 	const twWH = `flex flex-col space-y-10 pt-6`;
 </script>
@@ -73,7 +89,7 @@
 		<div class="mb-12">
 			<PngFadeIcons images={_icons} />
 		</div>
-		<TitleText {tw}>{_title}</TitleText>
+		<TextClickFlash tw={'text-7xl'}>{_title}</TextClickFlash>
 	</div>
 	<!-- C3: Why, How ---------------------------------------------------->
 	<div class="{twWH} text-left">

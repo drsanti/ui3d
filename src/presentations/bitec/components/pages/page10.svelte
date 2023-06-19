@@ -21,10 +21,13 @@
 			names: {
 				cps: 'CPS',
 				ai: 'AI',
-				vr: 'VR',
+				vr: 'VR/AR',
 				sensor: 'Sensing',
 				info: 'Information',
-				data: 'Data'
+				data: 'Data',
+				dt: 'Digital Twin',
+				robot: 'Robot',
+				manage: 'Management'
 			},
 			text: {
 				measurement: 'The proper Measurement',
@@ -33,7 +36,11 @@
 			},
 			questions: {
 				why: 'Why we need the accurate and sufficient data/information?'
-			}
+			},
+			answers: {
+				because: 'Because ee need to<br>utilize the data-driven technologies'
+			},
+			techName: 'Data-driven technologies'
 		},
 		thai: {
 			titles: {
@@ -44,10 +51,13 @@
 			names: {
 				cps: 'ซีพีเอส',
 				ai: 'เอไอ',
-				vr: 'วีอาร์',
+				vr: 'วีอาร์/เออาร์',
 				sensor: 'การวัดค่า',
 				info: 'ข้อมูล',
-				data: 'ข้อมูล'
+				data: 'ข้อมูล',
+				dt: 'ฝาแฝดดิจิทัล',
+				robot: 'หุ่นยนต์',
+				manage: 'การจัดการ'
 			},
 			text: {
 				measurement: 'การตรวจวัดที่ดี',
@@ -56,7 +66,11 @@
 			},
 			questions: {
 				why: 'ทำไมเราจึงต้องการข้อมูลที่แม่นยำและมากพอ'
-			}
+			},
+			answers: {
+				because: 'เพราะว่าเราต้องการใช้ประโยชน์จาก<br>เทคโนโลยีที่ถูกขับโดยข้อมูล'
+			},
+			techName: 'เทคโนโลยีที่ถูกขับโดยข้อมูล'
 		}
 	};
 	let content = data.english;
@@ -101,45 +115,72 @@
 			]}
 		/>
 		<div class="pt-20">
-			<TextClickFlash>{content.questions.why}</TextClickFlash>
+			<TextClickFlash>{@html content.questions.why}</TextClickFlash>
+		</div>
+
+		<!-- Because ----------------------------------------------------------------->
+
+		<div class="pt-12">
+			<Fragment>
+				<div class="flex flex-row justify-center pb-12">
+					<ArrowDouble arrow={'down'} color={'#f8f'} />
+					<ArrowDouble arrow={'down'} color={'#f8f'} />
+					<ArrowDouble arrow={'down'} color={'#f8f'} />
+				</div>
+
+				<TextClickFlash tw={'text-green-300'}>
+					{@html content.answers.because}
+				</TextClickFlash>
+			</Fragment>
 		</div>
 	</PageVertical>
 	<PageVertical>
+		<!--  -->
+		<div class="pb-20">
+			<TextClickFlash>
+				<span class="text-[5rem]">
+					{@html content.techName}
+				</span>
+			</TextClickFlash>
+		</div>
 		<!-- CPS -->
-		<Fragment index={1}>
-			<div class="flex flex-col mt-2 items-center text-gray-400">
-				<TextClickFlash>{content.names.cps}</TextClickFlash>
-				<IconBlock icon={icons.pngCps} tw={'border-4 border-orange-500'} />
-				<ArrowDouble arrow={'up'} color={'cyan'} tw={'mt-2'} />
-			</div>
-		</Fragment>
+		<div class="grid grid-cols-3 grid-rows-2 gap-y-8">
+			<Fragment index={2}>
+				<IconBlock icon={icons.pngAie} tw={'w-[18rem] border-4 border-orange-500'}>
+					{content.names.ai}
+				</IconBlock>
+			</Fragment>
 
-		<!-- Sensing >> Information >> AI -->
-		<!-- <Fragment index={1}> -->
-		<div class="flex flex-row justify-around items-center mt-2">
-			<IconBlock icon={icons.pngSm4} />
-			<ArrowDouble arrow={'right'} color={'#8f8'} />
-			<IconBlock icon={icons.pngDab} />
-			<ArrowDouble arrow={'right'} color={'cyan'} />
-			<IconBlock tw={'border-4 border-orange-500'} icon={icons.pngAie} />
-		</div>
-		<div>
-			<div class="grid grid-cols-3 pt-1 justify-around text-gray-400">
-				<TextClickFlash tw={'pr-20'}>{content.names.sensor}</TextClickFlash>
-				<TextClickFlash tw={'pl-4'}>{content.names.info}</TextClickFlash>
-				<TextClickFlash tw={'ml-20'}>{content.names.ai}</TextClickFlash>
-			</div>
-		</div>
-		<!-- </Fragment> -->
-		<!-- VR -->
-		<Fragment index={3}>
-			<div class="flex flex-col mt- items-center text-gray-400">
-				<ArrowDouble arrow={'down'} color={'cyan'} tw={'mb-2'} />
-				<IconBlock icon={icons.pngVrh} tw={'border-4 border-orange-500'} />
-				<TextClickFlash>
+			<Fragment index={5}>
+				<IconBlock icon={icons.pngCps} tw={'w-[18rem] border-4 border-orange-500'}>
+					{content.names.cps}
+				</IconBlock>
+			</Fragment>
+
+			<Fragment index={3}>
+				<IconBlock icon={icons.pngDt} tw={'w-[18rem] border-4 border-orange-500'}>
+					{content.names.dt}
+				</IconBlock>
+			</Fragment>
+
+			<Fragment index={4}>
+				<IconBlock icon={icons.pngVrh} tw={'w-[18rem] border-4 border-orange-500'}>
 					{content.names.vr}
-				</TextClickFlash>
-			</div>
-		</Fragment>
+				</IconBlock>
+			</Fragment>
+			<Fragment index={6}>
+				<IconBlock icon={icons.pngBcv} tw={'w-[18rem] border-4 border-orange-500'}>
+					{content.names.robot}
+				</IconBlock>
+			</Fragment>
+			<Fragment index={1}>
+				<IconBlock
+					icon={icons.stockManage}
+					tw={'w-[18rem] border-4 border-orange-500'}
+				>
+					{content.names.manage}
+				</IconBlock>
+			</Fragment>
+		</div>
 	</PageVertical>
 </PageAutoAnimate>

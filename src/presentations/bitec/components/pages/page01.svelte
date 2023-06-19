@@ -13,6 +13,7 @@
 
 	import santi from '$lib/assets/images/santi_nuratch.jpg';
 	import PngIcon from '../items/PngIcon.svelte';
+	import TextClickFlash from '../items/TextClickFlash.svelte';
 
 	let content = data.english;
 	$: {
@@ -24,9 +25,13 @@
 	<PageVertical>
 		<PngFadeIcons />
 		<div class="h-1 bg-green-600/50 mx-32 my-12" />
-		<TitleText>{content.title}</TitleText>
+		<TextClickFlash tw={'text-7xl'}>
+			{content.title}
+		</TextClickFlash>
 		<Fragment>
-			<p>{content.subtitle}</p>
+			<TextClickFlash>
+				<p>{content.subtitle}</p>
+			</TextClickFlash>
 		</Fragment>
 	</PageVertical>
 

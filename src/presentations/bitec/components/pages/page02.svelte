@@ -11,6 +11,7 @@
 	import { techIconsList as ic } from '$lib/assets/icons/png/tech';
 	import Fragment from '../Fragment.svelte';
 	import PngFadeIcons from '../items/PngFadeIcons.svelte';
+	import TextClickFlash from '../items/TextClickFlash.svelte';
 
 	let topicData = topic.english;
 	let techData = tech.english;
@@ -30,7 +31,7 @@
 	<!-- Blue robot and "Factory of the Future" ----------------------------------------->
 	<PageVertical>
 		<IconTop icon={icons.pngFbot} scale={2}>
-			<TitleText>{topicData.title}</TitleText>
+			<TextClickFlash tw={'text-7xl'}>{topicData.title}</TextClickFlash>
 		</IconTop>
 	</PageVertical>
 	<!-- G1/4 --------------------------------------------------------------------------->

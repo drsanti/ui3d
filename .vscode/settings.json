@@ -138,5 +138,8 @@
 		"wireframe",
 		"wwwh",
 		"yoyo"
-	]
+	],
+	"CodeGPT.maxTokens": 500,
+	"CodeGPT.model": "text-davinci-003",
+	"CodeGPT.organizationId": ""
 }
