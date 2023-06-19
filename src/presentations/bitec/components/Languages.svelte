@@ -36,6 +36,7 @@
 				speakerStore.set(true);
 			} else {
 				speakerStore.set(false);
+				checked = true;
 			}
 		}
 	};
@@ -67,11 +68,13 @@
 		<!--  -->
 		<div class="flex w-full justify-between items-center px-2">
 			<!-- Page URL ---------------------------------------------------------------------------->
-			<div class="">
-				Page: {mqttMessage}
-			</div>
+			{#if $speakerStore === true}
+				<div class="text-sm">
+					Page: {mqttMessage}
+				</div>
+			{/if}
 			<!-- User ID ---------------------------------------------------------------------------->
-			<div class="">
+			<div class="text-sm">
 				{$speakerStore === true ? 'Speaker' : 'Guest'}: {userId}
 			</div>
 			<!-- Sync button ------------------------------------------------------------------------>
