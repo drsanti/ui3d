@@ -34,7 +34,11 @@ const config = {
 			assets: 'docs',		/* Asset output directory */
 			fallback: undefined,
 			precompress: false,
-			strict: true
+			strict: true,
+			hash: false,
+			static:{
+				hash: false,
+			}
 		})
 	},
 
