@@ -25,8 +25,8 @@
 	const modal: ModalSettings = {
 		type: 'prompt',
 		// Data
-		title: 'Speaker',
-		//body: 'Provide your first name in the field below.',
+		title: 'Speaker(s)',
+		body: 'Guest: click the Cancel button.',
 		// Populates the input value and attributes
 		value: '',
 		valueAttr: { type: 'password', minlength: 3, maxlength: 30, required: true },
@@ -36,7 +36,7 @@
 				speakerStore.set(true);
 			} else {
 				speakerStore.set(false);
-				checked = true;
+				// checked = true;
 			}
 		}
 	};
