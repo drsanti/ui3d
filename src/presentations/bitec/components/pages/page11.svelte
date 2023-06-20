@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		pngIconsList as icons,
-		pngAi,
-		pngQyr,
-		pngSfw
-	} from '$lib/assets/icons/png';
+	import { pngIconsList as icons } from '$lib/assets/icons/png';
 	import { langStore } from '../languageStore';
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
 	import IconBlock from '../items/IconBlock.svelte';
@@ -173,17 +168,16 @@
 	<!-- How do you transfer the data? ------------------------------------------------------>
 	<PageVertical>
 		<div class="flex flex-col">
-			<div class="mb-[4rem]">
-				<TextClickFlash tw={'text-[4rem]'}>
-					{@html content.questions.transfer}
-				</TextClickFlash>
-			</div>
+			<TextClickFlash tw={'text-[4rem]'}>
+				{@html content.questions.transfer}
+			</TextClickFlash>
 
 			<Fragment>
 				<div class="flex flex-row justify-around">
 					<PngIcon tw={'pl-10'} icon={icons.pngNlc} />
 					<PngIcon tw={'pl-10'} icon={icons.pngNio} />
 				</div>
+				<div />
 				<div class="flex flex-row justify-around">
 					{#each split(content.answers.transfer) as text}
 						<div class="flex flex-col justify-center items-center">
@@ -241,14 +235,14 @@
 			</div>
 
 			<Fragment>
-				<div class="flex flex-row justify-around">
-					<PngIcon tw={'pl-[2rem]'} scale={0.85} icon={icons.humanNote} />
-					<PngIcon tw={'pl-[8rem]'} icon={icons.pngDsb} />
-					<PngIcon tw={'pl-[4rem]'} icon={icons.pngAie} />
+				<div class="flex flex-row justify-between mx-[6rem]">
+					<PngIcon tw={'pl-[0rem]'} scale={0.85} icon={icons.humanNote} />
+					<PngIcon tw={'pl-[0rem]'} icon={icons.pngDsb} />
+					<PngIcon tw={'pl-[0rem]'} icon={icons.pngAie} />
 				</div>
-				<div class="flex flex-row justify-around">
+				<div class="flex flex-row justify-between mx-[0rem]">
 					{#each split(content.answers.analyze) as text}
-						<div class="flex flex-col justify-center items-center">
+						<div class="flex flex-col justify-center items-center w-1/3">
 							<WindSpinners
 								color={chroma.hsl(Math.random() * 360, 0.8, 0.7).hex()}
 							/>

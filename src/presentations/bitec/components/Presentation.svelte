@@ -2,6 +2,7 @@
 	import PageAutoAnimate from './PageAutoAnimate.svelte';
 	import PageVertical from './PageVertical.svelte';
 	import MqttPaho from './pages/mqttPaho.svelte';
+	import Page00 from './pages/page00.svelte';
 	import Page01 from './pages/page01.svelte';
 	import Page02 from './pages/page02.svelte';
 	import Page03 from './pages/page03.svelte';
@@ -15,10 +16,7 @@
 	import Page11 from './pages/page11.svelte';
 </script>
 
-<!-- <div class="relative text-xl h-screen flex justify-start items-end px-2 py-2">
-	<span>{mqttMessage}</span>
-</div> -->
-
+<Page00 />
 <Page01 />
 <Page02 />
 <Page03 />
