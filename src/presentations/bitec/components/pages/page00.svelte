@@ -30,12 +30,12 @@
 				'This presentation features both horizontal and vertical slides. To navigate, you can either slide left or right, or click on the controls (arrows) to move to the next or previous slide.'
 		},
 		thai: {
-			how: 'การใช้งานแอพพลิเคชันนำเสนอ',
+			how: 'การใช้งานแอปพลิเคชันนำเสนอ',
 			presentation: 'เข้าสู่เว็บนำเสนอ',
 			desc1:
-				'แอพพลิเคชันนำเสนอนนี้มีทั้งภาษาอะงกฤษและภาษาไทย การเปลี่ยนภาษาให้คลิกที่ปุ่ม EN/TH ด้านบนขวา หากต้องการดูหน้าการนำแสนอพร้อมกับผู้น้ำเสนอให้เลื่อนปุ่ม Sync ไปทางขวา (เป็นสีเขียว)',
+				'แอปพลิเคชันนำเสนอนี้มีทั้งภาษาอังกฤษและภาษาไทย การเปลี่ยนภาษาให้คลิกที่ปุ่ม EN/TH ด้านบนขวา หากต้องการดูสไลด์การนำเสนอพร้อมกับผู้นำเสนอให้เลื่อนปุ่ม Sync ไปทางขวา (เป็นสีเขียว)',
 			desc2:
-				'แอพพลิเคชันนำเสนอนนี้มีทั้งแนวนอนและแนวตั้ง การเปลี่ยนหน้าการนำเสนอให้สัมผัสจอแล้วเลื่อนไปทางซ้าย ขวา ขึ้น หรือ ลง หรือกดที่ลูกศร เพื่อทำการเปลี่ยนไปยังหน้าที่ต้องการ'
+				'แอปพลิเคชันนำเสนอนี้มีทั้งแนวนอนและแนวตั้ง การเปลี่ยนหน้าการนำเสนอให้สไลด์ด้วยการเลื่อนซ้ายหรือขวา หรือคลิกที่ตัวควบคุม (ลูกศร) เพื่อย้ายไปยังสไลด์ถัดไปหรือก่อนหน้านี้'
 		}
 	};
 
@@ -48,36 +48,41 @@
 	}
 </script>
 
-<!-- QRCode DigitalOcean -->
 <PageAutoAnimate>
-	<IconTop icon={qrDo} scale={4}>
-		<TextClickBorder tw={'text-[4rem] mt-8 text-blue-400'}
-			>{text.presentation}</TextClickBorder
-		>
-		<TextClickBorder tw={'text-[3rem] mt-0 text-blue-500'}
-			>https://shorturl.at/dijCP</TextClickBorder
-		>
-		<span class="text-gray-500">(main)</span>
-	</IconTop>
+	<!-- QRCode DigitalOcean -->
+	<PageVertical>
+		<IconTop icon={qrDo} scale={4}>
+			<TextClickBorder tw={'text-[4rem] mt-8 text-blue-400'}>
+				{text.presentation}
+			</TextClickBorder>
+			<TextClickBorder tw={'text-[3rem] mt-0 text-blue-500'}>
+				<span class="text-gray-600">https://</span>
+				<span>shorturl.at/dijCP</span>
+			</TextClickBorder>
+			<span class="text-gray-700">(main)</span>
+		</IconTop>
+	</PageVertical>
+
+	<!-- GitHub QRCode  -->
+	<PageVertical>
+		<IconTop icon={qrGh} scale={4}>
+			<TextClickBorder tw={'text-[4rem] mt-8 text-green-400'}>
+				{text.presentation}
+			</TextClickBorder>
+			<TextClickBorder tw={'text-[3rem] mt-0 text-green-500'}>
+				<span class="text-gray-600">https://</span>
+				<span>shorturl.at/bhyFQ</span>
+			</TextClickBorder>
+			<span class="text-gray-600">(mirror)</span>
+		</IconTop>
+	</PageVertical>
 </PageAutoAnimate>
 
-<!-- GitHub QRCode  -->
-<PageAutoAnimate>
-	<IconTop icon={qrGh} scale={4}>
-		<TextClickBorder tw={'text-[4rem] mt-8 text-green-400'}
-			>{text.presentation}</TextClickBorder
-		>
-		<TextClickBorder tw={'text-[3rem] mt-0 text-green-500'}
-			>https://shorturl.at/bhyFQ</TextClickBorder
-		>
-		<span class="text-gray-500">(mirror)</span>
-	</IconTop>
-</PageAutoAnimate>
-
+<!-- How to use this presentation -->
 <PageAutoAnimate>
 	<PageVertical>
 		<TextClickFlash>
-			<div class="mb-10 text-[4rem]">
+			<div class="mb-5 text-[4rem]">
 				{text.how}
 			</div>
 		</TextClickFlash>
@@ -85,14 +90,14 @@
 		<div
 			class="text-center mb-10 text-gray-500 bg-blue-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-4"
 		>
-			<TextClickFlash>
+			<TextClickFlash tw={'text-[1.7rem]'}>
 				{text.desc1}
 			</TextClickFlash>
 		</div>
 		<div
 			class="text-center mb-10 text-gray-500 bg-green-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-4"
 		>
-			<TextClickFlash>
+			<TextClickFlash tw={'text-[1.7rem]'}>
 				{text.desc2}
 			</TextClickFlash>
 		</div>

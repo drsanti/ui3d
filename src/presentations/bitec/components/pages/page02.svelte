@@ -3,13 +3,11 @@
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
 	import PageVertical from '../PageVertical.svelte';
 	import IconTop from '../items/IconTop.svelte';
-	import TitleText from '../items/TitleText.svelte';
 	import { langStore } from '../languageStore';
 	import { data as topic } from './topic.data';
 	import { data as tech } from './technology.data';
 	import IconLeft from '../items/IconLeft.svelte';
 	import { techIconsList as ic } from '$lib/assets/icons/png/tech';
-	import Fragment from '../Fragment.svelte';
 	import PngFadeIcons from '../items/PngFadeIcons.svelte';
 	import TextClickFlash from '../items/TextClickFlash.svelte';
 
