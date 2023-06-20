@@ -11,7 +11,7 @@
 	import ArrowDouble from '../items/arrowDouble.svelte';
 	import BlockSpinners from '../items/BlockSpinners.svelte';
 	import TitleText from '../items/TitleText.svelte';
-	import ClickRunning from '../items/ClickRunning.svelte';
+	import ClickRunning from '../items/ClockRunning.svelte';
 	import DotRotators from '../items/DotRotators.svelte';
 	import chroma from 'chroma-js';
 	import PngIcon from '../items/PngIcon.svelte';

@@ -1,7 +1,4 @@
 <script lang="ts">
-	import PageAutoAnimate from './PageAutoAnimate.svelte';
-	import PageVertical from './PageVertical.svelte';
-	import MqttPaho from './pages/mqttPaho.svelte';
 	import Page00 from './pages/page00.svelte';
 	import Page01 from './pages/page01.svelte';
 	import Page02 from './pages/page02.svelte';
@@ -14,6 +11,7 @@
 	import Page09 from './pages/page09.svelte';
 	import Page10 from './pages/page10.svelte';
 	import Page11 from './pages/page11.svelte';
+	import Page12 from './pages/page12.svelte';
 </script>
 
 <Page00 />
@@ -24,9 +22,8 @@
 <Page05 />
 <Page06 />
 <Page07 />
-
 <Page08 />
 <Page09 />
 <Page10 />
-
 <Page11 />
+<Page12 />

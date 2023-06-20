@@ -63,6 +63,9 @@ import pngDcd from '$lib/assets/icons/png/database-cloud.png';
 import humanNote from '$lib/assets/icons/png/human-note.png';
 import stockManage from '$lib/assets/icons/png/stock-management.png';
 
+import realtimeDatabase from '$lib/assets/icons/png/real-time-database.png';
+import humanVrInteraction from '$lib/assets/icons/png/virtual-reality-human-star.png';
+
 
 
 
@@ -79,6 +82,7 @@ export {
     pngKed, pngWnm, pngWnb, pngWnt, pngPmw, pngIop,
     pngIoc, pngPlc, pngSmg, pngSrb, pngSrd, pngNio,
     pngNlc, pngDxc, pngDbs, pngDcd, humanNote, stockManage,
+    realtimeDatabase, humanVrInteraction
 
 }
 
@@ -94,6 +98,7 @@ export const pngIconsArray = [
     pngKed, pngWnm, pngWnb, pngWnt, pngPmw, pngIop,
     pngIoc, pngPlc, pngSmg, pngSrb, pngSrd, pngNio,
     pngNlc, pngDxc, pngDbs, pngDcd, humanNote, stockManage,
+    realtimeDatabase, humanVrInteraction,
 
 
 ];
@@ -114,7 +119,8 @@ const pngIconsList = {
     pngIoc: pngIoc, pngPlc: pngPlc, pngSmg: pngSmg, pngSrb: pngSrb,
     pngSrd: pngSrd, pngNio: pngNio, pngNlc: pngNlc, pngDxc: pngDxc,
     pngDbs: pngDbs, pngDcd: pngDcd, humanNote: humanNote,
-    stockManage: stockManage,
+    stockManage: stockManage, realtimeDatabase: realtimeDatabase,
+    humanVrInteraction: humanVrInteraction,
 
 
 }

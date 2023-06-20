@@ -4,7 +4,7 @@
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
 	import IconBlock from '../items/IconBlock.svelte';
 	import TextClickFlash from '../items/TextClickFlash.svelte';
-	import ClickRunning from '../items/ClickRunning.svelte';
+	import ClickRunning from '../items/ClockRunning.svelte';
 	import Fragment from '../Fragment.svelte';
 	import PageVertical from '../PageVertical.svelte';
 	import BlocksMove from '../items/BlocksMove.svelte';
