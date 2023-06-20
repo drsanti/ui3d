@@ -20,31 +20,47 @@
 	import IconTop from '../items/IconTop.svelte';
 	import TextClickBorder from '../items/TextClickBorder.svelte';
 
+	const textHelp = {
+		english: {
+			how: 'How to use this presentation?',
+			presentation: 'Presentation'
+		},
+		thai: {
+			how: 'การใช้งานแอพพลิเคชัน',
+			presentation: 'เข้าสู่เว็บนำเสนอ'
+		}
+	};
+
+	let text = textHelp.english;
+
 	let content = data.english;
 	$: {
 		content = $langStore === 'EN' ? data.english : data.thai;
+		text = $langStore === 'EN' ? textHelp.english : textHelp.thai;
 	}
 </script>
 
+<!-- QRCode DigitalOcean -->
 <PageAutoAnimate>
 	<IconTop icon={qrDo} scale={4}>
 		<TextClickBorder tw={'text-[4rem] mt-8 text-blue-400'}
-			>Presentation</TextClickBorder
+			>{text.presentation}</TextClickBorder
 		>
 		<TextClickBorder tw={'text-[3rem] mt-0 text-blue-500'}
-			>shorturl.at/EN256</TextClickBorder
+			>https://shorturl.at/dijCP</TextClickBorder
 		>
 		<span class="text-gray-500">(main)</span>
 	</IconTop>
 </PageAutoAnimate>
 
+<!-- QRCode  -->
 <PageAutoAnimate>
 	<IconTop icon={qrGh} scale={4}>
 		<TextClickBorder tw={'text-[4rem] mt-8 text-green-400'}
-			>Presentation</TextClickBorder
+			>{text.presentation}</TextClickBorder
 		>
 		<TextClickBorder tw={'text-[3rem] mt-0 text-green-500'}
-			>shorturl.at/cTX19</TextClickBorder
+			>https://shorturl.at/cTX19</TextClickBorder
 		>
 		<span class="text-gray-500">(mirror)</span>
 	</IconTop>

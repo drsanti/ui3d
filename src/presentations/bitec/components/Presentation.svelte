@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Page00 from './pages/page00.svelte';
-	import Page01 from './pages/page01.svelte';
+	import Page01 from './pages/page1.svelte';
 	import Page02 from './pages/page02.svelte';
 	import Page03 from './pages/page03.svelte';
 	import Page04 from './pages/page04.svelte';
