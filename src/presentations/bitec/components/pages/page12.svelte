@@ -1,13 +1,11 @@
 <script>
 	import PageAutoAnimate from '../PageAutoAnimate.svelte';
-	import PngIcon from '../items/PngIcon.svelte';
 	import { pngIconsList as icons } from '$lib/assets/icons/png';
 	import PageVertical from '../PageVertical.svelte';
 	import IconTop from '../items/IconTop.svelte';
 	import TextClickBorder from '../items/TextClickBorder.svelte';
 	import ClockRunning from '../items/ClockRunning.svelte';
 	import BlockSpinners from '../items/BlockSpinners.svelte';
-	import DotRotators from '../items/DotRotators.svelte';
 	import PluseSpinners from '../items/PluseSpinners.svelte';
 	import { langStore } from '../languageStore';
 

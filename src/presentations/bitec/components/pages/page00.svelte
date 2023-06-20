@@ -60,7 +60,7 @@
 			>{text.presentation}</TextClickBorder
 		>
 		<TextClickBorder tw={'text-[3rem] mt-0 text-green-500'}
-			>https://shorturl.at/cTX19</TextClickBorder
+			>https://shorturl.at/bhyFQ</TextClickBorder
 		>
 		<span class="text-gray-500">(mirror)</span>
 	</IconTop>

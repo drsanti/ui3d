@@ -12,9 +12,11 @@
 	import Page10 from './pages/page10.svelte';
 	import Page11 from './pages/page11.svelte';
 	import Page12 from './pages/page12.svelte';
+	import Page13 from './pages/page13.svelte';
+	import Page14 from './pages/page14.svelte';
 </script>
 
-<Page00 />
+<!-- <Page00 />
 <Page01 />
 <Page02 />
 <Page03 />
@@ -26,4 +28,6 @@
 <Page09 />
 <Page10 />
 <Page11 />
-<Page12 />
+<Page12 /> -->
+<Page13 />
+<Page14 />

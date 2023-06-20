@@ -65,6 +65,10 @@ import stockManage from '$lib/assets/icons/png/stock-management.png';
 
 import realtimeDatabase from '$lib/assets/icons/png/real-time-database.png';
 import humanVrInteraction from '$lib/assets/icons/png/virtual-reality-human-star.png';
+import demoClick from '$lib/assets/icons/png/demo-click.png';
+import internetClick from '$lib/assets/icons/png/internet-click.png';
+import graphicsDesigner from '$lib/assets/icons/png/graphic-designer.png';
+import robotThanks from '$lib/assets/icons/png/robot-thanks.png';
 
 
 
@@ -82,7 +86,7 @@ export {
     pngKed, pngWnm, pngWnb, pngWnt, pngPmw, pngIop,
     pngIoc, pngPlc, pngSmg, pngSrb, pngSrd, pngNio,
     pngNlc, pngDxc, pngDbs, pngDcd, humanNote, stockManage,
-    realtimeDatabase, humanVrInteraction
+    realtimeDatabase, humanVrInteraction, demoClick, internetClick, graphicsDesigner, robotThanks
 
 }
 
@@ -98,7 +102,7 @@ export const pngIconsArray = [
     pngKed, pngWnm, pngWnb, pngWnt, pngPmw, pngIop,
     pngIoc, pngPlc, pngSmg, pngSrb, pngSrd, pngNio,
     pngNlc, pngDxc, pngDbs, pngDcd, humanNote, stockManage,
-    realtimeDatabase, humanVrInteraction,
+    realtimeDatabase, humanVrInteraction, demoClick, internetClick, graphicsDesigner, robotThanks
 
 
 ];
@@ -121,6 +125,8 @@ const pngIconsList = {
     pngDbs: pngDbs, pngDcd: pngDcd, humanNote: humanNote,
     stockManage: stockManage, realtimeDatabase: realtimeDatabase,
     humanVrInteraction: humanVrInteraction,
+    demoClick: demoClick, internetClick: internetClick, graphicsDesigner: graphicsDesigner,
+    robotThanks: robotThanks,
 
 
 }
