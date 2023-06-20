@@ -23,11 +23,19 @@
 	const textHelp = {
 		english: {
 			how: 'How to use this presentation?',
-			presentation: 'Presentation'
+			presentation: 'Presentation',
+			desc1:
+				'This presentation includes both English and Thai languages. Click the EN/TH button to switch to your preferred language. Enable the Sync button to synchronize your slides with the speaker.',
+			desc2:
+				'This presentation features both horizontal and vertical slides. To navigate, you can either slide left or right, or click on the controls (arrows) to move to the next or previous slide.'
 		},
 		thai: {
-			how: 'การใช้งานแอพพลิเคชัน',
-			presentation: 'เข้าสู่เว็บนำเสนอ'
+			how: 'การใช้งานแอพพลิเคชันนำเสนอ',
+			presentation: 'เข้าสู่เว็บนำเสนอ',
+			desc1:
+				'แอพพลิเคชันนำเสนอนนี้มีทั้งภาษาอะงกฤษและภาษาไทย การเปลี่ยนภาษาให้คลิกที่ปุ่ม EN/TH ด้านบนขวา หากต้องการดูหน้าการนำแสนอพร้อมกับผู้น้ำเสนอให้เลื่อนปุ่ม Sync ไปทางขวา (เป็นสีเขียว)',
+			desc2:
+				'แอพพลิเคชันนำเสนอนนี้มีทั้งแนวนอนและแนวตั้ง การเปลี่ยนหน้าการนำเสนอให้สัมผัสจอแล้วเลื่อนไปทางซ้าย ขวา ขึ้น หรือ ลง หรือกดที่ลูกศร เพื่อทำการเปลี่ยนไปยังหน้าที่ต้องการ'
 		}
 	};
 
@@ -75,21 +83,17 @@
 		</TextClickFlash>
 
 		<div
-			class="text-center mb-10 text-gray-500 bg-blue-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-2"
+			class="text-center mb-10 text-gray-500 bg-blue-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-4"
 		>
 			<TextClickFlash>
-				This presentation includes both English and Thai languages. Click the EN/TH
-				button to switch to your preferred language. Enable the Sync button to
-				synchronize your slides with the speaker.
+				{text.desc1}
 			</TextClickFlash>
 		</div>
 		<div
-			class="text-center mb-10 text-gray-500 bg-green-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-2"
+			class="text-center mb-10 text-gray-500 bg-green-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-4"
 		>
 			<TextClickFlash>
-				This presentation features both horizontal and vertical slides. To navigate,
-				you can either slide left or right, or click on the controls (arrows) to move
-				to the next or previous slide.
+				{text.desc2}
 			</TextClickFlash>
 		</div>
 		<div>

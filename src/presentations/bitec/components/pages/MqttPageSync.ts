@@ -9,7 +9,7 @@ let newLoc = window.location.hash;;
 let isSpeaker: boolean;
 speakerStore.subscribe((speaker) => {
     isSpeaker = speaker;
-    console.log(`isSpeaker: ${isSpeaker}`);
+    // console.log(`isSpeaker: ${isSpeaker}`);
 })
 
 const doSyncPage = () => {
@@ -65,7 +65,7 @@ export const connect = () => {
     client = new Client(brokerUrl, clientId);
 
     client.onConnectionLost = (responseObject: any) => {
-        console.log(`Connection lost: ${responseObject.errorMessage}`);
+        // console.log(`Connection lost: ${responseObject.errorMessage}`);
         setTimeout(() => client.connect(), 3000)
     };
 
@@ -79,11 +79,11 @@ export const connect = () => {
 
     client.connect({
         onSuccess: () => {
-            console.log('Connected to MQTT broker');
+            // console.log('Connected to MQTT broker');
             client.subscribe('slide-changed');
         },
         onFailure: (responseObject: any) => {
-            console.log(`Failed to connect: ${responseObject.errorMessage}`);
+            // console.log(`Failed to connect: ${responseObject.errorMessage}`);
             setTimeout(() => client.connect(), 3000)
         },
         userName: username,

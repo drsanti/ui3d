@@ -12,7 +12,7 @@
 	let mqttMessage = window.location.hash;
 
 	onMessage((message) => {
-		mqttMessage = `${message.payloadString} - ${$langStore}`;
+		mqttMessage = `${message.payloadString}`; //; - ${$langStore}`;
 
 		// guest
 		if ($speakerStore === false && $syncStore === true) {
@@ -45,14 +45,14 @@
 		connect();
 		checked = true;
 
-		console.log($speakerStore);
+		// console.log($speakerStore);
 	});
 	onDestroy(() => disconnect());
 
 	let checked: true;
 
 	$: {
-		console.log(checked);
+		// console.log(checked);
 		syncStore.set(checked);
 	}
 	function onChange(e: any) {
@@ -70,7 +70,7 @@
 			<!-- Page URL ---------------------------------------------------------------------------->
 			{#if $speakerStore === true}
 				<div class="text-sm">
-					Page: {mqttMessage}
+					url: {mqttMessage}
 				</div>
 			{/if}
 			<!-- User ID ---------------------------------------------------------------------------->
