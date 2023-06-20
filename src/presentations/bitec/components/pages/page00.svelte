@@ -53,7 +53,7 @@
 	</IconTop>
 </PageAutoAnimate>
 
-<!-- QRCode  -->
+<!-- GitHub QRCode  -->
 <PageAutoAnimate>
 	<IconTop icon={qrGh} scale={4}>
 		<TextClickBorder tw={'text-[4rem] mt-8 text-green-400'}
@@ -67,36 +67,13 @@
 </PageAutoAnimate>
 
 <PageAutoAnimate>
-	<PageVertical>How to use this presentation</PageVertical>
-
 	<PageVertical>
-		<PngFadeIcons />
-		<div class="h-1 bg-green-600/50 mx-32 my-12" />
-		<TextClickFlash tw={'text-7xl'}>
-			{content.title}
-		</TextClickFlash>
-		<Fragment>
-			<TextClickFlash>
-				<p>{content.subtitle}</p>
-			</TextClickFlash>
-		</Fragment>
-	</PageVertical>
-
-	<PageVertical tw={'text-[1.8rem]'}>
-		<div class="flex justify-center">
-			<div class="relative w-[256px] h-[256px]">
-				<img
-					class="border-8 border-gray-300/30 rounded-full absolute inset-0 object-cover object-top w-full h-full"
-					src={santi}
-					alt=""
-				/>
+		<TextClickFlash>
+			<div class="mb-10 text-[4rem]">
+				{text.how}
 			</div>
-		</div>
-		<div class="h-4" />
-		<DrSantiInfo />
-	</PageVertical>
+		</TextClickFlash>
 
-	<PageVertical>
 		<div
 			class="text-center mb-10 text-gray-500 bg-blue-900/50 border-2 border-gray-500 rounded-[1rem] px-4 py-2"
 		>
@@ -209,5 +186,34 @@
 				</div>
 			</div>
 		</div>
+	</PageVertical>
+</PageAutoAnimate>
+
+<PageAutoAnimate>
+	<PageVertical>
+		<PngFadeIcons />
+		<div class="h-1 bg-green-600/50 mx-32 my-12" />
+		<TextClickFlash tw={'text-7xl'}>
+			{content.title}
+		</TextClickFlash>
+		<Fragment>
+			<TextClickFlash>
+				<p>{content.subtitle}</p>
+			</TextClickFlash>
+		</Fragment>
+	</PageVertical>
+
+	<PageVertical tw={'text-[1.8rem]'}>
+		<div class="flex justify-center">
+			<div class="relative w-[256px] h-[256px]">
+				<img
+					class="border-8 border-gray-300/30 rounded-full absolute inset-0 object-cover object-top w-full h-full"
+					src={santi}
+					alt=""
+				/>
+			</div>
+		</div>
+		<div class="h-4" />
+		<DrSantiInfo />
 	</PageVertical>
 </PageAutoAnimate>
