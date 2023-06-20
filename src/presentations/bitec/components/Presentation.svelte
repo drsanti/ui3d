@@ -16,7 +16,7 @@
 	import Page14 from './pages/page14.svelte';
 </script>
 
-<!-- <Page00 />
+<Page00 />
 <Page01 />
 <Page02 />
 <Page03 />
@@ -28,6 +28,6 @@
 <Page09 />
 <Page10 />
 <Page11 />
-<Page12 /> -->
+<Page12 />
 <Page13 />
 <Page14 />
