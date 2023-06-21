@@ -12,6 +12,9 @@
 	let counter = 0;
 
 	export let modelId = 2;
+	export let tw = '';
+	export let width: number | 'auto' = 'auto';
+	export let height: number | 'auto' = 'auto';
 
 	let isCreated = false;
 
@@ -64,7 +67,11 @@
 			});
 
 			gr.onResize(() => {
-				gr.setSize169();
+				if (width === height && width === 'auto') {
+					gr.setSize169();
+				} else {
+					gr.setSize(width as number, height as number);
+				}
 			});
 
 			/**
@@ -94,7 +101,7 @@
 
 <!-- <div>Graphics....{counter}</div> -->
 
-<div class="border border-blue-500 p-0 m-0">
+<div class="{tw} border border-blue-500 p-0 m-0">
 	<div id={containerId} />
 	<slot />
 </div>

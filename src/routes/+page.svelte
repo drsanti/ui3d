@@ -10,15 +10,4 @@
 	import Reveal from '../presentations/bitec/components/Reveal.svelte';
 </script>
 
-<!-- <div class="flex flex-col justify-center items-center h-screen w-screen">
-	<EngineComponent>
-		<GraphicsComponent modelId={2} />
-		<GraphicsComponent modelId={0} />
-	</EngineComponent>
-</div> -->
-
-<!-- <EngineComponent /> -->
-<!-- <RevealSlides /> -->
-<!-- <Iphone /> -->
-
 <Reveal />

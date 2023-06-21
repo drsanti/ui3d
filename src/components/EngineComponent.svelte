@@ -6,7 +6,10 @@
 	import type { Resources } from '../ui3d/Graphics/GraphicsResources';
 	import Stats from './Stats.svelte';
 	import Memory from './Memory.svelte';
-	import type { CubeTextureDownloadInfo, ModelDownloadInfo } from '../ui3d/Graphics/GraphicsLoader';
+	import type {
+		CubeTextureDownloadInfo,
+		ModelDownloadInfo
+	} from '../ui3d/Graphics/GraphicsLoader';
 	import DownloadInfo from './DownloadInfo.svelte';
 
 	let engine: Engine;
@@ -70,12 +73,14 @@
 		}
 	);
 
+	//- -Used for bindings
 	let parentModelDownloadProgress: (info: ModelDownloadInfo) => void;
 	let parentCubeTextureDownloadProgress: (info: CubeTextureDownloadInfo) => void;
 
 	function progressModelInfo(info: ModelDownloadInfo) {
 		parentModelDownloadProgress(info);
 	}
+
 	function progressTextureInfo(info: CubeTextureDownloadInfo) {
 		parentCubeTextureDownloadProgress(info);
 	}
@@ -84,9 +89,9 @@
 </script>
 
 {#if resourcesDownloaded}
-	<Stats />
+	<!-- <Stats /> -->
 	<slot />
-	<Memory />
+	<!-- <Memory /> -->
 {:else}
 	<DownloadInfo
 		bind:childModelDownloadProgress={parentModelDownloadProgress}

@@ -54,6 +54,7 @@
 		"paho-mqtt": "^1.1.0",
 		"reveal.js": "^4.5.0",
 		"skeleton-ui": "^0.0.8",
+		"svelte-youtube": "^0.0.2",
 		"three": "^0.153.0",
 		"three-orbitcontrols-ts": "^0.1.2"
 	}

@@ -1,5 +1,8 @@
 <script lang="ts">
-	import type { CubeTextureDownloadInfo, ModelDownloadInfo } from '../ui3d/Graphics/GraphicsLoader';
+	import type {
+		CubeTextureDownloadInfo,
+		ModelDownloadInfo
+	} from '../ui3d/Graphics/GraphicsLoader';
 
 	let cubeInfos: string[] = [];
 	let modelInfos: string[] = [];
@@ -9,18 +12,22 @@
 	let cInfo: string | undefined;
 	let mInfo: string | undefined;
 
-	let interval: number | undefined;
+	let interval: number | NodeJS.Timer | undefined;
 	export const childModelDownloadProgress = (info: ModelDownloadInfo) => {
 		modelInfos.push(
-			`${info.path}, ${info.percent.toFixed(2)}, ${(info.loaded / 1e6).toFixed(2)}, ${(
-				info.total / 1e6
-			).toFixed(2)}`
+			`${info.path}, ${info.percent.toFixed(2)}, ${(info.loaded / 1e6).toFixed(
+				2
+			)}, ${(info.total / 1e6).toFixed(2)}`
 		);
 		start();
 	};
 
-	export const childCubeTextureDownloadProgress = (info: CubeTextureDownloadInfo) => {
-		cubeInfos.push(`${info.tag}, ${info.url}, ${info.loaded.toFixed(2)}, ${info.total}`);
+	export const childCubeTextureDownloadProgress = (
+		info: CubeTextureDownloadInfo
+	) => {
+		cubeInfos.push(
+			`${info.tag}, ${info.url}, ${info.loaded.toFixed(2)}, ${info.total}`
+		);
 		start();
 	};
 
@@ -37,7 +44,11 @@
 				cInfo = cubeInfos.shift();
 				mInfo = modelInfos.shift();
 
-				if (resourcesDownloaded === true && cInfo === undefined && mInfo === undefined) {
+				if (
+					resourcesDownloaded === true &&
+					cInfo === undefined &&
+					mInfo === undefined
+				) {
 					clearInterval(interval);
 					interval = undefined;
 					console.log('DONE');
