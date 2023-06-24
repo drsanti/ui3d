@@ -7,9 +7,9 @@
  * mosquitto_pub -h localhost -t "test" -m "hello world" -u "dtwin" -P "dtwin"
  ******************************************************************************/
 
-import { EngineEventBus } from "../Engine/EngineEventBus"
 
 import mqtt from 'mqtt';
+import { EngineEventBus } from '../Engine/EngineEventBus';
 
 
 // import { EngineEvent } from "../Engine";

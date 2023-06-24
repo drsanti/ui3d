@@ -1,13 +1,31 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import EngineComponent from '../components/EngineComponent.svelte';
-	import GraphicsComponent from '../components/GraphicsComponent.svelte';
-	import Grids from './grids.svelte';
-	import Iphone from './iphone/iphone.svelte';
-	import RevealSlides from './slides/RevealSlides.svelte';
-	// onMount(() => console.log(`%c page.svelte loaded`, `background: #228`));
+	import type { Message } from 'paho-mqtt';
+	import { MqttPahoClient } from '../ui3d/NetLink/MqttPahoClient';
 
-	import Reveal from '../presentations/bitec/components/Reveal.svelte';
+	let clientId = '';
+	let clientTopic = '';
+	let receivedData = '';
+	let isConnected = false;
+
+	const client = new MqttPahoClient({
+		onConnectionSuccess: (id: string, topic: string) => {
+			clientId = id;
+			clientTopic = topic;
+			isConnected = true;
+		},
+		onConnectionLost: (id: string, e: Paho.MQTT.MQTTError) => (isConnected = false),
+		onMessageArrived: (id: string, message: Message) =>
+			(receivedData = message.payloadString)
+	}).connect();
 </script>
 
-<Reveal />
+<div class="flex flex-col items-center justify-center h-screen">
+	{#if isConnected}
+		<p class="text-2xl text-[#5f8]">Connecting to services.bits-fusion.com</p>
+		<p class="text-neutral-500">{clientId}</p>
+		<p class="text-neutral-500">{clientTopic}</p>
+		<p class="text-[#85f] text-xl">{receivedData}</p>
+	{:else}
+		<p class="text-2xl text-[#f58]">Connecting to services.bits-fusion.com</p>
+	{/if}
+</div>
