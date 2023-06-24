@@ -9,6 +9,6 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 /dist
-
+docs-bitec
 
 # git subtree push --prefix build/ origin ui3d-pages    
