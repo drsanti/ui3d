@@ -1,31 +1,31 @@
 <script lang="ts">
-	import type { Message } from 'paho-mqtt';
-	import { MqttPahoClient } from '../ui3d/NetLink/MqttPahoClient';
+	// const socket: WebSocket = new WebSocket('ws://services.bits-fusion.com:3000');
+	const socket: WebSocket = new WebSocket('wss://services.bits-fusion.com:8080');
 
-	let clientId = '';
-	let clientTopic = '';
-	let receivedData = '';
-	let isConnected = false;
+	console.clear();
 
-	const client = new MqttPahoClient({
-		onConnectionSuccess: (id: string, topic: string) => {
-			clientId = id;
-			clientTopic = topic;
-			isConnected = true;
-		},
-		onConnectionLost: (id: string, e: Paho.MQTT.MQTTError) => (isConnected = false),
-		onMessageArrived: (id: string, message: Message) =>
-			(receivedData = message.payloadString)
-	}).connect();
+	// Connection opened
+	socket.addEventListener('open', (event: Event) => {
+		console.log('Connected to WebSocket server');
+		// Send data to the server
+		socket.send('Hello Server!');
+	});
+
+	// Listen for messages from the server
+	socket.addEventListener('message', (event: MessageEvent) => {
+		const message: string = event.data;
+		console.log('Received message from server:', message);
+	});
+
+	// Handle errors
+	socket.addEventListener('error', (error: Event) => {
+		console.error('WebSocket error:', error);
+	});
+
+	// Connection closed
+	socket.addEventListener('close', (event: CloseEvent) => {
+		console.log('Disconnected from WebSocket server');
+	});
 </script>
 
-<div class="flex flex-col items-center justify-center h-screen">
-	{#if isConnected}
-		<p class="text-2xl text-[#5f8]">Connecting to services.bits-fusion.com</p>
-		<p class="text-neutral-500">{clientId}</p>
-		<p class="text-neutral-500">{clientTopic}</p>
-		<p class="text-[#85f] text-xl">{receivedData}</p>
-	{:else}
-		<p class="text-2xl text-[#f58]">Connecting to services.bits-fusion.com</p>
-	{/if}
-</div>
+<div class="flex flex-col items-center justify-center h-screen">ws</div>

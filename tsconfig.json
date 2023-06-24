@@ -12,5 +12,5 @@
 		"outDir": "./build",
 		"typeRoots": ["src/ui3d/Graphics/Controls", "src/ui3d/three-local/@types"]
 	},
-	"exclude": ["docs/**", "santi-utils/**"]
+	"exclude": []
 }
